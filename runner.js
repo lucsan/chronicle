@@ -1,5 +1,6 @@
 console.log('%crunner running ->>', 'color: red')
 
+
 // console.log('clearing localStorage')
 
 
@@ -11,12 +12,13 @@ if (reset) {
 }
 
 
-
 scriptsLoader(['app/config.js'], () => document.dispatchEvent(new Event('configLoaded')))
 
 document.addEventListener('configLoaded', () => {
   scriptsLoader(config.autoload, () => document.dispatchEvent(new Event('scriptsLoaded')) )
 })
+
+let custom = () => {}
 
 document.addEventListener('scriptsLoaded', () => {
   let css = 'color:green;'
@@ -26,7 +28,14 @@ document.addEventListener('scriptsLoaded', () => {
   console.log('%cMarshalling assets', css+css1)
   const marshall = marshalls(propsPlans, setsPlans)
 
-  loadGame(marshall.cabinet)
+  // scripted actions
+  const customActions = (marshall, act) => {
+    return (act) => marshall.action(act.action, act.id)
+  }
+
+  custom = customActions(marshall)
+
+  //loadGame(marshall.cabinet)
 
   const stage = theater(headless(marshall.cabinet.draws))
   stage.build()
@@ -61,6 +70,8 @@ const moves_one = (marshall) => {
   console.log(decor.welcomizer.actions)
 
   marshall.move('clearing')
+
+  marshall.cabinet.draws.decor.stick.actions.env.kick()
 
   marshall.move('creepyWoods')
 

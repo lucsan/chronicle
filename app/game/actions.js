@@ -1,4 +1,5 @@
 console.log('%c--> Actions', 'color: green;')
+
 const actions = () => {
 
   const defaultActions = (id, action) => {
@@ -20,14 +21,20 @@ const actions = () => {
   }
 
   const doAction = (act, id, cabinet) => {
-    if (act == 'env->bod') changePropLocation('env', 'bod', id, cabinet)
-    if (act == 'bod->env') changePropLocation('bod', 'env', id, cabinet)
-    if (act == 'bod->inv') changePropLocation('bod', 'inv', id, cabinet)
-    if (act == 'inv->bod') changePropLocation('inv', 'bod', id, cabinet)
+    if (act == 'env->bod') return changePropLocation('env', 'bod', id, cabinet)
+    if (act == 'bod->env') return changePropLocation('bod', 'env', id, cabinet)
+    if (act == 'bod->inv') return changePropLocation('bod', 'inv', id, cabinet)
+    if (act == 'inv->bod') return changePropLocation('inv', 'bod', id, cabinet)
     if (act == 'look') {
-      dispatch({ action: 'look', code: id, msg: cabinet.draws.decor[id].desc })
+      return dispatch({ action: 'look', code: id, msg: cabinet.draws.decor[id].desc })
     }
-    if (act == 'combine') combineProps(id, cabinet)
+    if (act == 'combine') return combineProps(id, cabinet)
+
+    doCustomAction(act, id, cabinet)
+  }
+
+  const doCustomAction = (act, id, cabinet) => {
+    if (act == 'kick') return dispatch({ action: 'msg', code: id, msg: `You kicked 🦵 a ${id}` })
   }
 
   const doMove = (to, cabinet) => {
@@ -113,6 +120,7 @@ const actions = () => {
 
   }
 
+
   const dispatch = (detail) => {
     document.dispatchEvent(
       new CustomEvent(
@@ -122,13 +130,6 @@ const actions = () => {
     )
   }
 
-  document.addEventListener('chronicle_dispatch_theater', (event) => {
-    const d = event.detail
-
-    //console.log(d)
-  })
-
-
   return {
     doMove,
     doAction,
@@ -136,3 +137,18 @@ const actions = () => {
     defaultActions
   }
 }
+
+
+// const customAction = (detail) => {
+//   //actions
+//   //detail.custom = true
+//   //console.log('customAction', detail)
+//   //const dispatch = (detail) => {
+//     document.dispatchEvent(
+//       new CustomEvent(
+//         'chronicle_dispatch',
+//         { detail: detail }
+//       )
+//     )
+//   //}
+// }

@@ -7,6 +7,8 @@ document.addEventListener('configLoaded', () => {
   scriptsLoader(config.autoload, () => document.dispatchEvent(new Event('scriptsLoaded')) )
 })
 
+let custom = () => {}
+
 document.addEventListener('scriptsLoaded', () => {
   let css = 'color:green;'
   let css1 = 'font-weight:bold;'
@@ -14,6 +16,13 @@ document.addEventListener('scriptsLoaded', () => {
 
   console.log('%cMarshalling assets', css+css1)
   const marshall = marshalls(propsPlans, setsPlans)
+
+  // scripted actions
+  const customActions = (marshall, act) => {
+    return (act) => marshall.action(act.action, act.id)
+  }
+
+  custom = customActions(marshall)
 
   loadGame(marshall.cabinet)
 

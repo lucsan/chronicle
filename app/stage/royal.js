@@ -42,6 +42,7 @@ const royal = (draws) => {
   const prop = (d) => {}
   const update = (d) => {}
   const combine = (d) => {}
+  const remark = (d) => {}
 
   return {
     build,
@@ -49,7 +50,8 @@ const royal = (draws) => {
     look,
     prop,
     update,
-    combine
+    combine,
+    remark
   }
 }
 

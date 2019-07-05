@@ -17,8 +17,7 @@ default: {
     actions: {
       // TODO synonyms for pick up? remove, get, take.
       env: {
-        //kick: () => { propActions().kick('stick') },
-        kick: () => { actions().doAction('kick', 'id', 'cabinet') },
+        kick: () => { custom({ action: 'kick', id: 'stick' }) },
       },
       inv: {
         destroy: () => {},
