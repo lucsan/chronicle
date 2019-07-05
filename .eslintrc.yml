@@ -1,0 +1,40 @@
+env:
+  browser: true
+  es6: true
+extends: 'eslint:recommended'
+parserOptions:
+  ecmaVersion: 2018
+rules:
+  indent:
+    - error
+    - 2
+  linebreak-style:
+    - error
+    - windows
+  quotes:
+    - error
+    - single
+  semi:
+    - error
+    - never
+  no-console:
+    - error
+    - allow:
+      - info
+      - error
+      - groupCollapsed
+      - groupEnd
+globals:
+  autoLoader: false
+  scriptLoader: false
+  application: false
+  app: false
+  player: false
+  character: false
+  el: false
+  actions: false
+  describe: false
+  expect: false
+  it: false
+  beforeAll: false
+  afterAll: false
