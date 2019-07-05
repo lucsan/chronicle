@@ -19,7 +19,7 @@ const marshalls = (defaultProps, defaultSets) => {
   cabinet.use({ tools: { saveGame: saveGame } } )
   cabinet.use({ tools: { loadGame: loadGame } } )
 
-  //cabinet.use({ tools: { customAction: acts.dispatch } })
+  cabinet.use({ tools: { dispatch: acts.dispatch } })
 
   return {
     cabinet,

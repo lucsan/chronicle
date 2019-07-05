@@ -11,11 +11,11 @@ const theater = (stage) => {
     if (d.action == 'prop') { stage.prop(d) }
     if (d.action == 'move') { stage.move(d) }
     if (d.action == 'update') { stage.update(d) }
-    if (d.action == 'combine') { stage.combine(d) }    
+    if (d.action == 'combine') { stage.combine(d) }
     //console.log(d)
   })
 
   return {
-    build,
+    build
   }
 }

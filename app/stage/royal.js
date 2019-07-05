@@ -1,5 +1,8 @@
 const royal = (draws) => {
 
+  const dispatch = draws.tools.dispatch
+  console.log(draws.tools.dispatch)
+
   const build = () => {
     el('banner', 'display', 'playerDetails').div('Player: ')
     el(undefined, 'display', 'characterDetails').div('Character: ')
@@ -17,12 +20,24 @@ const royal = (draws) => {
   const move = (d) => {
     const place = draws.places[d.to]
     document.getElementById('place').innerHTML = ''
-    console.log(d)
+    //console.log('royal', d, 'place', place)
     el('place', 'placeTitle').div(place.desc)
     if (place.prose) {
       pd = el('place', 'prose', 'prose').div().innerHTML = place.prose
     }
+    placeExits(place)
   }
+
+  const placeExits = (place) => {
+    el('place', 'exits', 'exits').div()
+    el('exits', 'title').div('Exits')
+    place.exits.map(e => {
+      el('exits', 'exit', e.to).div()
+      //el(e.to, 'exit').button(camelToDesc(e.desc), () => {exitAction(e.to)})
+      el(e.to, 'exit').button(e.desc, () => dispatch({ action: 'move', to: e.to }))
+    })
+  }
+
   const look = (d) => {}
   const prop = (d) => {}
   const update = (d) => {}

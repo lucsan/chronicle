@@ -122,10 +122,17 @@ const actions = () => {
     )
   }
 
+  document.addEventListener('chronicle_dispatch_theater', (event) => {
+    const d = event.detail
+
+    //console.log(d)
+  })
+
+
   return {
     doMove,
     doAction,
-    //dispatch,
+    dispatch,
     defaultActions
   }
 }
