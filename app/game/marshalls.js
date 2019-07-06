@@ -3,10 +3,7 @@ const marshalls = (defaultProps, defaultSets) => {
   let acts = actions()
 
   const move = (to) => acts.doMove(to, cabinet)
-  const action = (act, id) => {
-    console.log('mart', act, id)
-    acts.doAction(act, id, cabinet)
-  }
+  const action = (act, id) => acts.doAction(act, id, cabinet)
   const custom = (act, id, special) => {
     acts.doCustom(act, id, special, cabinet)
   }
@@ -16,7 +13,6 @@ const marshalls = (defaultProps, defaultSets) => {
 
   plans.loadProps(cabinet.draws.props)
   cabinet.use({ decor: plans.initaliseProps(acts.defaultActions, action) })
-  cabinet.use({ saves: { decor: cabinet.draws.decor } })
 
   plans.loadSets(cabinet.draws.sets)
   cabinet.use({ places: defaultSets })

@@ -40,14 +40,16 @@ const actions = () => {
   }
 
   const doMove = (to, cabinet) => {
+    loadProse(to, cabinet)
     const currentLocation = cabinet.draws.character.location
     let moves = cabinet.draws.character.moves
     let name = cabinet.draws.character.name
-    console.log('act', to)
     cabinet.use({ character: { location: to, moves: ++moves }})
-    loadProse(to, cabinet)
     cabinet.use({ saves: { [name]: { character: cabinet.draws.character } } })
+    cabinet.use({ saves: { [name]: { decor: cabinet.draws.decor } } })
+
     cabinet.use({ saves: { [name]: { [to]: to } } })
+    console.log('msvs',cabinet.draws.saves)
     saveGame(cabinet.draws)
     dispatch({ action: 'move', from: currentLocation, to: to, msg: 'char moved' })
   }
@@ -67,7 +69,6 @@ const actions = () => {
     if (from == 'env') from = loc
     if (to == 'env') to = loc
     let locs = cabinet.draws.decor[id].locs
-      console.log(locs, from)
     if (!locs.find(l => l == from)) return
 
     let f = false
@@ -81,8 +82,13 @@ const actions = () => {
     cabinet.use({ decor: { [id]: { locs: locs } } })
 
     let name = cabinet.draws.character.name
+    let decor = cabinet.draws.decor
     cabinet.use({ saves: { [name]: { decor: cabinet.draws.decor } } } )
+    console.log('wcm',cabinet.draws.decor.welcomizer)
     saveGame(cabinet.draws)
+
+    let save = localStorage.getItem(name)
+    //console.log(save)
 
     dispatch({ action: 'prop', from: from, to: to, code: id })
   }

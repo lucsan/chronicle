@@ -24,12 +24,13 @@ document.addEventListener('scriptsLoaded', () => {
 
   custom = customActions(marshall)
 
-  //loadGame(marshall.cabinet)
+  localStorage.setItem('player', JSON.stringify({ name: 'Playe Rone', character: 'Charac Ter' }))
+  loadGame(marshall.cabinet)
 
   const stage = theater(royal(marshall.cabinet.draws))
   stage.build()
 
-  marshall.move('begining')
+  marshall.move(marshall.cabinet.draws.character.location)
 
   //moves_test_saves(marshall)
   //moves_one(marshall)
