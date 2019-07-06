@@ -4,12 +4,14 @@
   "description": "",
   "main": "main.js",
   "scripts": {
-    "test": "jasmine"
+    "test": "jasmine",
+    "royal": "node node_modules/less/bin/lessc app/stage/royal.less app/stage/royal.css"
   },
   "author": "🌞 lucsan@zencorp.co.uk",
   "license": "ISC",
-  "dependencies": {
+  "devDependencies": {
     "jasmine": "^3.4.0",
-    "puppeteer": "^1.18.1"
+    "puppeteer": "^1.18.1",
+    "less": "^3.9.0"
   }
 }
