@@ -75,7 +75,7 @@ const actions = () => {
     locs = locs.filter(l => l != undefined)
     locs.push(to)
     cabinet.use({ decor: { [id]: { locs: locs } } })
-    dispatch({ action: 'prop', from: from, to: to, id: id })
+    dispatch({ action: 'prop', from: from, to: to, code: id })
     let name = cabinet.draws.character.name
     cabinet.use({ saves: { [name]: { decor: cabinet.draws.decor } } } )
     saveGame(cabinet.draws)

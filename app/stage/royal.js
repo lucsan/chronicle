@@ -15,42 +15,53 @@ const royal = (draws) => {
     el(undefined, 'display', 'containers').div()
     el(undefined, 'display', 'testArea').div()
 
-    el('containers', 'notplace container', 'notplace').div()
-    el('containers', 'place container', 'place').div()
-
-    el('place', 'place container', 'env').div()
-    el('notplace', 'inventory container', 'inv').div()
-    el('notplace', 'body container', 'bod').div()
+    //el('containers', 'notplace container', 'notplace').div()
+    el('containers', 'place container', 'place').div('🗺Location')
+    el('place', 'place title placeTitle', 'placeTitle').div()
+    el('place', 'place prose', 'placeProse').div()
+    el('place', 'exits', 'exits').div()
+    el('place', 'container place', 'env').div()
+    el('place', 'container inventory', 'inv').div()
+    el('place', 'container body', 'bod').div()
 
     respond = document.getElementById('respond')
   }
 
 
-
   const move = (d) => {
-    document.getElementById('place').innerHTML = ''
-
     const place = draws.places[d.to]
-    el('place', 'title placeTitle', 'placeTitle').div(place.desc)
-    if (place.prose) {
-      el('place', 'prose', 'prose').div().innerHTML = place.prose
-    }
+    document.getElementById('placeTitle').innerHTML = place.desc
+    document.getElementById('placeProse').innerHTML = ''
+    if (place.prose) document.getElementById('placeProse').innerHTML = place.prose
+
     placeExits(place)
     placeProps(d.to, 'env')
     placeProps('bod', 'bod')
     placeProps('inv', 'inv')
-
   }
 
-  const placeProps = (id, container) => {
-    const propIds = draws.tools.propsAtLoc(id, draws.decor)
-    console.log(container)
+  const prop = (d) => {
+    console.log(`You took 🤜 ${d.code} ${draws.decor[d.code].desc} from ${d.from} to ${d.to} `)
+
+    let placeId = null
+    if ( d.from != 'bod' && d.from != 'inv' ) placeId = d.from
+    if ( d.to != 'bod' && d.to != 'inv' ) placeId = d.to
+
+    if (placeId) placeProps(placeId, 'env')
+    placeProps('inv', 'inv')
+    placeProps('bod', 'bod')
+  }
+
+
+
+
+  const placeProps = (placeId, container) => {
+    const propIds = draws.tools.propsAtLoc(placeId, draws.decor)
     if (document.getElementById(container)) document.getElementById(container).innerHTML = ''
-    el('place', 'place container', container).div()
     propIds.map(p => {
       let prop = draws.decor[p]
-      el(container, 'title prop').div(prop.code)
       el(container, 'prop', prop.code).div()
+      el(prop.code, 'title').div(prop.code)
       propsActions(prop, container)
     })
   }
@@ -58,7 +69,6 @@ const royal = (draws) => {
   const propsActions = (prop, container) => {
     const box = prop.actions[container]
     for (let i in box) {
-      console.log(i, box[i])
       el(prop.code, 'action').button(i, box[i])
     }
   }
@@ -68,7 +78,7 @@ const royal = (draws) => {
 
 
   const placeExits = (place) => {
-    el('place', 'exits', 'exits').div()
+    document.getElementById('exits').innerHTML = ''
     el('exits', 'title').div('Exits')
     place.exits.map(e => {
       el('exits', 'exit', e.to).div()
@@ -81,9 +91,6 @@ const royal = (draws) => {
     respond.innerHTML = `Its a ${d.code} ${d.id}`
   }
 
-  const prop = (d) => {
-    console.log(`You took 🤜 ${d.id} ${draws.decor[d.id].desc} from ${d.from} to ${d.to} `)
-  }
   const update = (d) => {if (d.type == 'prose') console.log('🎀' + draws.places[d.code].prose)}
   const combine = (d) => { console.log(d) }
   const remark = (d) => { console.log(`%c${d.msg}`, 'color:green;font-weight:bold;') }

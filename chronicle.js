@@ -24,7 +24,7 @@ document.addEventListener('scriptsLoaded', () => {
 
   custom = customActions(marshall)
 
-  loadGame(marshall.cabinet)
+  //loadGame(marshall.cabinet)
 
   const stage = theater(royal(marshall.cabinet.draws))
   stage.build()
