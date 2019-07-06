@@ -67,8 +67,16 @@ const royal = (draws) => {
   const propsActions = (prop, container) => {
     const box = prop.actions[container]
     for (let i in box) {
-      el(prop.code, 'action').button(i, box[i])
+      el(prop.code, 'action').button(actionEmos(i), box[i])
     }
+  }
+
+  const actionEmos = (actionName) => {
+    if (actionName == 'pickUp') return '<span title="Pick me up" >🤏</span>'
+    if (actionName == 'grab') return '<span title="Take me out of the bag" >🤏</span>'
+    if (actionName == 'bagIt') return '<span title="pop into the bag" >🎒</span>'
+
+    return actionName
   }
 
 
@@ -90,7 +98,13 @@ const royal = (draws) => {
     respond.innerHTML = `Its a ${d.code} ${d.id}`
   }
 
-  const update = (d) => {if (d.type == 'prose') console.log('🎀' + draws.places[d.code].prose)}
+  const update = (d) => {
+    if (d.type == 'prose') {
+      document.getElementById('placeProse').innerHTML = draws.places[d.code].prose
+      console.log('🎀' + draws.places[d.code].prose)
+
+    }
+  }
   const combine = (d) => { console.log(d) }
   const remark = (d) => { console.log(`%c${d.msg}`, 'color:green;font-weight:bold;') }
 

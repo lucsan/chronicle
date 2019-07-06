@@ -2,3 +2,5 @@
 
 .inventory { border: 2px solid brown; }
 .body { border: 2px solid green; }
+
+.action, .exit { cursor: pointer; }
