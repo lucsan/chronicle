@@ -6,7 +6,6 @@ const actions = () => {
     return {
       env: {
         pickUp: () => action('env->bod', id),
-        //pickUp: () => dispatch({ action: 'env->bod', id: id}), //action('env->bod', id),
         look: () => action('look', id)
       },
       bod: {
@@ -80,16 +79,10 @@ const actions = () => {
     locs = locs.filter(l => l != undefined)
     locs.push(to)
     cabinet.use({ decor: { [id]: { locs: locs } } })
-
     let name = cabinet.draws.character.name
     let decor = cabinet.draws.decor
     cabinet.use({ saves: { [name]: { decor: cabinet.draws.decor } } } )
-    console.log('wcm',cabinet.draws.decor.welcomizer)
     saveGame(cabinet.draws)
-
-    let save = localStorage.getItem(name)
-    //console.log(save)
-
     dispatch({ action: 'prop', from: from, to: to, code: id })
   }
 

@@ -11,18 +11,19 @@ const royal = (draws) => {
     el('banner', 'display', 'playerDetails').div('Player: ')
     el(undefined, 'display', 'characterDetails').div('Character: ')
 
-    el(undefined, 'display', 'respond').div()
     el(undefined, 'display', 'containers').div()
     el(undefined, 'display', 'testArea').div()
 
-    //el('containers', 'notplace container', 'notplace').div()
-    el('containers', 'place container', 'place').div('🗺Location')
+    el('containers', 'place container', 'place').div()
+    el('containers', 'display respond', 'respond').div()
+    el('containers', 'things container', 'things').div()
+
     el('place', 'place title placeTitle', 'placeTitle').div()
     el('place', 'place prose', 'placeProse').div()
-    el('place', 'exits', 'exits').div()
-    el('place', 'container place', 'env').div()
-    el('place', 'container inventory', 'inv').div()
-    el('place', 'container body', 'bod').div()
+    el('place', 'place exits', 'exits').div()
+    el('things', 'things place placeProps', 'env').div()
+    el('things', 'things body', 'bod').div()
+    el('things', 'things inventory', 'inv').div()
 
     respond = document.getElementById('respond')
   }
@@ -56,6 +57,10 @@ const royal = (draws) => {
   const placeProps = (placeId, container) => {
     const propIds = draws.tools.propsAtLoc(placeId, draws.decor)
     if (document.getElementById(container)) document.getElementById(container).innerHTML = ''
+    let title = `🌐${placeId}`
+    if (container == 'inv') title = '🎒backpack'
+    if (container == 'bod') title = '🤲In Hand'
+    el(container, 'title').div(title)
     propIds.map(p => {
       let prop = draws.decor[p]
       el(container, 'prop', prop.code).div()
@@ -75,6 +80,10 @@ const royal = (draws) => {
     if (actionName == 'pickUp') return '<span title="Pick me up" >🤏</span>'
     if (actionName == 'grab') return '<span title="Take me out of the bag" >🤏</span>'
     if (actionName == 'bagIt') return '<span title="pop into the bag" >🎒</span>'
+    if (actionName == 'look') return '<span title="lookey see" >👁‍🗨</span>'
+    if (actionName == 'inspect') return '<span title="peeky peek" >🔎</span>'
+    if (actionName == 'examine') return '<span title="examine closely" >🔬</span>'
+    if (actionName == 'dropIt') return '<span title="drop me" >👐</span>'
 
     return actionName
   }

@@ -1,6 +1,25 @@
-.title { font-weight: bold; }
-
-.inventory { border: 2px solid brown; }
-.body { border: 2px solid green; }
-
-.action, .exit { cursor: pointer; }
+.title {
+  font-weight: bold;
+}
+.respond {
+  height: 40px;
+}
+.inventory {
+  border: 2px solid brown;
+  width: 32%;
+  float: left;
+}
+.body {
+  border: 2px solid red;
+  width: 32%;
+  float: left;
+}
+.placeProps {
+  border: 2px solid green;
+  width: 32%;
+  float: left;
+}
+.action,
+.exit {
+  cursor: pointer;
+}
