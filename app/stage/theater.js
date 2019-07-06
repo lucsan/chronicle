@@ -13,7 +13,7 @@ const theater = (stage) => {
     if (d.action == 'move') return stage.move(d)
     if (d.action == 'update') return stage.update(d)
     if (d.action == 'combine') return stage.combine(d)
-    if (d.action == 'msg') return stage.remark(d)
+    if (d.action == 'remark') return stage.remark(d)
 
     // Custom actions
 

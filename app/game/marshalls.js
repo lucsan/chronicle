@@ -4,9 +4,9 @@ const marshalls = (defaultProps, defaultSets) => {
 
   const move = (to) => acts.doMove(to, cabinet)
   const action = (act, id) => acts.doAction(act, id, cabinet)
-  const custom = (act, id, special) => {
-    acts.doCustom(act, id, special, cabinet)
-  }
+  // const custom = (act, id, special) => {
+  //   acts.doCustom(act, id, special, cabinet)
+  // }
 
   cabinet.use({ props: defaultProps })
   cabinet.use({ sets: defaultSets })

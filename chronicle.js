@@ -19,7 +19,10 @@ document.addEventListener('scriptsLoaded', () => {
 
   // scripted actions
   const customActions = (marshall, act) => {
-    return (act) => marshall.action(act.action, act.id)
+    return (act) => {
+    console.log('chra',act)
+      marshall.action(act.action, act.id)
+    }
   }
 
   custom = customActions(marshall)

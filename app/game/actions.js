@@ -26,10 +26,9 @@ const actions = () => {
     if (act == 'bod->env') return changePropLocation('bod', 'env', id, cabinet)
     if (act == 'bod->inv') return changePropLocation('bod', 'inv', id, cabinet)
     if (act == 'inv->bod') return changePropLocation('inv', 'bod', id, cabinet)
-    if (act == 'look') {
-      return dispatch({ action: 'look', code: id, msg: cabinet.draws.decor[id].desc })
-    }
+    if (act == 'look') return dispatch({ action: 'look', code: id })
     if (act == 'combine') return combineProps(id, cabinet)
+    if (act == 'remark') return dispatch({ action: 'remark', msg: id })
 
     doCustomAction(act, id, cabinet)
   }

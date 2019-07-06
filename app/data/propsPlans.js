@@ -9,17 +9,6 @@ default: {
     hit: true, // can hit things with it
     strikes: false, // retaliates
   },
-  testa: {
-    desc: 'Test object',
-    locs: ['begining'],
-    actions: {
-      env: {
-        slurp: () => custom({ action: 'slurp', id: 'slurpo'}),
-        logo: () => console.log('loggoed testa'),
-        pickUp: () => console.log('cant pick me up')
-      }
-    }
-  },
   stick: {
     desc: '🌲 a nice stick',
     locs: ['clearing', 'creepyWoods'],
@@ -28,7 +17,7 @@ default: {
     actions: {
       // TODO synonyms for pick up? remove, get, take.
       env: {
-        kick: () => { custom({ action: 'kick', id: 'stick', msg: 'you prod away' }) },
+        kick: () => { custom({ action: 'kick', id: 'stick', msg: 'ouch' }) },
         prod: () => {}
       },
       inv: {
@@ -48,7 +37,7 @@ default: {
   },
 
   chest: {
-    desc: 'a locked chest',
+    desc: 'a locked chest, maybe it contains a rubish sword',
     locs: ['testSite', 'clearing'],
     artist: 'lucsan',
     isBox: true,
@@ -57,6 +46,11 @@ default: {
         unlock: () => {propActions().unlock('chest',['chestKey', 'badge'])}
       }
     }
+  },
+
+  rubishSword: {
+    desc: 'Its a sword, well almost, still... its trying its best',
+    locs: ['testSite']
   },
 
   chestKey: {
@@ -72,10 +66,13 @@ default: {
     pickUp: true,
     actions: {
       env: {
-        ask: () => { propActions().msg('Click on pickUp to pick me up') }
+        ask: () => { custom({ action: 'remark', id: 'Click on 🤏 pickUp to pick me up, click on 👁‍🗨 look, to inspect me.' }) }
       },
       bod: {
-        ask: () => { propActions().msg('Click on bagit, to put me in the backpack. Click on drop to drop me.') },
+        ask: () => { custom({ action: 'remark', id: 'Click on 🎒bag it, to put me in the backpack. Click on 👐drop to drop me.' }) },
+      },
+      inv: {
+        ask: () => { custom({ action: 'remark', id: 'Click on ' }) },
       },
     },
   },
@@ -180,7 +177,7 @@ default: {
     locs: ['testSite', 'lab'],
   },
   citricAcid: {
-    desc: 'a bag of citric acid.',
+    desc: 'a bag of citric acid. It tastes kinda lemony',
     locs: ['testSite', 'lab'],
   },
   testTube: {

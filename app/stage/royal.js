@@ -103,8 +103,8 @@ const royal = (draws) => {
   }
 
   const look = (d) => {
-    console.log(`👁‍🗨 ${d.code} ${d.id}`, d)
-    respond.innerHTML = `Its a ${d.code} ${d.id}`
+    console.log(`👁‍🗨 ${d.code}`, d)
+    respond.innerHTML = draws.decor[d.code].desc
   }
 
   const update = (d) => {
@@ -115,7 +115,11 @@ const royal = (draws) => {
     }
   }
   const combine = (d) => { console.log(d) }
-  const remark = (d) => { console.log(`%c${d.msg}`, 'color:green;font-weight:bold;') }
+
+  const remark = (d) => {
+    document.getElementById('respond').innerHTML = d.msg
+    console.log(`%c${d.msg}`, 'color:green;font-weight:bold;')
+}
 
   return {
     build,
