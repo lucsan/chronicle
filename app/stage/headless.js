@@ -38,7 +38,7 @@ const headless = (draws) => {
   const look = (d) => { console.log(`You look at ${draws.decor[d.code].desc}`, d)}
 
   const prop = (d) => {
-    console.log(`You took 🤜 ${d.id} ${draws.decor[d.id].desc} from ${d.from} to ${d.to} `)
+    console.log(`You took 🤜 ${d.code} ${draws.decor[d.code].desc} from ${d.from} to ${d.to} `)
   }
 
   const remark = (d) => {

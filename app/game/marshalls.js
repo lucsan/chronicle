@@ -22,6 +22,7 @@ const marshalls = (defaultProps, defaultSets) => {
   cabinet.use({ places: defaultSets })
 
   cabinet.use({ tools: { propsAtLoc: plans.propsAtLoc } })
+  cabinet.use({ tools: { move: move } })
   cabinet.use({ tools: { saveGame: saveGame } } )
   cabinet.use({ tools: { loadGame: loadGame } } )
 

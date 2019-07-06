@@ -41,8 +41,9 @@ const actions = () => {
 
   const doMove = (to, cabinet) => {
     const currentLocation = cabinet.draws.character.location
-    let moves = cabinet.use('character').moves
+    let moves = cabinet.draws.character.moves
     let name = cabinet.draws.character.name
+    console.log('act', to)
     cabinet.use({ character: { location: to, moves: ++moves }})
     loadProse(to, cabinet)
     cabinet.use({ saves: { [name]: { character: cabinet.draws.character } } })
@@ -62,10 +63,13 @@ const actions = () => {
 
   const changePropLocation = (from, to, id, cabinet) => {
     let loc = cabinet.draws.character.location
+
     if (from == 'env') from = loc
     if (to == 'env') to = loc
     let locs = cabinet.draws.decor[id].locs
+      console.log(locs, from)
     if (!locs.find(l => l == from)) return
+
     let f = false
     locs = locs.map(l => {
       if (l != from) return l
@@ -75,10 +79,12 @@ const actions = () => {
     locs = locs.filter(l => l != undefined)
     locs.push(to)
     cabinet.use({ decor: { [id]: { locs: locs } } })
-    dispatch({ action: 'prop', from: from, to: to, code: id })
+
     let name = cabinet.draws.character.name
     cabinet.use({ saves: { [name]: { decor: cabinet.draws.decor } } } )
     saveGame(cabinet.draws)
+
+    dispatch({ action: 'prop', from: from, to: to, code: id })
   }
 
   const combineProps = (id, cabinet) => {

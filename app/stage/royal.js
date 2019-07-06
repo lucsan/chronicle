@@ -53,8 +53,6 @@ const royal = (draws) => {
   }
 
 
-
-
   const placeProps = (placeId, container) => {
     const propIds = draws.tools.propsAtLoc(placeId, draws.decor)
     if (document.getElementById(container)) document.getElementById(container).innerHTML = ''
@@ -82,7 +80,8 @@ const royal = (draws) => {
     el('exits', 'title').div('Exits')
     place.exits.map(e => {
       el('exits', 'exit', e.to).div()
-      el(e.to, 'exit').button(e.desc?e.desc:e.to, () => dispatch({ action: 'move', to: e.to }))
+      el(e.to, 'exit').button(e.desc?e.desc:e.to, () => draws.tools.move(e.to))
+
     })
   }
 
@@ -105,6 +104,10 @@ const royal = (draws) => {
     remark
   }
 }
+
+
+// ---------==================================================================------------------------
+
 
 
 const stageRoyal1 = (rigging) => {
