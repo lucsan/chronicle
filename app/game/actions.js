@@ -6,6 +6,7 @@ const actions = () => {
     return {
       env: {
         pickUp: () => action('env->bod', id),
+        //pickUp: () => dispatch({ action: 'env->bod', id: id}), //action('env->bod', id),
         look: () => action('look', id)
       },
       bod: {
@@ -21,6 +22,7 @@ const actions = () => {
   }
 
   const doAction = (act, id, cabinet) => {
+    console.log('act', act, id, cabinet)
     if (act == 'env->bod') return changePropLocation('env', 'bod', id, cabinet)
     if (act == 'bod->env') return changePropLocation('bod', 'env', id, cabinet)
     if (act == 'bod->inv') return changePropLocation('bod', 'inv', id, cabinet)

@@ -6,7 +6,7 @@ const theater = (stage) => {
 
   document.addEventListener('chronicle_dispatch', (event) => {
     const d = event.detail
-
+    console.log('theater', d)
 
     if (d.action == 'look') return stage.look(d)
     if (d.action == 'prop') return stage.prop(d)

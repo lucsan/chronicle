@@ -28,7 +28,7 @@ const headless = (draws) => {
 
   }
 
-  const combine = (d) => { console.log(d)}
+  const combine = (d) => { console.log(d) }
 
   const update = (d) => {
     console.log(d)

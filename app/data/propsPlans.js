@@ -9,6 +9,17 @@ default: {
     hit: true, // can hit things with it
     strikes: false, // retaliates
   },
+  testa: {
+    desc: 'Test object',
+    locs: ['begining'],
+    actions: {
+      env: {
+        slurp: () => custom({ action: 'slurp', id: 'slurpo'}),
+        logo: () => console.log('loggoed testa'),
+        pickUp: () => console.log('cant pick me up')
+      }
+    }
+  },
   stick: {
     desc: '🌲 a nice stick',
     locs: ['clearing', 'creepyWoods'],
@@ -17,7 +28,8 @@ default: {
     actions: {
       // TODO synonyms for pick up? remove, get, take.
       env: {
-        kick: () => { custom({ action: 'kick', id: 'stick' }) },
+        kick: () => { custom({ action: 'kick', id: 'stick', msg: 'you prod away' }) },
+        prod: () => {}
       },
       inv: {
         destroy: () => {},
