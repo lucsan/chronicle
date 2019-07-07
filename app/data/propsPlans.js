@@ -163,11 +163,11 @@ default: {
   },
 
   mingVase: {
-    desc: 'a ming dynsaty delicate china vase',
+    desc: 'a ming dynsaty delicate china vase, it dispences unlimited sticks',
     locs: ['testSite', 'creepyWoods'],
     actions: {
       env: {
-        pickUp: () => propActions().pickUp('stick'),
+        pickUp: () => custom({ action: 'create', id: 'stick' })
       },
     },
   },
