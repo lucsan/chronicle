@@ -44,15 +44,25 @@ const royal = (draws) => {
   const prop = (d) => {
     console.log(`You took 🤜 ${d.code} ${draws.decor[d.code].desc} from ${d.from} to ${d.to} `)
 
-    let placeId = null
-    if ( d.from != 'bod' && d.from != 'inv' ) placeId = d.from
-    if ( d.to != 'bod' && d.to != 'inv' ) placeId = d.to
+    if (d.from == 'inv') {
+      placeProps('inv', 'inv')
+      placeProps('bod', 'bod')
+    }
 
-    if (placeId) placeProps(placeId, 'env')
-    placeProps('inv', 'inv')
-    placeProps('bod', 'bod')
+    if (d.from != 'inv' && d.from != 'bod') {
+      placeProps(d.from, 'env')
+      placeProps('bod', 'bod')
+    }
+
+    if (d.from == 'bod') {
+      placeProps('bod', 'bod')
+      if (d.to != 'inv') {
+        placeProps(d.to, 'env')
+      } else {
+        placeProps('inv', 'inv')
+      }
+    }
   }
-
 
   const placeProps = (placeId, container) => {
     const propIds = draws.tools.propsAtLoc(placeId, draws.decor)
