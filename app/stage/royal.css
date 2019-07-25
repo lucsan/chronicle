@@ -2,23 +2,34 @@
   font-weight: bold;
 }
 .respond {
-  height: 40px;
   background: #eeeeee;
 }
 .inventory {
   border: 2px solid brown;
-  width: 32%;
+  width: 48%;
   float: left;
 }
 .body {
+  background-color: #ffe6cc;
   border: 2px solid red;
-  width: 32%;
+  width: 48%;
   float: left;
 }
+.body .container-title {
+  background-color: #ff9933;
+}
 .placeProps {
+  background-color: #c2f0c2;
   border: 2px solid green;
-  width: 32%;
-  float: left;
+}
+#place {
+  background-color: #c2f0c2;
+}
+#place .placeTitle {
+  background-color: #5cd65c;
+}
+.placeProps .container-title {
+  background-color: #5cd65c;
 }
 .action,
 .exit {

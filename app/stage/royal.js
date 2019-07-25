@@ -1,90 +1,4 @@
 const royal = (draws) => {
-  //const draws = marshall.cabinet.draws
-
-  const dispatch = draws.tools.dispatch
-
-  let respond = null
-
-  //console.log(draws.tools.dispatch)
-
-  const build = () => {
-    el('banner', 'display', 'playerDetails').div('Player: ')
-    el(undefined, 'display', 'characterDetails').div('Character: ')
-
-    el(undefined, 'display', 'containers').div()
-    el(undefined, 'display', 'testArea').div()
-
-    el('containers', 'place container', 'place').div()
-    el('containers', 'display respond', 'respond').div()
-    el('containers', 'things container', 'things').div()
-
-    el('place', 'place title placeTitle', 'placeTitle').div()
-    el('place', 'place prose', 'placeProse').div()
-    el('place', 'place exits', 'exits').div()
-    el('things', 'things place placeProps', 'env').div()
-    el('things', 'things body', 'bod').div()
-    el('things', 'things inventory', 'inv').div()
-
-    respond = document.getElementById('respond')
-  }
-
-
-  const move = (d) => {
-    const place = draws.places[d.to]
-    document.getElementById('placeTitle').innerHTML = place.desc
-    document.getElementById('placeProse').innerHTML = ''
-    if (place.prose) document.getElementById('placeProse').innerHTML = place.prose
-
-    placeExits(place)
-    placeProps(d.to, 'env')
-    placeProps('bod', 'bod')
-    placeProps('inv', 'inv')
-  }
-
-  const prop = (d) => {
-    console.log(`You took 🤜 ${d.code} ${draws.decor[d.code].desc} from ${d.from} to ${d.to} `)
-
-    if (d.from == 'inv') {
-      placeProps('inv', 'inv')
-      placeProps('bod', 'bod')
-    }
-
-    if (d.from != 'inv' && d.from != 'bod') {
-      placeProps(d.from, 'env')
-      placeProps('bod', 'bod')
-    }
-
-    if (d.from == 'bod') {
-      placeProps('bod', 'bod')
-      if (d.to != 'inv') {
-        placeProps(d.to, 'env')
-      } else {
-        placeProps('inv', 'inv')
-      }
-    }
-  }
-
-  const placeProps = (placeId, container) => {
-    const propIds = draws.tools.propsAtLoc(placeId, draws.decor)
-    if (document.getElementById(container)) document.getElementById(container).innerHTML = ''
-    let title = `🌐${placeId}`
-    if (container == 'inv') title = '🎒backpack'
-    if (container == 'bod') title = '🤲In Hand'
-    el(container, 'title').div(title)
-    propIds.map(p => {
-      let prop = draws.decor[p]
-      el(container, 'prop', prop.code).div()
-      el(prop.code, 'title').div(prop.code)
-      propsActions(prop, container)
-    })
-  }
-
-  const propsActions = (prop, container) => {
-    const box = prop.actions[container]
-    for (let i in box) {
-      el(prop.code, 'action').button(actionEmos(i), box[i])
-    }
-  }
 
   const actionEmos = (actionName) => {
     if (actionName == 'pickUp') return '<span title="Pick me up" >🤏</span>'
@@ -98,23 +12,132 @@ const royal = (draws) => {
     return actionName
   }
 
+  const build = () => {
+    el('banner', 'display', 'playerDetails').div('Player: ')
+    el(undefined, 'display', 'characterDetails').div('Character: ')
 
+    el(undefined, 'display', 'containers').div()
+    el(undefined, 'display', 'testArea').div()
 
+    el('containers', 'place container', 'place').div()
+    el('containers', 'display respond', 'respond').div()
+    el('containers', 'things container', 'things').div()
 
+    el('place', 'place title placeTitle', 'placeTitle').div()
+    el('place', 'place desc placeDesc', 'placeDesc').div()
+    el('place', 'place prose', 'placeProse').div()
+    el('place', 'things place placeProps', 'env').div()
+    el('place', 'place exits', 'exits').div()
+
+    el('things', 'things body', 'bod').div()
+    el('things', 'things inventory', 'inv').div()
+
+    //el('things', 'things inventory', 'inv').div()
+
+    //respond = document.getElementById('respond')
+    place()
+  }
+
+  const place = (d) => {
+    const placeId = draws.character.location
+    const place = draws.places[placeId]
+    const propIds = draws.tools.propsAtLoc(placeId, draws.decor)
+
+    document.getElementById('placeTitle').innerHTML = ctt(placeId)
+    document.getElementById('placeDesc').innerHTML = ''
+    if (place.desc) document.getElementById('placeDesc').innerHTML = place.desc
+
+    document.getElementById('placeProse').innerHTML = ''
+    if (place.prose) document.getElementById('placeProse').innerHTML = place.prose
+
+    // console.log(placeId)
+    // console.log(propIds)
+    // console.log(draws)
+    if (d) document.getElementById('respond').innerHTML = `Moved from ${ctt(d.from)} to ${ctt(d.to)}`
+
+    //placeProps()
+    //bodProps()
+    //invProps()
+
+    placeExits(place)
+    propMoved()
+    // doProps(draws.character.location)
+    // doProps('bod')
+    // doProps('inv')
+  }
+
+  const propMoved = () => {
+    // placeProps()
+    // bodProps()
+    // invProps()
+    doProps(draws.character.location)
+    doProps('bod')
+    doProps('inv')
+  }
+
+  const doProps = (loc) => {
+    const propIds = draws.tools.propsAtLoc(loc, draws.decor)
+    if (loc != 'bod' && loc != 'inv') loc = 'env'
+    document.getElementById(loc).innerHTML = ''
+    propIds.map(p => {
+      let prop = draws.decor[p]
+      el(loc, 'prop', `${loc}-${prop.code}`).div()
+      el(`${loc}-${prop.code}`, 'title').div(ctt(prop.code))
+      propsActions(prop, loc)
+    })
+  }
+
+  // const placeProps = () => {
+  //   const propIds = draws.tools.propsAtLoc(draws.character.location, draws.decor)
+  //   document.getElementById('env').innerHTML = ''
+  //   propIds.map(p => {
+  //     let prop = draws.decor[p]
+  //     el('env', 'prop', `env-${prop.code}`).div()
+  //     el(`env-${prop.code}`, 'title').div(ctt(prop.code))
+  //     propsActions(prop, 'env')
+  //   })
+  // }
+  //
+  // const bodProps = () => {
+  //   const propIds = draws.tools.propsAtLoc('bod', draws.decor)
+  //   document.getElementById('bod').innerHTML = ''
+  //   propIds.map(p => {
+  //     let prop = draws.decor[p]
+  //     el('bod', 'prop', `bod-${prop.code}`).div()
+  //     el(`bod-${prop.code}`, 'title').div(ctt(prop.code))
+  //     propsActions(prop, 'bod')
+  //   })
+  // }
+  //
+  // const invProps = () => {
+  //   const propIds = draws.tools.propsAtLoc('inv', draws.decor)
+  //   document.getElementById('inv').innerHTML = ''
+  //   propIds.map(p => {
+  //     let prop = draws.decor[p]
+  //     el('inv', 'prop', `inv-${prop.code}`).div()
+  //     el(`inv-${prop.code}`, 'title').div(ctt(prop.code))
+  //     propsActions(prop, 'inv')
+  //   })
+  // }
+
+  const propsActions = (prop, container) => {
+    const box = prop.actions[container]
+    for (let i in box) {
+      el(`${container}-${prop.code}`, 'action').button(actionEmos(i), box[i])
+    }
+    if (prop.usedIn.length > 0) {
+      el(`${container}-${prop.code}`, 'action').button('combo', e => console.log('combo'))
+    }
+
+  }
 
   const placeExits = (place) => {
     document.getElementById('exits').innerHTML = ''
     el('exits', 'title').div('Exits')
     place.exits.map(e => {
       el('exits', 'exit', e.to).div()
-      el(e.to, 'exit').button(e.desc?e.desc:e.to, () => draws.tools.move(e.to))
-
+      el(e.to, 'exit').button(ctt(e.to), () => draws.tools.move(e.to))
     })
-  }
-
-  const look = (d) => {
-    console.log(`👁‍🗨 ${d.code}`, d)
-    respond.innerHTML = draws.decor[d.code].desc
   }
 
   const update = (d) => {
@@ -124,220 +147,29 @@ const royal = (draws) => {
 
     }
   }
-  const combine = (d) => { console.log(d) }
-
-  const remark = (d) => {
-    document.getElementById('respond').innerHTML = d.msg
-    console.log(`%c${d.msg}`, 'color:green;font-weight:bold;')
-}
-
-  return {
-    build,
-    move,
-    look,
-    prop,
-    update,
-    combine,
-    remark
-  }
-}
 
 
-// ---------==================================================================------------------------
+  const look = (d) => {
+    const prop = draws.decor[d.code]
+    let lookText = '<details>'
+    lookText += '<summary>' + prop.desc + '</summary>'
 
-
-
-const stageRoyal1 = (rigging) => {
-
-  const build = () => {
-    el('banner', 'display', 'playerDetails').div('Player: ')
-    el(undefined, 'display', 'characterDetails').div('Character: ')
-
-    el(undefined, 'display', 'containers').div()
-    el(undefined, 'display', 'respond').div()
-    //el(undefined, 'display', 'prose').div()
-    el(undefined, 'display', 'testArea').div()
-
-    el('containers', 'boxes', 'boxes').div()
-    el('containers', 'place', 'place').div()
-    el('boxes', 'inventory', 'inv').div()
-    el('boxes', 'body', 'bod').div()
-
-  }
-
-  const inputPlayerName = (eventAction) => {
-    el('playerDetails', undefined, 'playerForm').div('Player')
-    el('playerForm', undefined, 'playerName').input()
-    el('playerForm', 'buttonClass', 'playerNameOKButton' ).button( 'OK', eventAction)
-  }
-
-  const updatePlayer = () => {
-    document.getElementById('playerDetails').innerHTML = `Player: ${rigging().player.name}`
-  }
-
-  const clearPlayerInput = () => { el().removeElement('playerForm') }
-
-  const inputCharacterName = (eventAction) => {
-    el('characterDetails', undefined, 'charForm').div('character')
-    el('charForm', undefined, 'charName').input()
-    el('charForm', 'buttonClass', 'charNameOKButton' ).button( 'OK', eventAction)
-  }
-
-  const clearCharacterInput = () => {el().removeElement('charForm') }
-
-  const updateCharacter = () => {
-    document.getElementById('characterDetails').innerHTML = ''
-    el('characterDetails', undefined, 'name').div(`character: ${rigging().character.name}`)
-    el('characterDetails', undefined, 'health').div(`health: ${rigging().character.health}`)
-  }
-
-  const characterMoved = () => {
-    //console.log('cm', rigging());
-    let placeId = rigging().character.location
-    let place = rigging().places[placeId]
-    document.getElementById('place').innerHTML = ''
-    el('place', 'placeTitle').div(place.title)
-    el('place', 'desc', 'placeDesc').div(place.desc)
-    if (place.prose) {
-      pd = el('place', 'prose', 'prose').div().innerHTML = place.prose
-    }
-    //if (!place.prose) console.log('no prose');
-    el('place', 'environ', 'env').div()
-    el('place', 'exits', 'exits').div()
-    el('exits', 'title').div('Exits')
-    doExits(place.exits, rigging().exitAction)
-    movedPlace()
-  }
-
-  const doExits = (exits, exitAction) => {
-    for (let e of exits) {
-      el('exits', 'exit', e.to).div()
-      if (!e.actions) {
-        el(e.to, 'exit').button(camelToDesc(e.desc), () => {exitAction(e.to)})
-      } else {
-        doExitActions(e)
-      }
-    }
-  }
-
-  const doExitActions = (exit) => {
-    el(exit.to, 'exitActions').div(camelToDesc(exit.desc))
-    for (let i in exit.actions) {
-      //exit.actions[i].desc
-      el(exit.to, 'exitAction', `exitAction-${i}`).button(camelToTitle(i), exit.actions[i])
-    }
-
-  }
-
-  const movedPlace = () => {
-    let placeId = rigging().character.location
-    let place = rigging().places[placeId]
-    doBox('env', place.title, place.props)
-  }
-
-  const updatePlaceBox = () => {
-    let placeId = rigging().character.location
-    let place = rigging().places[placeId]
-    document.getElementById('env').innerHTML = ''
-    //el('place', 'env', 'env').div()
-    doBox('env', place.title, place.props)
-  }
-
-  const updateBoxes = () => {
-    let boxes = rigging().boxes
-    document.getElementById('boxes').innerHTML = ''
-    for (let boxId in boxes) { // each box (inv, bod, hand, head etc)
-      el('boxes', boxId, boxId).div()
-      let title = boxId
-      if (title === 'inv') title = 'Backpack'
-      if (title === 'bod') title = 'In Hand'
-      doBox(boxId, title, boxes[boxId])
-    }
-  }
-
-  const doBox = (boxId, title, propsInBox) => {
-    if (boxId !== 'env') { el(boxId, 'title').div(title) }
-    doProps(boxId, propsInBox)
-  }
-
-  const doProps = (boxId, propsInBox) => {
-    for (let prop of propsInBox) {
-      //document.getElementById(prop.id).innerHTML = ''
-      el(boxId, undefined, prop.id).div()
-      el(prop.id, 'propTitle').div(prop.title)
-      doCombos(prop, boxId)
-      doActions(prop, boxId)
-    }
-  }
-
-  const doActions = (prop, boxId) => {
-    let acts = prop.actions[boxId]
-    for (let i in acts) {
-      const title = camelToTitle(i)
-      const emo = emojify(title)
-      const legend = emo? `<span title="${title}" >${emo}</span>`: title;
-      el(prop.id, 'action', `${i}-${prop.id}`).button(legend, acts[i])
-    }
-  }
-
-  const doCombos = (prop, boxId) => {
     if (prop.usedIn.length > 0) {
-      prop.usedIn.map( (i) => {
-        el(prop.id, 'combine', `combine-${prop.id}`).button(`used in making <span class="clickable">${camelToTitle(i)}</span>`, () => {rigging().comboAction(i)})
-      })
+      lookText += '<div>Used in: ' + prop.usedIn.join(',') + '<div>'
     }
+    document.getElementById('respond').innerHTML = lookText + '</details>'
+    console.log(`👁‍🗨 ${d.code}`, prop)
+    //testArea.innerHTML = 'barry'
   }
 
-  const respond = (msg) => { document.getElementById('respond').innerHTML = msg }
+  const respond = () => {}
 
-  const propMoved = () => {
-    updateBoxes()
-    updatePlaceBox()
-    //movedPlace()
-  }
 
   return {
     build,
-    inputPlayerName,
-    clearPlayerInput,
-    updatePlayer,
-    inputCharacterName,
-    clearCharacterInput,
-    updateCharacter,
-    characterMoved,
-    propMoved,
-    updateBoxes,
-    respond
+    update,
+    look,
+    move: place,
+    prop: propMoved
   }
 }
-
-
-// const envPropActions = (prop) => {
-//   for (let a in prop.actions.env) {
-//     //console.log(typeof(prop.actions.env[a]), a)
-//     console.log(a, prop.actions.env[a])
-//     //let f = typeof(prop.actions.env[a]) === 'function'?prop.actions.env[a]:() => dispatch({ action: a, id: prop.code })
-//     //console.log(f)
-//     // if (typeof(prop.actions.env[a]) === 'function') {
-//     //   el(prop.code, 'prop').button(a, prop.actions.env[a])
-//     // } else {
-//       //el(prop.code, 'prop').button(a, () => dispatch({ action: a, id: prop.code }))
-//       el(prop.code, 'action').button(a, prop.actions.env[a])
-//     // }
-//
-//   }
-// }
-
-
-// const placeProps = (place, d) => {
-//   const propIds = draws.tools.propsAtLoc(d.to, draws.decor)
-//   propIds.map(p => {
-//     let prop = draws.decor[p]
-//     // el('place', 'prop', 'props').div()
-//     // el('props', 'title').div('Exits')
-//     el('place', 'prop', prop.code).div(prop.code)
-//     propsActions(prop)
-//
-//   })
-//   //console.log(propIds)
-// }
