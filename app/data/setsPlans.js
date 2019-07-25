@@ -137,6 +137,11 @@ const setsPlans = {
   bannanaFactoryFrontEntrance: {
     desc: 'And you thought bannans grew on trees.',
     exits: [{to: 'testSite'}],
+  },
+
+  alienSpaceShip: {
+    desc: 'A spaceship, it belongs to some aliens from outer space.',
+    exits: [{to: 'testSite'}],
   }
 
 
