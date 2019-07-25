@@ -19,12 +19,23 @@ plans.codesSets = () => plans.codes(plans.sets)
 
 plans.propsAtLoc = (loc, decor) => {
   let codes = Object.keys(decor)
-  return codes.filter(c => {
-    if (decor[c].locs) return decor[c].locs.find(l => l == loc)
+  let ids = []
+  codes.map(c => {
+    if (decor[c].locs) {
+      decor[c].locs.map(l => {
+        if ( l == loc) ids.push(c)
+      })
+    }
   })
+  return ids
 }
 
-
+// plans.propsAtLoc = (loc, decor) => {
+//   let codes = Object.keys(decor)
+//   return codes.filter(c => {
+//     if (decor[c].locs) return decor[c].locs.find(l => l == loc)
+//   })
+// }
 
 plans.initaliseProps = (defaultActions, action) => {
   for (let id in plans.props) {
