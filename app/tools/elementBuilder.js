@@ -42,7 +42,7 @@ const el = (parent = 'app', className = '', id = '' ) => {
   }
 
   const button = (buttonText = 'OK', buttonOnClick = defaultButtonClick) => {
-    let e = document.createElement('div')
+    let e = document.createElement('button')
     e.innerHTML = buttonText
     e.addEventListener("click", buttonOnClick)
     append(e)
