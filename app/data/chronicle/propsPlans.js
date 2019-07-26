@@ -24,8 +24,9 @@ default: {
         destroy: () => {},
       },
       bod: {
-        hit: () => {console.log('you hit');},
-        poke: () => {console.log(`you poke`);},
+        hit: () => { custom({ action: 'msg', id: 'stick', msg: 'you hit the stick' }) },
+        poke: () => { console.log(`you poke`) },
+        swish: () => { custom({ action: () => { msg: 'You swish the stick' }, id: 'stick' })  },
       },
     },
     properties: {

@@ -2,7 +2,7 @@ console.log('%c--> loadGameSave', 'color:green')
 
 const saveGame = (draws) => {
   const saveName = draws.character.name
-  console.log('saves', draws.saves)
+  //console.log('saves', draws.saves)
   localStorage.setItem(saveName, JSON.stringify(draws.saves))
 }
 

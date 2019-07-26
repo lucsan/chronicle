@@ -5,7 +5,7 @@ let Cabinet = function() {
     player: { name: 'Playe Rone', character: 'Charac Ter' },
     character: {
       name: 'Charac Ter',
-      location: config.charStart,
+      location: versionConfig.charStart,
       moves: 0
     },
     props: {},

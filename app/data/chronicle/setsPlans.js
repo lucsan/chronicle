@@ -5,40 +5,6 @@ const setsPlans = {
     proseScript: 'begining',
     exits: [
       {to: 'clearing', desc: 'Adventure awaits (click here) ...'},
-      {
-        to: 'testSite',
-        actions: {
-          'enterTestSite': () => {setActions().enter('testSite')}
-        }
-      },
-    ]
-  },
-  testSite: {
-    desc: 'hazardous items test area',
-    exits: [
-      {to: 'clearing'},
-      {
-        to: 'helicopter',
-        actions: {
-          board: () => {setActions().enter('helicopter')},
-          ride: () => {setActions().ride('helicopter')},
-        },
-      },
-      {
-        to: 'testChest',
-        actions: {
-          unlock: () => {setActions().unlock('testChest')},
-          open: () => {setActions().enter('testChest')},
-        },
-      },
-      {to: 'begining'},
-    ],
-  },
-
-  testChest: {
-    desc: 'Set as chest (container)',
-    exits: [
-      {to: 'testSite', desc: 'close the chest'}
     ]
   },
 
@@ -54,16 +20,6 @@ const setsPlans = {
       },
       { to: 'treeHouse' },
       { to: 'teaHouse' },
-      {
-        desc: 'a small mysterious wooden door in a tree',
-        to: 'tree',
-        actions: {
-          open: () => {setActions().open('tree')},
-          unlock: () => {setActions().unlock('tree')},
-          lock: () => {setActions().lock('tree')},
-          knock: () => {setActions().knock('tree')},
-        },
-      },
       {to: 'lab', desc: 'the laboratory entrance'}
     ]
   },

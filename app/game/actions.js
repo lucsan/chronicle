@@ -34,7 +34,9 @@ const actions = () => {
   }
 
   const doCustomAction = (act, id, cabinet) => {
-    if (act == 'kick') return dispatch({ action: 'msg', code: id, msg: `You kicked 🦵 a ${id}` })
+    return dispatch({ action: 'custom', code: id, act: act })
+    //if (act == 'kick') return dispatch({ action: 'msg', code: id, msg: `You kicked 🦵 a ${id}` })
+    //return dispatch({ action: act, code: id, act: cabinet.draws.decor[id].actions })
   }
 
   const doMove = (to, cabinet) => {
@@ -47,7 +49,7 @@ const actions = () => {
     cabinet.use({ saves: { [name]: { decor: cabinet.draws.decor } } })
 
     cabinet.use({ saves: { [name]: { [to]: to } } })
-    console.log('msvs',cabinet.draws.saves)
+    //console.log('msvs',cabinet.draws.saves)
     saveGame(cabinet.draws)
     dispatch({ action: 'move', from: currentLocation, to: to, msg: 'char moved' })
   }
@@ -55,7 +57,7 @@ const actions = () => {
   const loadProse = (to, cabinet) => {
     const place = cabinet.draws.places[to]
     if (!place.proseScript || place.prose) return
-    scriptsLoader([`app/data/places/${place.proseScript}.js`], () => {
+    scriptsLoader([`app/data/${versionConfig.version}/places/${place.proseScript}.js`], () => {
       place.prose = Function(`return ${place.proseScript}_prose`)()
       dispatch({ action: 'update', type: 'prose', code: to, msg: 'prose found' })
     })
@@ -77,6 +79,7 @@ const actions = () => {
     })
     locs = locs.filter(l => l != undefined)
     locs.push(to)
+    //console.log(locs)
     cabinet.use({ decor: { [id]: { locs: locs } } })
     let name = cabinet.draws.character.name
     let decor = cabinet.draws.decor
@@ -91,7 +94,7 @@ const actions = () => {
     console.log(`you need ${proposedProp.combines.needs}`)
 
     let dontHave = proposedProp.combines.needs.filter(n => {
-      needed = cabinet.draws.decor[n]
+      let needed = cabinet.draws.decor[n]
       if (!needed.locs.find(l => l == 'bod' || l == 'inv')) return needed.code
     })
 

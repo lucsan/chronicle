@@ -6,7 +6,7 @@ const theater = (stage) => {
 
   document.addEventListener('chronicle_dispatch', (event) => {
     const d = event.detail
-    console.log('theater', d)
+    //console.log('theater', d)
 
     if (d.action == 'look') return stage.look(d)
     if (d.action == 'prop') return stage.prop(d)
@@ -18,6 +18,16 @@ const theater = (stage) => {
     // Custom actions
 
     console.log('custom command', d)
+    //if (d.action == 'msg') return stage.remark(d)
+
+    if (d.action == 'custom') {
+      //return stage[]
+      console.log('d.act', d.act)
+      //return d.act()
+      return stage[d.act()]
+    }
+
+
 
   })
 

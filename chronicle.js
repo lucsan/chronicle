@@ -1,16 +1,30 @@
 console.log('%cChronicle running ->>', 'color:red;font-weight:bold;')
 
+const loadCommonScripts = () => {
+  scriptsLoader(['app/config.js'], () => commonConfigLoaded())
 
-scriptsLoader(['app/config.js'], () => configLoaded())
-const configLoaded = () => {
-  scriptsLoader(config.autoload, () => scriptsLoaded() )
 }
 
-//scriptsLoader(['app/config.js'], () => document.dispatchEvent(new Event('configLoaded')))
-  //scriptsLoader(config.autoload, () => document.dispatchEvent(new Event('scriptsLoaded')) )
-// document.addEventListener('configLoaded', () => {
-//   scriptsLoader(config.autoload, () => document.dispatchEvent(new Event('scriptsLoaded')) )
-// })
+const commonConfigLoaded = () => {
+  scriptsLoader(commonConfig.autoload, () => loadVersionConfig() )
+}
+
+const loadVersionConfig = () => {
+  scriptsLoader(['app/data/chronicle/config.js'], () => loadVersionScripts())
+}
+
+const loadVersionScripts = () => {
+  scriptsLoader(versionConfig.autoload, () => scriptsLoaded())
+}
+
+loadCommonScripts()
+
+
+
+
+const setActions = (a) => {
+  console.log('setactions', a)
+}
 
 const scriptsLoaded = () => {
   let css = 'color:green;'
@@ -28,13 +42,27 @@ const scriptsLoaded = () => {
     }
   }
 
-  custom = customActions(marshall)
-
   localStorage.setItem('player', JSON.stringify({ name: 'Playe Rone', character: 'Charac Ter' }))
   loadGame(marshall.cabinet)
 
   const stage = theater(royal(marshall.cabinet.draws))
   stage.build()
+
+
+  let custom = () => {}
+
+  // scriptsLoader(['app/config.js'], () => configLoaded())
+  // const configLoaded = () => {
+  //   scriptsLoader(config.autoload, () => scriptsLoaded() )
+  // }
+
+  //scriptsLoader(['app/config.js'], () => document.dispatchEvent(new Event('configLoaded')))
+    //scriptsLoader(config.autoload, () => document.dispatchEvent(new Event('scriptsLoaded')) )
+  // document.addEventListener('configLoaded', () => {
+  //   scriptsLoader(config.autoload, () => document.dispatchEvent(new Event('scriptsLoaded')) )
+  // })
+
+  //console.log(marshall.cabinet.draws)
 
   //marshall.move(marshall.cabinet.draws.character.location)
 
@@ -45,7 +73,7 @@ const scriptsLoaded = () => {
 }
 
 
-let custom = () => {}
+
 
 // document.addEventListener('scriptsLoaded', () => {
 //   let css = 'color:green;'
