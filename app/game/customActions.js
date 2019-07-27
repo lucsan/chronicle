@@ -3,7 +3,7 @@ const customActions = (dispatch) => {
 
   const lock = (id, cabinet) => {
     const decor = cabinet.draws.decor
-    if (!keyCheck(id, decor)) return dispatch({ action: 'message', msg: 'You do not have the key' })
+    if (!keyCheck(id, decor)) return dispatch({ action: 'remark', msg: `You do not have ${decor[id].box.key}` })
     delete decor[id].actions.env.lock
     delete decor[id].actions.env.open
     decor[id].actions.env.unlock = () => custom({ action: 'unlock', id: 'chest' })
@@ -13,7 +13,7 @@ const customActions = (dispatch) => {
   const unlock = (id, cabinet) => {
     const decor = cabinet.draws.decor
     //console.log('custom actions unlocking')
-    if (!keyCheck(id, decor)) return dispatch({ action: 'message', msg: 'You do not have the key' })
+    if (!keyCheck(id, decor)) return dispatch({ action: 'remark', msg: `You need the ${decor[id].box.key} to open the ${id}` })
     // change unlock to lock, add open (close?)
 
     delete decor[id].actions.env.unlock

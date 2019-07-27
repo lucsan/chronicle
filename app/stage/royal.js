@@ -147,7 +147,10 @@ const royal = (draws) => {
     //testArea.innerHTML = 'barry'
   }
 
-  const respond = () => {}
+  const respond = (d) => {
+    console.log('respond', d.msg)
+    document.getElementById('respond').innerHTML = d.msg
+  }
 
   // const customUpdate = (d) => {
   //   place(d)
@@ -157,9 +160,10 @@ const royal = (draws) => {
   return {
     build,
     update,
-    customUpdate: place,
+    customUpdate: propMoved,
     look,
     move: place,
-    prop: propMoved
+    prop: propMoved,
+    remark: respond
   }
 }
