@@ -36,14 +36,16 @@ const plans = () => {
     return ids
   }
 
-  const initaliseProps = (defaultActions, action, draws) => {
+  const initaliseProps = (info) => {
+    // action, draws
+    //const info = {}
     for (let id in props) {
       let prop = props[id]
       if (prop.code == undefined) prop.code = id
       if (prop.desc == undefined) prop.desc = id
       if (prop.locs == undefined) prop.locs = []
       prop.usedIn = []
-      defaultActions(id, action, draws)
+      info.defaultActions(id, info.action, info.draws)
     }
     for (let id in props) {
       let prop = props[id]

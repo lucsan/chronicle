@@ -40,8 +40,6 @@ const actions = () => {
       } else {
         if (!prop.actions.env.open) prop.actions.env.open = () => { action('open', id) }
       }
-
-      //prop.actions.env.open = () => action()
     }
 
   }
@@ -83,13 +81,14 @@ const actions = () => {
     loadProse(to, cabinet)
     const currentLocation = cabinet.draws.character.location
     let moves = cabinet.draws.character.moves
-    let name = cabinet.draws.character.name
     cabinet.use({ character: { location: to, moves: ++moves }})
-    cabinet.use({ saves: { [name]: { character: cabinet.draws.character } } })
-    cabinet.use({ saves: { [name]: { decor: cabinet.draws.decor } } })
 
+    let name = cabinet.draws.character.name
+    // cabinet.use({ saves: { [name]: { character: cabinet.draws.character } } })
+    // cabinet.use({ saves: { [name]: { decor: cabinet.draws.decor } } })
     cabinet.use({ saves: { [name]: { [to]: to } } })
-    //console.log('msvs',cabinet.draws.saves)
+    updateSave(cabinet)
+
     saveGame(cabinet.draws)
     dispatch({ action: 'move', from: currentLocation, to: to, msg: 'char moved' })
   }
@@ -120,18 +119,35 @@ const actions = () => {
     })
     locs = locs.filter(l => l != undefined)
     locs.push(to)
-    //console.log(locs)
     cabinet.use({ decor: { [id]: { locs: locs } } })
-    let name = cabinet.draws.character.name
-    let decor = cabinet.draws.decor
-    cabinet.use({ saves: { [name]: { character: cabinet.draws.character } } })
-    cabinet.use({ saves: { [name]: { decor: cabinet.draws.decor } } } )
+
+    updateSave(cabinet)
     saveGame(cabinet.draws)
+    // from to probably not needed here
     dispatch({ action: 'prop', from: from, to: to, code: id })
   }
 
   const moveFromBox = (id, cabinet) => {
-    console.log('movefrombox', id)
+
+    const boxs = cabinet.draws.decor[id].boxs
+    if (!boxs.find(b => b == cabinet.draws.openBox)) return
+
+    let a = boxs.filter(b => {
+      return b != cabinet.draws.openBox
+    })
+    cabinet.draws.decor[id].boxs = a
+    cabinet.draws.decor[id].locs.push('bod')
+    console.log(a)
+
+    console.log('movefrombox', id, cabinet.draws.decor[id].boxs, cabinet.draws.openBox)
+    dispatch({ action: 'prop', box: cabinet.draws.openBox })
+
+  }
+
+  const updateSave = (cabinet) => {
+    const name = cabinet.draws.character.name
+    cabinet.use({ saves: { [name]: { character: cabinet.draws.character } } })
+    cabinet.use({ saves: { [name]: { decor: cabinet.draws.decor } } } )
   }
 
   const combineProps = (id, cabinet) => {

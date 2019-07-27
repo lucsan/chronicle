@@ -8,6 +8,7 @@ let Cabinet = function() {
       location: versionConfig.charStart,
       moves: 0
     },
+    openBox: '',
     props: {},
     decor: {},
     sets: {},

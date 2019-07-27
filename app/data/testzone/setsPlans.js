@@ -4,12 +4,12 @@ const setsPlans = {
     desc: 'A begining. Your character stands poised ready for a new adventure',
     proseScript: 'begining',
     exits: [
-      {to: 'clearing', desc: 'Adventure awaits (click here) ...'},
+      {
+        to: 'clearing',
+        desc: 'Adventure awaits (click here) ...',
+      },
       {
         to: 'testSite',
-        actions: {
-          'enterTestSite': () => {setActions().enter('testSite')}
-        }
       },
     ]
   },
@@ -69,6 +69,7 @@ const setsPlans = {
       },
       { to: 'treeHouse' },
       { to: 'teaHouse' },
+      { to: 'testSite' },
       {
         to: 'tree',
         desc: 'a small mysterious wooden door in a tree',

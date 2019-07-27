@@ -68,6 +68,7 @@ const royal = (draws) => {
     if (!d || !d.box) return
     console.log('doing boxes', d)
     let inBox = propsInBox(d.box)
+    console.log(inBox)
     document.getElementById('box').innerHTML = ''
     inBox.map(pid => {
       const prop = draws.decor[pid]

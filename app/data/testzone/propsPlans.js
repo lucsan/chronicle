@@ -92,8 +92,19 @@ default: {
     boxs: ['chest'],
   },
 
+  cheeseWax: {
+    pickUp: true,
+    desc: 'The wax wrapper from a small cheese wheel',
+    boxs: ['chest'],
+  },
+
   shinnyPennyOne: {
     desc: 'A shinny penny',
+    boxs: ['ninePennyBowl', 'chest', 'cardBox']
+  },
+
+  oldSoverign: {
+    desc: 'A dull old soverign piece',
     boxs: ['ninePennyBowl']
   },
 
