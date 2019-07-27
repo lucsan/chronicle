@@ -14,22 +14,27 @@ const theater = (stage) => {
     if (d.action == 'update') return stage.update(d)
     if (d.action == 'combine') return stage.combine(d)
     if (d.action == 'remark') return stage.remark(d)
+    if (d.action == 'customUpdate') return stage.customUpdate(d)
 
     // Custom actions
 
-    console.log('custom command', d)
-    //if (d.action == 'msg') return stage.remark(d)
-
-    if (d.action == 'custom') {
-      //return stage[]
-      console.log('d.act', d.act)
-      //return d.act()
-      return stage[d.act()]
-    }
+    // console.log('custom command', d)
+    // //if (d.action == 'msg') return stage.remark(d)
+    //
+    // if (d.action == 'custom') {
+    //   //return stage[]
+    //   console.log('d.act', d.act)
+    //   //return d.act()
+    //   return d.act()
+    // }
+    //
+    // const unlock = () => { console.log('unlocking') }
 
 
 
   })
+
+
 
   return {
     build

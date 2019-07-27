@@ -11,7 +11,7 @@ default: {
   },
   stick: {
     desc: '🌲 a nice stick',
-    locs: ['clearing', 'creepyWoods'],
+    locs: ['testSite', 'clearing', 'creepyWoods'],
     artist: 'lucsan',
     pickUp: true,
     actions: {
@@ -39,19 +39,62 @@ default: {
 
   chest: {
     desc: 'a locked chest, maybe it contains a rubish sword',
-    locs: ['testSite', 'clearing'],
+    locs: ['testSite'],
     artist: 'lucsan',
-    isBox: true,
+    box: {
+      locked: true,
+      key: 'chestKey',
+      //contains: ['rubishSword'],
+    },
+    // isBox: true,
+    // locked: true,
+    // key: 'chestKey',
+    // contains: ['rubishSword'],
+    // actions: {
+    //   env: {
+    //     unlock: () => { custom({ action: 'unlock', id: 'chest' }) }
+    //   }
+    // }
+  },
+
+  cardBox: {
+    desc: 'a cardboard box',
+    locs: ['testSite'],
+    artist: 'lucsan',
+    pickUp: true,
+    box: {},
     actions: {
-      env: {
-        unlock: () => {propActions().unlock('chest',['chestKey', 'badge'])}
-      }
+      // env: {
+      //   open: () => { custom({ action: 'open', id: 'cardBox' }) }
+      // },
+      bod: {
+        open: () => { custom({ action: 'open', id: 'cardBox' }) },
+        crush: () => {custom({ action: 'crush', id: 'cardBox' })},
+      },
     }
   },
 
+  ninePennyBowl: {
+    desc: 'A bowl which should have nine shinny new pennies in it. but dosent.',
+    locs: ['testSite'],
+    box: {
+      open: true,
+      //contains: ['shinnyPennyOne'],
+    },
+    // isBox: true,
+    // open: true,
+  },
+
   rubishSword: {
+    pickUp: true,
     desc: 'Its a sword, well almost, still... its trying its best',
-    locs: ['testSite']
+    locs: ['testSite'],
+    boxs: ['chest'],
+  },
+
+  shinnyPennyOne: {
+    desc: 'A shinny penny',
+    boxs: ['ninePennyBowl']
   },
 
   chestKey: {
@@ -165,7 +208,7 @@ default: {
 
   mingVase: {
     desc: 'a ming dynsaty delicate china vase, it dispences unlimited sticks',
-    locs: ['testSite', 'creepyWoods'],
+    locs: [],
     actions: {
       env: {
         pickUp: () => custom({ action: 'create', id: 'stick' })
@@ -175,15 +218,15 @@ default: {
 
   washingSoda: {
     desc: 'A tin of sodium carbonate.',
-    locs: ['testSite', 'lab'],
+    locs: ['lab'],
   },
   citricAcid: {
     desc: 'a bag of citric acid. It tastes kinda lemony',
-    locs: ['testSite', 'lab'],
+    locs: ['lab'],
   },
   testTube: {
     desc: 'a test tube of dubious cleanliness.',
-    locs: ['testSite', 'lab'],
+    locs: ['lab'],
   },
   chiborg: {
     desc: 'a chicken with a mechanical heart.',
@@ -195,11 +238,11 @@ default: {
   },
   vexedSheep: {
     desc: 'a slightly vexed sheep with fluffy white fleece.',
-    locs: ['testSite', 'funkyHills']
+    locs: ['funkyHills']
   },
   articulatedGoat: {
     desc: 'a goat, articulated at the knees.',
-    locs: ['testSite']
+    locs: []
   },
   oldMonk: {
     desc: 'a calm old monk called Ren-i quietly pushing his broom.',

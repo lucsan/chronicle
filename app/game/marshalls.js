@@ -5,9 +5,7 @@ const marshalls = (defaultProps, defaultSets) => {
 
   const move = (to) => acts.doMove(to, cabinet)
   const action = (act, id) => acts.doAction(act, id, cabinet)
-  // const custom = (act, id, special) => {
-  //   acts.doCustom(act, id, special, cabinet)
-  // }
+
   cabinet.use({ props: defaultProps })
   cabinet.use({ sets: defaultSets })
   cabinet.use({ places: defaultSets })
@@ -15,8 +13,9 @@ const marshalls = (defaultProps, defaultSets) => {
   planz.loadProps(cabinet.draws.props)
   planz.loadSets(cabinet.draws.sets)
 
-  cabinet.use({ decor: planz.initaliseProps(acts.defaultActions, action) })
+  cabinet.use({ decor: planz.initaliseProps(acts.defaultActions, action, cabinet.draws) })
   cabinet.use({ tools: { propsAtLoc: planz.propsAtLoc } })
+  cabinet.use({ tools: { propsInBox: planz.propsInBox } })
 
   cabinet.use({ tools: { move: move } })
   cabinet.use({ tools: { saveGame: saveGame } } )
@@ -27,7 +26,6 @@ const marshalls = (defaultProps, defaultSets) => {
   return {
     cabinet,
     move,
-    action,
-    //custom
+    action
   }
 }

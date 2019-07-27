@@ -1,6 +1,7 @@
 const royal = (draws) => {
 
   const propsAtLoc = (loc) => { return draws.tools.propsAtLoc(loc, draws.decor) }
+  const propsInBox = (box) => { return draws.tools.propsInBox(box, draws.decor) }
 
   const actionEmos = (actionName) => {
     if (actionName == 'pickUp') return '<span title="Pick me up" >🤏</span>'
@@ -19,7 +20,6 @@ const royal = (draws) => {
     el(undefined, 'display', 'characterDetails').div('Character: ')
     el(undefined, 'display', 'restart').button('Restart', () => { localStorage.clear() } )
 
-
     el(undefined, 'display', 'containers').div()
     el(undefined, 'display', 'testArea').div()
 
@@ -33,12 +33,10 @@ const royal = (draws) => {
     el('place', 'things place placeProps', 'env').div()
     el('place', 'place exits', 'exits').div()
 
+    el('things', 'things box', 'box').div()
     el('things', 'things body', 'bod').div()
     el('things', 'things inventory', 'inv').div()
 
-    //el('things', 'things inventory', 'inv').div()
-
-    //respond = document.getElementById('respond')
     place()
   }
 
@@ -53,21 +51,35 @@ const royal = (draws) => {
     document.getElementById('placeProse').innerHTML = ''
     if (place.prose) document.getElementById('placeProse').innerHTML = place.prose
 
-    if (d) document.getElementById('respond').innerHTML = `Moved from ${ctt(d.from)} to ${ctt(d.to)}`
+    if (d && d.from != undefined) document.getElementById('respond').innerHTML = `Moved from ${ctt(d.from)} to ${ctt(d.to)}`
 
     placeExits(place)
-    propMoved()
+    propMoved(d)
   }
 
-  const propMoved = () => {
+  const propMoved = (d) => {
     doProps(draws.character.location)
     doProps('bod')
     doProps('inv')
+    doBoxes(d)
+  }
+
+  const doBoxes = (d) => {
+    if (!d || !d.box) return
+    console.log('doing boxes', d)
+    let inBox = propsInBox(d.box)
+    document.getElementById('box').innerHTML = ''
+    inBox.map(pid => {
+      const prop = draws.decor[pid]
+      el('box', 'box prop', `box-${prop.code}`).div()
+      el( `box-${prop.code}`, 'box title').div(prop.code)
+      propsActions(prop, 'box')
+    })
   }
 
   const doProps = (loc) => {
     const propIds = propsAtLoc(loc)
-    if (loc != 'bod' && loc != 'inv') loc = 'env'
+    if (loc != 'bod' && loc != 'inv' && loc != 'box') loc = 'env'
     document.getElementById(loc).innerHTML = ''
     propIds.map(p => {
       let prop = draws.decor[p]
@@ -109,8 +121,6 @@ const royal = (draws) => {
     el(e.to, 'exit').button(ctt(e.to), () => draws.tools.move(e.to))
   }
 
-
-
   const update = (d) => {
     if (d.type == 'prose') {
       document.getElementById('placeProse').innerHTML = draws.places[d.code].prose
@@ -128,6 +138,10 @@ const royal = (draws) => {
     if (prop.usedIn.length > 0) {
       lookText += '<div>Used in: ' + prop.usedIn.join(',') + '<div>'
     }
+    if (prop.isBox) {
+      let txt = prop.contains.length < 1? 'Probably nothing': 'looks interesting'
+      lookText += '<div>Contains: ' + txt + '<div>'
+    }
     document.getElementById('respond').innerHTML = lookText + '</details>'
     console.log(`👁‍🗨 ${d.code}`, prop)
     //testArea.innerHTML = 'barry'
@@ -135,10 +149,15 @@ const royal = (draws) => {
 
   const respond = () => {}
 
+  // const customUpdate = (d) => {
+  //   place(d)
+  // }
+
 
   return {
     build,
     update,
+    customUpdate: place,
     look,
     move: place,
     prop: propMoved

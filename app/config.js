@@ -9,7 +9,7 @@ const commonConfig = {
     'app/tools/loadGameSave.js',
     'app/tools/tools.js',
 
-    'app/constructors/container.js',
+    //'app/constructors/container.js',
     'app/constructors/plans.js',
     'app/stage/theater.js',
     //'app/stage/headless.js',
@@ -17,6 +17,7 @@ const commonConfig = {
 
     'app/game/cabinet.js',
     'app/game/actions.js',
+    'app/game/customActions.js',
     'app/game/marshalls.js',
   ],
 

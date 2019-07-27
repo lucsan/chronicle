@@ -2,11 +2,10 @@ console.log('%c--> Actions', 'color: green;')
 
 const actions = () => {
 
-  const defaultActions = (id, action) => {
-    return {
+  const defaultActions = (id, action, draws) => {
+    let defaults = {
       env: {
-        pickUp: () => action('env->bod', id),
-        look: () => action('look', id)
+        look: () => action('look', id),
       },
       bod: {
         examine: () => action('look', id),
@@ -16,8 +15,39 @@ const actions = () => {
       inv: {
         grab: () => action('inv->bod', id),
         inspect: () => action('look', id)
+      },
+      box: {
+        take: () => action('box->bod', id),
+        view: () => action('look', id)
       }
     }
+
+    let prop = draws.props[id]
+
+    if (!prop.actions) prop.actions = {}
+
+    for (let box in defaults) {
+      if (!prop.actions[box]) prop.actions[box] = {}
+      for (act in defaults[box]) {
+        if (!prop.actions[box][act]) prop.actions[box][act] = defaults[box][act]
+      }
+    }
+
+    if (prop.pickUp) prop.actions.env.pickUp = () => action('env->bod', id)
+    if (prop.box) {
+      if (prop.box.key) {
+        prop.actions.env.unlock = () => { action('unlock', id) }
+      } else {
+        if (!prop.actions.env.open) prop.actions.env.open = () => { action('open', id) }
+      }
+
+      //prop.actions.env.open = () => action()
+    }
+
+  }
+
+  const doBoxAction = (box, act, id, cabinet) => {
+    console.log('box action', box, act, id)
   }
 
   const doAction = (act, id, cabinet) => {
@@ -26,6 +56,7 @@ const actions = () => {
     if (act == 'bod->env') return changePropLocation('bod', 'env', id, cabinet)
     if (act == 'bod->inv') return changePropLocation('bod', 'inv', id, cabinet)
     if (act == 'inv->bod') return changePropLocation('inv', 'bod', id, cabinet)
+    if (act == 'box->bod') return changePropLocation('box', 'bod', id, cabinet)
     if (act == 'look') return dispatch({ action: 'look', code: id })
     if (act == 'combine') return combineProps(id, cabinet)
     if (act == 'remark') return dispatch({ action: 'remark', msg: id })
@@ -34,7 +65,16 @@ const actions = () => {
   }
 
   const doCustomAction = (act, id, cabinet) => {
-    return dispatch({ action: 'custom', code: id, act: act })
+
+    console.log('action', act, id, cabinet)
+
+    if (act == 'lock') return customActions(dispatch).lock(id, cabinet)
+    if (act == 'unlock') return customActions(dispatch).unlock(id, cabinet)
+    if (act == 'open') return customActions(dispatch).open(id, cabinet)
+
+    console.log('Action not found ', act, id)
+
+    //return dispatch({ action: 'custom', code: id, act: act })
     //if (act == 'kick') return dispatch({ action: 'msg', code: id, msg: `You kicked 🦵 a ${id}` })
     //return dispatch({ action: act, code: id, act: cabinet.draws.decor[id].actions })
   }
@@ -64,6 +104,7 @@ const actions = () => {
   }
 
   const changePropLocation = (from, to, id, cabinet) => {
+    if (from == 'box') return moveFromBox(id, cabinet)
     let loc = cabinet.draws.character.location
 
     if (from == 'env') from = loc
@@ -83,9 +124,14 @@ const actions = () => {
     cabinet.use({ decor: { [id]: { locs: locs } } })
     let name = cabinet.draws.character.name
     let decor = cabinet.draws.decor
+    cabinet.use({ saves: { [name]: { character: cabinet.draws.character } } })
     cabinet.use({ saves: { [name]: { decor: cabinet.draws.decor } } } )
     saveGame(cabinet.draws)
     dispatch({ action: 'prop', from: from, to: to, code: id })
+  }
+
+  const moveFromBox = (id, cabinet) => {
+    console.log('movefrombox', id)
   }
 
   const combineProps = (id, cabinet) => {

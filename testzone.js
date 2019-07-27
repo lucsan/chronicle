@@ -41,6 +41,8 @@ const scriptsLoaded = () => {
     }
   }
 
+  window.custom = customActions(marshall)
+
   localStorage.setItem('player', JSON.stringify({ name: 'Playe Rone', character: 'Charac Ter' }))
   console.log(marshall.cabinet)
   marshall.cabinet.draws.character.location = 'testSite'
@@ -53,4 +55,4 @@ const scriptsLoaded = () => {
 }
 
 
-let custom = () => {}
+//let custom = scriptsLoaded.customActions

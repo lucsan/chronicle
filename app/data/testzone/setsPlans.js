@@ -31,7 +31,22 @@ const setsPlans = {
           { open: () => setActions().enter('testChest') },
         ],
       },
-      {to: 'begining'},
+      {to: 'begining' },
+      {to: 'secretPassage' },
+    ],
+  },
+
+  secretPassage: {
+    hidden: true,
+    desc: 'a secret passage, not to be revieled till its discovered',
+    exits: [
+      {
+        to: 'clearing',
+        actions: [
+          { reveal: () => setActions().unlock('secretPassage') }
+        ],
+      },
+      { to: 'testsite' },
     ],
   },
 
