@@ -15,6 +15,7 @@ const theater = (stage) => {
     if (d.action == 'combine') return stage.combine(d)
     if (d.action == 'remark') return stage.remark(d)
     if (d.action == 'customUpdate') return stage.customUpdate(d)
+    if (d.action == 'doorsUpdate') return stage.doorsUpdate(d)
 
     // Custom actions
 

@@ -33,14 +33,15 @@ const scriptsLoaded = () => {
   console.info('%cMarshalling assets', css+css1)
   const marshall = marshalls(propsPlans, setsPlans)
 
-  // scripted actions
+//  scripted actions
   const customActions = (marshall, act) => {
     return (act) => {
-    console.log('chra',act)
+    //console.log('chra',act)
       marshall.action(act.action, act.id)
     }
   }
 
+  // should this be userAction?
   window.custom = customActions(marshall)
 
   localStorage.setItem('player', JSON.stringify({ name: 'Playe Rone', character: 'Charac Ter' }))

@@ -141,7 +141,7 @@ default: {
     pickUp: true,
     actions: {
       bod: {
-        rub: () => { propActions().msg('you give it a little rub and its a tiny bit more shinny') },
+        rub: () => {  custom({ action: 'remark', id: '👋 you give it a little rub and its a tiny bit more shinny' })  },
       }
     },
   },

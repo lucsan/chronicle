@@ -16,29 +16,39 @@ const setsPlans = {
   testSite: {
     desc: 'hazardous items test area',
     exits: [
-      {to: 'clearing'},
+      { to: 'clearing' },
       {
         to: 'helicopter',
-        actions: [
-          { board: () => setActions().enter('helicopter') },
-          { ride: () => setActions().ride('helicopter') },
-        ],
+        // actions: [
+        //   { board: () => setActions().enter('helicopter') },
+        //   { ride: () => setActions().ride('helicopter') },
+        // ],
       },
-      {
-        to: 'testChest',
-        actions: [
-          { unlock: () => setActions().unlock('testChest') },
-          { open: () => setActions().enter('testChest') },
-        ],
-      },
+      // {
+      //   to: 'testChest',
+      //   // actions: [
+      //   //   { unlock: () => setActions().unlock('testChest') },
+      //   //   { open: () => setActions().enter('testChest') },
+      //   // ],
+      // },
       {to: 'begining' },
       {to: 'secretPassage' },
+      {to: 'puzzleStation' },
     ],
   },
 
+  helicopter: {
+    desc: 'a sleek and shinny helecopter',
+    exits: [{ to: 'testSite' }],
+    doors: [
+      { name: 'board', locked: true, key: 'helipass' }
+    ],
+  },
+
+
   secretPassage: {
     hidden: true,
-    desc: 'a secret passage, not to be revieled till its discovered',
+    desc: 'a secret passage, not to be revealed till its discovered',
     exits: [
       {
         to: 'clearing',
@@ -138,11 +148,6 @@ const setsPlans = {
   teaHouse: {
     desc: 'a tea house, well, more a hut than house',
     exits: [{to: 'clearing'}],
-  },
-
-  helicopter: {
-    desc: 'a sleek and shinny helecopter',
-    exits: [{to: 'testSite'}],
   },
 
   puzzleStation: {

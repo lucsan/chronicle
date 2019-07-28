@@ -42,15 +42,38 @@ const customActions = (dispatch) => {
     dispatch({ action: 'customUpdate', box: boxId })
   }
 
-  const putIn = () => {
-    // maybe not putIn, maybe use open?
 
-    // tells the system which box to put stuff in
 
-    // add put in box action to items
+  const unlockDoor = (info, cabinet) => {
+    //let doors = cabinet.draws.places[info.to].doors.find(d => d.name == info.name)
+    let doors = cabinet.draws.places[info.to].doors
+
+
+    let i = 0
+    for (i = 0; i < doors.length; i++) {
+      if (doors[i].name == info.name) break;
+    }
+    let di = doors.indexOf(info.name)
+    let key = cabinet.draws.decor[info.key]
+    if (!key.locs.find(l => l == 'bod')) return
+
+    //console.log('aaaaaaa',doors[0])
+
+    doors[i].locked = false
+
+
+    cabinet.use({ places: { [info.to]: { doors: doors } } })
+
+  //  console.log(cabinet.draws.places[info.to])
+
+    dispatch({ action: 'doorsUpdate', info: { place: info.to, door: info.name } })
+
+    //console.log('unlockdoor', info, 'key', key, 'doors', cabinet.draws.places[info.to].doors)
+
+    //let place = cabinet.draws.places
+
+
   }
-
-
 
 
   // This is a custom action rather than a container action.
@@ -58,9 +81,12 @@ const customActions = (dispatch) => {
     // The object is crushed (modify to crushedObject ?)
   }
 
+
+
   return {
     lock,
     unlock,
     open,
+    unlockDoor,
   }
 }

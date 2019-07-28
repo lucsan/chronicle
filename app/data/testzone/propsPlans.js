@@ -81,8 +81,29 @@ default: {
       open: true,
       //contains: ['shinnyPennyOne'],
     },
-    // isBox: true,
-    // open: true,
+    // If has nine pennies in it then condition met
+    // what happens?
+
+  },
+
+  helipass: {
+    locs: ['bod'],
+  },
+
+  gnome: {
+    desc: "a nice gnome",
+    locs: ['clearing'],
+    actions: {
+      env: {
+        speak: () => { custom({ action: 'lines', id: 'random' }) },
+        tickle: () => { custom({ action: 'remark', id: 'ha ha ha, he he he, I\'m a little gnome and you can\'t catch me'}) },
+      },
+    },
+    lines: [
+      { id: '1', line: 'line one' },
+      { id: '2', line: 'line two' },
+      { id: '3', line: 'line three' },
+    ],
   },
 
   rubishSword: {
@@ -128,17 +149,6 @@ default: {
       },
       inv: {
         ask: () => { custom({ action: 'remark', id: 'Click on ' }) },
-      },
-    },
-  },
-
-  gnome: {
-    desc: "a nice gnome",
-    locs: ['clearing'],
-    actions: {
-      env: {
-        speak: () => { propActions().msg('ha ha ha, he he he, I\'m a little gnome and you can\'t catch me') },
-        tickle: () => {},
       },
     },
   },

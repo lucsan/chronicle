@@ -103,15 +103,33 @@ const royal = (draws) => {
     document.getElementById('exits').innerHTML = ''
     el('exits', 'title').div('Exits')
     place.exits.map(e => {
-      e.actions? exitActions(e, place): makeExit(e)
+      const exit = draws.places[e.to]
+      //console.log(exit)
+
+      if (exit.doors) {
+        makeDoor(e, exit)
+      } else {
+        makeExit(e)
+      }
+
+      //e.actions? exitActions(e, place): makeExit(e)
+
+
     })
   }
 
-  const exitActions = (e, place) => {
-    el('exits', 'exit', e.to).div(e.to)
-    e.actions.map(a => {
-      let code = Object.keys(a)
-      el(e.to, 'exit action').button(code, () => setActions(a) )
+  const makeDoor = (e, exit) => {
+    //console.log(e, exit)
+    exit.doors.map(d => {
+      //console.log(d)
+      if (d.locked) {
+        el('exits', 'exit', e.to).div(e.to)
+        el(e.to, 'exit').button('unlock', () => custom({ action: 'unlockDoor', id: { name: d.name, to: e.to, key: d.key } }))
+      } else {
+        el('exits', 'exit', e.to).div(e.to)
+        el(e.to, 'exit').button('open', () => draws.tools.move(e.to))
+      }
+
     })
   }
 
@@ -127,7 +145,6 @@ const royal = (draws) => {
 
     }
   }
-
 
   const look = (d) => {
     const prop = draws.decor[d.code]
@@ -150,6 +167,11 @@ const royal = (draws) => {
     document.getElementById('respond').innerHTML = d.msg
   }
 
+  const doorsUpdate = (d) => {
+    let place = draws.places[draws.character.location]
+    placeExits(place)
+  }
+
   // const customUpdate = (d) => {
   //   place(d)
   // }
@@ -159,6 +181,7 @@ const royal = (draws) => {
     build,
     update,
     customUpdate: propMoved,
+    doorsUpdate,
     look,
     move: place,
     prop: propMoved,

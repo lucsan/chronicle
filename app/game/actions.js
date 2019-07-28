@@ -67,6 +67,7 @@ const actions = () => {
     if (act == 'lock') return customActions(dispatch).lock(id, cabinet)
     if (act == 'unlock') return customActions(dispatch).unlock(id, cabinet)
     if (act == 'open') return customActions(dispatch).open(id, cabinet)
+    if (act == 'unlockDoor') return customActions(dispatch).unlockDoor(id, cabinet)
 
     console.log('Action not found ', act, id)
 
