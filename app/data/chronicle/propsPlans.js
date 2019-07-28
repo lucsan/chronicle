@@ -73,7 +73,7 @@ default: {
         ask: () => { custom({ action: 'remark', id: 'Click on 🎒bag it, to put me in the backpack. Click on 👐drop to drop me.' }) },
       },
       inv: {
-        ask: () => { custom({ action: 'remark', id: 'Click on ' }) },
+        ask: () => { custom({ action: 'remark', id: 'Click on 🤏 grab, to grab me out of the backpak.' }) },
       },
     },
   },

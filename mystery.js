@@ -52,6 +52,6 @@ const scriptsLoaded = () => {
 
 }
 
-console.log('m', marshall)
+//console.log('m', marshall)
 
 let custom = (info) => { marshall.action(info.action, info.id) }
