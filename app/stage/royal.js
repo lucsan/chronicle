@@ -66,9 +66,7 @@ const royal = (draws) => {
 
   const doBoxes = (d) => {
     if (!d || !d.box) return
-    console.log('doing boxes', d)
     let inBox = propsInBox(d.box)
-    console.log(inBox)
     document.getElementById('box').innerHTML = ''
     inBox.map(pid => {
       const prop = draws.decor[pid]
@@ -93,10 +91,11 @@ const royal = (draws) => {
   const propsActions = (prop, container) => {
     const box = prop.actions[container]
     for (let i in box) {
-      el(`${container}-${prop.code}`, 'action').button(actionEmos(i), box[i])
+      if (i == 'boxIt' && draws.openBox == '') continue
+      el(`${container}-${prop.code}`, `action ${i}`).button(actionEmos(i), box[i])
     }
     if (prop.usedIn.length > 0) {
-      el(`${container}-${prop.code}`, 'action').button('combo', e => console.log('combo'))
+      el(`${container}-${prop.code}`, 'action i').button('combo', e => console.log('combo'))
     }
   }
 
@@ -112,7 +111,6 @@ const royal = (draws) => {
     el('exits', 'exit', e.to).div(e.to)
     e.actions.map(a => {
       let code = Object.keys(a)
-      //el('exits', 'exit action', code).div()
       el(e.to, 'exit action').button(code, () => setActions(a) )
     })
   }
@@ -145,7 +143,6 @@ const royal = (draws) => {
     }
     document.getElementById('respond').innerHTML = lookText + '</details>'
     console.log(`👁‍🗨 ${d.code}`, prop)
-    //testArea.innerHTML = 'barry'
   }
 
   const respond = (d) => {

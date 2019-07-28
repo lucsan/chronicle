@@ -10,7 +10,8 @@ const actions = () => {
       bod: {
         examine: () => action('look', id),
         bagIt: () => action('bod->inv', id),
-        dropIt: () => action('bod->env', id)
+        dropIt: () => action('bod->env', id),
+        boxIt: () => action('bod->box', id)
       },
       inv: {
         grab: () => action('inv->bod', id),
@@ -44,10 +45,6 @@ const actions = () => {
 
   }
 
-  const doBoxAction = (box, act, id, cabinet) => {
-    console.log('box action', box, act, id)
-  }
-
   const doAction = (act, id, cabinet) => {
     console.log('act', act, id, cabinet)
     if (act == 'env->bod') return changePropLocation('env', 'bod', id, cabinet)
@@ -55,16 +52,17 @@ const actions = () => {
     if (act == 'bod->inv') return changePropLocation('bod', 'inv', id, cabinet)
     if (act == 'inv->bod') return changePropLocation('inv', 'bod', id, cabinet)
     if (act == 'box->bod') return changePropLocation('box', 'bod', id, cabinet)
+    if (act == 'bod->box') return changePropLocation('bod', 'box', id, cabinet)
     if (act == 'look') return dispatch({ action: 'look', code: id })
     if (act == 'combine') return combineProps(id, cabinet)
     if (act == 'remark') return dispatch({ action: 'remark', msg: id })
 
-    doCustomAction(act, id, cabinet)
+    doBoxAction(act, id, cabinet)
   }
 
-  const doCustomAction = (act, id, cabinet) => {
+  const doBoxAction = (act, id, cabinet) => {
 
-    console.log('action', act, id, cabinet)
+  //  console.log('action', act, id, cabinet)
 
     if (act == 'lock') return customActions(dispatch).lock(id, cabinet)
     if (act == 'unlock') return customActions(dispatch).unlock(id, cabinet)
@@ -72,20 +70,16 @@ const actions = () => {
 
     console.log('Action not found ', act, id)
 
-    //return dispatch({ action: 'custom', code: id, act: act })
-    //if (act == 'kick') return dispatch({ action: 'msg', code: id, msg: `You kicked 🦵 a ${id}` })
-    //return dispatch({ action: act, code: id, act: cabinet.draws.decor[id].actions })
   }
 
   const doMove = (to, cabinet) => {
+    cabinet.draws.openBox = ''
     loadProse(to, cabinet)
     const currentLocation = cabinet.draws.character.location
     let moves = cabinet.draws.character.moves
     cabinet.use({ character: { location: to, moves: ++moves }})
 
     let name = cabinet.draws.character.name
-    // cabinet.use({ saves: { [name]: { character: cabinet.draws.character } } })
-    // cabinet.use({ saves: { [name]: { decor: cabinet.draws.decor } } })
     cabinet.use({ saves: { [name]: { [to]: to } } })
     updateSave(cabinet)
 
@@ -104,6 +98,8 @@ const actions = () => {
 
   const changePropLocation = (from, to, id, cabinet) => {
     if (from == 'box') return moveFromBox(id, cabinet)
+    if (to == 'box') return moveToBox(id, cabinet)
+
     let loc = cabinet.draws.character.location
 
     if (from == 'env') from = loc
@@ -127,6 +123,23 @@ const actions = () => {
     dispatch({ action: 'prop', from: from, to: to, code: id })
   }
 
+  const moveToBox = (id, cabinet) => {
+    if (cabinet.draws.openBox == '') return
+    if(!cabinet.draws.decor[id].boxs) cabinet.use({ decor: { [id]: { boxs: [] } } })
+
+    const boxs = cabinet.draws.decor[id].boxs
+    const locs = cabinet.draws.decor[id].locs
+
+    const newLocs = locs.filter(b => { return b != 'bod' })
+    boxs.push(cabinet.draws.openBox)
+
+    cabinet.use({ decor: { [id]: { locs: newLocs } } })
+    cabinet.use({ decor: { [id]: { boxs: boxs } } })
+
+    //console.log('moveToBox', id, cabinet, 'openBox', cabinet.draws.openBox)
+    dispatch({ action: 'prop', box: cabinet.draws.openBox })
+  }
+
   const moveFromBox = (id, cabinet) => {
 
     const boxs = cabinet.draws.decor[id].boxs
@@ -137,9 +150,8 @@ const actions = () => {
     })
     cabinet.draws.decor[id].boxs = a
     cabinet.draws.decor[id].locs.push('bod')
-    console.log(a)
 
-    console.log('movefrombox', id, cabinet.draws.decor[id].boxs, cabinet.draws.openBox)
+    //console.log('movefrombox', id, cabinet.draws.decor[id].boxs, cabinet.draws.openBox)
     dispatch({ action: 'prop', box: cabinet.draws.openBox })
 
   }
@@ -191,7 +203,6 @@ const actions = () => {
 
   }
 
-
   const dispatch = (detail) => {
     document.dispatchEvent(
       new CustomEvent(
@@ -208,18 +219,3 @@ const actions = () => {
     defaultActions
   }
 }
-
-
-// const customAction = (detail) => {
-//   //actions
-//   //detail.custom = true
-//   //console.log('customAction', detail)
-//   //const dispatch = (detail) => {
-//     document.dispatchEvent(
-//       new CustomEvent(
-//         'chronicle_dispatch',
-//         { detail: detail }
-//       )
-//     )
-//   //}
-// }

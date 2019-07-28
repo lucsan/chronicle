@@ -2,14 +2,32 @@ const setsPlans = {
 
   begining: {
     author: 'lucsan',
-    desc: 'A mystery awaits ...',
+    desc: 'Mystery awaits ...',
     label: 'Where the mystery begins',
     exits: [
       {
-        to: 'foulManorLibrary',
+        to: 'foulManor',
         desc: 'Adventure awaits (click here) ...'
       },
     ]
+  },
+
+  foulManor: {
+    desc: 'Foul Manor',
+    proseScript: 'foulManor',
+    exits: [{ to: 'foulHall1' }]
+  },
+
+  foulHall1: {
+    desc: 'The hall',
+    proseScript: 'foulHall1',
+    exits: [{ to: 'foulManorLibrary' }]
+  },
+
+  foulHall: {
+    desc: 'The hall',
+    //proseScript: 'foulHall1',
+    exits: [{ to: 'foulManorLibrary' }, { to: 'foulManorStudy', desc: 'a door leads to the masters study' }]
   },
 
   foulManorLibrary: {
@@ -17,22 +35,17 @@ const setsPlans = {
     label: 'The Library',
     author: 'lucsan',
     proseScript: 'library',
-    exits: [
-      {
-        desc: 'a door leads to the masters study',
-        to: 'mastersStudy',
-      },
-    ]
+    exits: [{to: 'foulHall'}]
   },
 
-  mastersStudy: {
+  foulManorStudy: {
     author: 'lucsan',
     desc: 'Its the masters study',
     label: 'The Study',
     proseScript: 'study',
     exits: [
       {
-        to: 'foulManorLibrary',
+        to: 'foulHall',
       }
     ],
 

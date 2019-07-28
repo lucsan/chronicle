@@ -38,20 +38,20 @@ const customActions = (dispatch) => {
   const open = (boxId, cabinet) => {
     //cabinet.use({ openBox: boxId })
     cabinet.draws.openBox = boxId
+    // add putInBox action here?
     dispatch({ action: 'customUpdate', box: boxId })
   }
 
-  // const findPropBox = (boxId, decor) => {
-  //   console.log('boxId', boxId)
-  //
-  //   for (let p in decor) {
-  //     if (decor[p].boxs == boxId) {
-  //       console.log('found', decor[p].code)
-  //     }
-  //   }
-  //
-  //
-  // }
+  const putIn = () => {
+    // maybe not putIn, maybe use open?
+
+    // tells the system which box to put stuff in
+
+    // add put in box action to items
+  }
+
+
+
 
   // This is a custom action rather than a container action.
   const crush = () => {
@@ -61,6 +61,6 @@ const customActions = (dispatch) => {
   return {
     lock,
     unlock,
-    open
+    open,
   }
 }

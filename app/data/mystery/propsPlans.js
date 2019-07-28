@@ -23,7 +23,7 @@ default: {
         ask: () => { custom({ action: 'remark', id: 'Click on 🎒bag it, to put me in the backpack. Click on 👐drop to drop me.' }) },
       },
       inv: {
-        ask: () => { custom({ action: 'remark', id: 'Click on ' }) },
+        ask: () => { custom({ action: 'remark', id: 'Click on 🤏 grab, to grab me out of the backpak.' }) },
       },
     },
   },
@@ -31,8 +31,23 @@ default: {
 
   badge: {
     desc: 'A little copper button badge, it says `Detective #1`.',
-    locs: ['bod'],
+    label: '📛 Badge',
+    locs: ['bod', 'foulManorLibrary'],
     pickUp: true,
+  },
+
+  nineShinnyPenniesBowl: {
+    artist: 'lucsan',
+    desc: 'A beautiful bowl with a dragon on it. It should have nine shinny pennies in it, but it dosen\'t.',
+    box: {
+      open: true
+    },
+    locs: ['foulManorLibrary'],
+  },
+
+  shinnyPennyOne: {
+    desc: 'A bright shinny penny',
+    boxs: ['nineShinnyPenniesBowl']
   },
 
 }

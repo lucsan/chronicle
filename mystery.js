@@ -1,5 +1,6 @@
 console.log('%cTestZone running ->>', 'color:red;font-weight:bold;')
 
+let marshall = null
 
 const loadCommonScripts = () => {
   scriptsLoader(['app/config.js'], () => commonConfigLoaded())
@@ -31,15 +32,15 @@ const scriptsLoaded = () => {
   console.info('%c--> Scripts Loaded', css)
 
   console.info('%cMarshalling assets', css+css1)
-  const marshall = marshalls(propsPlans, setsPlans)
+  marshall = marshalls(propsPlans, setsPlans)
 
   // scripted actions
-  const customActions = (marshall, act) => {
-    return (act) => {
-    console.log('chra',act)
-      marshall.action(act.action, act.id)
-    }
-  }
+  // const customActions = (marshall, act) => {
+  //   return (act) => {
+  //   console.log('chra',act)
+  //     marshall.action(act.action, act.id)
+  //   }
+  // }
 
   localStorage.setItem('player', JSON.stringify({ name: 'Playe Rone', character: 'Charac Ter' }))
   console.log(marshall.cabinet)
@@ -49,8 +50,8 @@ const scriptsLoaded = () => {
   const stage = theater(royal(marshall.cabinet.draws))
   stage.build()
 
-
 }
 
+console.log('m', marshall)
 
-let custom = () => {}
+let custom = (info) => { marshall.action(info.action, info.id) }
