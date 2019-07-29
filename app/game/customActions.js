@@ -76,6 +76,37 @@ const customActions = (dispatch) => {
   }
 
 
+  const dispense = (d, cabinet) => {
+    const prop = cabinet.draws.decor[d]
+    const pays = prop.pays
+    const drops = pays.drops
+
+    drops.map(pid => {
+      let drop = cabinet.draws.decor[pid]
+      if (!drop.boxs) drop.boxs = []
+      drop.boxs.push(d)
+    })
+
+
+
+    console.log('dispencing', d)
+    //console.log(cabinet.draws.decor[pid])
+    console.log(prop)
+    console.log(prop.pays)
+    console.log(prop.pays.drops)
+    console.log(cabinet)
+
+
+    // create a new payout object and put in dispenser.
+
+    //const drops =
+
+    // increment pays
+
+        dispatch({ action: 'customUpdate', box: d })
+
+  }
+
   // This is a custom action rather than a container action.
   const crush = () => {
     // The object is crushed (modify to crushedObject ?)
@@ -88,5 +119,6 @@ const customActions = (dispatch) => {
     unlock,
     open,
     unlockDoor,
+    dispense
   }
 }

@@ -11,6 +11,7 @@ const royal = (draws) => {
     if (actionName == 'inspect') return '<span title="peeky peek" >🔎</span>'
     if (actionName == 'examine') return '<span title="examine closely" >🔬</span>'
     if (actionName == 'dropIt') return '<span title="drop me" >👐</span>'
+    if (actionName == 'boxIt') return '<span title="put me in the box" >🎁</span>'
 
     return actionName
   }

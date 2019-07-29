@@ -86,9 +86,31 @@ default: {
 
   },
 
+  shinnyPennyOne: {
+    pickUp: true,
+    desc: 'A shinny penny',
+    boxs: ['ninePennyBowl', 'chest', 'cardBox'],
+    locs: ['testSite', 'clearing']
+  },
+
   helipass: {
+    pickUp: true,
     locs: ['bod'],
   },
+
+  helipassDispenser: {
+    locs: ['testSite'],
+    box: { open: true },
+    pays: {
+      criteria: { list: [], inOrder: false },
+      drops: ['helipass'],
+      destroy: false, // mutates, combines,
+      paid: 0,
+      max: 10,
+    },
+  },
+
+
 
   gnome: {
     desc: "a nice gnome",
@@ -117,11 +139,6 @@ default: {
     pickUp: true,
     desc: 'The wax wrapper from a small cheese wheel',
     boxs: ['chest'],
-  },
-
-  shinnyPennyOne: {
-    desc: 'A shinny penny',
-    boxs: ['ninePennyBowl', 'chest', 'cardBox']
   },
 
   oldSoverign: {

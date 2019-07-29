@@ -42,6 +42,9 @@ const actions = () => {
         if (!prop.actions.env.open) prop.actions.env.open = () => { action('open', id) }
       }
     }
+    if (prop.pays) {
+      prop.actions.env.dispense = () => { action('dispense', id) }
+    }
 
   }
 
@@ -68,6 +71,7 @@ const actions = () => {
     if (act == 'unlock') return customActions(dispatch).unlock(id, cabinet)
     if (act == 'open') return customActions(dispatch).open(id, cabinet)
     if (act == 'unlockDoor') return customActions(dispatch).unlockDoor(id, cabinet)
+    if (act == 'dispense') return customActions(dispatch).dispense(id, cabinet)
 
     console.log('Action not found ', act, id)
 
@@ -162,6 +166,13 @@ const actions = () => {
     cabinet.use({ saves: { [name]: { character: cabinet.draws.character } } })
     cabinet.use({ saves: { [name]: { decor: cabinet.draws.decor } } } )
   }
+
+
+  // prop combination
+  // prop mutation (replacement)
+  // payout (pull the lever)
+  // props in box puzle (put the right props in the box)
+
 
   const combineProps = (id, cabinet) => {
     let proposedProp = cabinet.draws.decor[id]
