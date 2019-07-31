@@ -41,17 +41,13 @@ default: {
     desc: 'a locked chest, maybe it contains a rubish sword',
     locs: ['testSite', 'clearing'],
     artist: 'lucsan',
-    isBox: true,
-    actions: {
-      env: {
-        unlock: () => {propActions().unlock('chest',['chestKey', 'badge'])}
-      }
-    }
+    box: { locked: true, key: 'chestKey' },
   },
 
   rubishSword: {
     desc: 'Its a sword, well almost, still... its trying its best',
-    locs: ['testSite']
+    locs: ['testSite'],
+    boxs: ['chest']
   },
 
   chestKey: {
