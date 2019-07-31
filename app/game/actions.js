@@ -143,6 +143,7 @@ const actions = () => {
 
     //console.log('moveToBox', id, cabinet, 'openBox', cabinet.draws.openBox)
     dispatch({ action: 'prop', box: cabinet.draws.openBox })
+    dispatch({ action: 'remark', msg: `You put ${id} in ${cabinet.draws.openBox}` })
   }
 
   const moveFromBox = (id, cabinet) => {

@@ -38,8 +38,8 @@ const customActions = (dispatch) => {
   const open = (boxId, cabinet) => {
     //cabinet.use({ openBox: boxId })
     cabinet.draws.openBox = boxId
-    // add putInBox action here?
     dispatch({ action: 'customUpdate', box: boxId })
+    dispatch({ action: 'remark', msg: `${boxId} opened` })
   }
 
 
@@ -75,11 +75,30 @@ const customActions = (dispatch) => {
 
   }
 
+  const paymentRequired = (prop, props) => {
+    if (!prop.pays.criteria) return false
+    if (prop.pays.criteria.list.length < 1) return false
+    const need = prop.pays.criteria.list
+
+    const list = need.filter(n => {
+      const p = props[n]
+      if (p.boxs == undefined
+        || p.boxs.length < 1
+        || p.boxs.indexOf(prop.code) < 0) return n
+    })
+    return list.length < 1? false: list
+  }
+
 
   const dispense = (d, cabinet) => {
-    const prop = cabinet.draws.decor[d]
+    const props = cabinet.draws.decor
+    const prop = props[d]
     const pays = prop.pays
     const drops = pays.drops
+    const pr = paymentRequired(prop, props)
+    if (pr) return dispatch({ action: 'remark', msg: `You need to put ${pr} in` })
+
+
 
     drops.map(pid => {
       let drop = cabinet.draws.decor[pid]
@@ -103,7 +122,8 @@ const customActions = (dispatch) => {
 
     // increment pays
 
-        dispatch({ action: 'customUpdate', box: d })
+    dispatch({ action: 'customUpdate', box: d })
+    dispatch({ action: 'remark', msg: `${d} dispensed` })
 
   }
 

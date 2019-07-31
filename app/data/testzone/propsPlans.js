@@ -102,9 +102,23 @@ default: {
     locs: ['testSite'],
     box: { open: true },
     pays: {
-      criteria: { list: [], inOrder: false },
+      //criteria: { list: [], inOrder: false },
       drops: ['helipass'],
-      destroy: false, // mutates, combines,
+      action: 'none', // mutates, combines,
+      //destroy: false,
+      paid: 0,
+      max: 10,
+    },
+  },
+
+  betterSwordDispenser: {
+    locs: ['testSite'],
+    box: { open: true },
+    pays: {
+      criteria: { list: ['rubishSword'], inOrder: false },
+      drops: ['betterSword'],
+      action: 'mutate',
+      //destroy: true, // mutates, combines,
       paid: 0,
       max: 10,
     },
@@ -133,6 +147,11 @@ default: {
     desc: 'Its a sword, well almost, still... its trying its best',
     locs: ['testSite'],
     boxs: ['chest'],
+  },
+
+  betterSword: {
+    pickUp: true,
+    desc: 'Its a better sword',
   },
 
   cheeseWax: {
