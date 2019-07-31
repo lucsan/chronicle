@@ -17,7 +17,7 @@ describe('cabinet', () => {
 
   it('should return draws contents if use() has no params', () => {
     let cabinet = new Cabinet
-    expect(cabinet.use().player.name).toBe('default')
+    expect(cabinet.use().player.name).toBe('Playe Rone')
   })
 
   it('should update draws contents if use() is sent a matching object', () => {
@@ -27,7 +27,7 @@ describe('cabinet', () => {
 
   it('should return an object if past a string', () => {
     let cabinet = new Cabinet
-    expect(cabinet.use('player').name).toBe('default')
+    expect(cabinet.use('player').name).toBe('Playe Rone')
   })
 
   it('should poulate a full object', () => {
