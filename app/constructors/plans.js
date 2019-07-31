@@ -1,14 +1,6 @@
 console.log('--> plans')
 
 const plans = () => {
-  let props = {}
-  let sets = {}
-
-  const codes = (obj) => {
-    let a = []
-    for (let c in obj) { a.push(c) }
-    return a
-  }
 
   const propsAtLoc = (loc, decor) => {
     let codes = Object.keys(decor)
@@ -36,9 +28,7 @@ const plans = () => {
     return ids
   }
 
-  const initaliseProps = (info) => {
-    // action, draws
-    //const info = {}
+  const initaliseProps = (props, info) => {
     for (let id in props) {
       let prop = props[id]
       if (prop.code == undefined) prop.code = id
@@ -49,41 +39,21 @@ const plans = () => {
     }
     for (let id in props) {
       let prop = props[id]
-      applyCombinesWith(prop)
+      applyCombinesWith(prop, props)
     }
     return props
   }
 
-  const applyCombinesWith = (prop) => {
+  const applyCombinesWith = (prop, props) => {
     if (!prop.combines) return
     prop.combines.needs.map(code => {
       props[code].usedIn.push(prop.code)
     })
   }
 
-  // const applyDefaultActions = (prop, actions) => {
-  //   if (prop.actions === undefined) {
-  //     prop.actions = actions
-  //     if (!prop.pickUp) delete prop.actions.env.pickUp
-  //     return
-  //   }
-  //   for (let bag in actions) {
-  //     if (prop.actions[bag] === undefined) prop.actions[bag] = actions[bag]
-  //     for (let act in actions[bag]) {
-  //       if (act == 'pickUp' && !prop.pickUp) continue
-  //       if (prop.actions[bag][act] === undefined) prop.actions[bag][act] = actions[bag][act]
-  //     }
-  //   }
-  // }
-
   return {
-    loadProps: (data) => { props = data },
-    loadSets: (data) => { sets = data },
-    codesProps: () => { codes(props) },
-    codesSets: () => { codes(sets) },
     propsAtLoc,
     propsInBox,
     initaliseProps,
-
   }
 }

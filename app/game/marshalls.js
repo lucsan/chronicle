@@ -10,17 +10,17 @@ const marshalls = (defaultProps, defaultSets) => {
   cabinet.use({ sets: defaultSets })
   cabinet.use({ places: defaultSets })
 
-  planz.loadProps(cabinet.draws.props)
-  planz.loadSets(cabinet.draws.sets)
+  //planz.loadProps(cabinet.draws.props)
+  //planz.loadSets(cabinet.draws.sets)
 
   cabinet.use({
-    decor: planz.initaliseProps({
+    decor: planz.initaliseProps(cabinet.draws.props, {
       defaultActions: acts.defaultActions,
       action: action,
       draws: cabinet.draws
     })
   })
-    
+
   cabinet.use({ tools: { propsAtLoc: planz.propsAtLoc } })
   cabinet.use({ tools: { propsInBox: planz.propsInBox } })
 
