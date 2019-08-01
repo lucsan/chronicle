@@ -36,19 +36,13 @@ const customActions = (dispatch) => {
   }
 
   const open = (boxId, cabinet) => {
-    //cabinet.use({ openBox: boxId })
     cabinet.draws.openBox = boxId
     dispatch({ action: 'customUpdate', box: boxId })
     dispatch({ action: 'remark', msg: `${boxId} opened` })
   }
 
-
-
   const unlockDoor = (info, cabinet) => {
-    //let doors = cabinet.draws.places[info.to].doors.find(d => d.name == info.name)
     let doors = cabinet.draws.places[info.to].doors
-
-
     let i = 0
     for (i = 0; i < doors.length; i++) {
       if (doors[i].name == info.name) break;
@@ -56,30 +50,22 @@ const customActions = (dispatch) => {
     let di = doors.indexOf(info.name)
     let key = cabinet.draws.decor[info.key]
     if (!key.locs.find(l => l == 'bod')) return
-
-    //console.log('aaaaaaa',doors[0])
-
     doors[i].locked = false
 
-
     cabinet.use({ places: { [info.to]: { doors: doors } } })
-
-  //  console.log(cabinet.draws.places[info.to])
-
     dispatch({ action: 'doorsUpdate', info: { place: info.to, door: info.name } })
-
-    //console.log('unlockdoor', info, 'key', key, 'doors', cabinet.draws.places[info.to].doors)
-
-    //let place = cabinet.draws.places
-
 
   }
 
-  const paymentRequired = (prop, props) => {
+
+  const paymentRequired = (prop) => {
     if (!prop.pays.criteria) return false
     if (prop.pays.criteria.list.length < 1) return false
-    const need = prop.pays.criteria.list
+    return true
+  }
 
+  const missingPayment = (prop, props) => {
+    const need = prop.pays.criteria.list
     const list = need.filter(n => {
       const p = props[n]
       if (p.boxs == undefined
@@ -89,38 +75,37 @@ const customActions = (dispatch) => {
     return list.length < 1? false: list
   }
 
+  const takePayment = (prop, props, cabinet) => {
+    const need = prop.pays.criteria.list
+    need.map(n => {
+      let item = props[n]
+      let boxs = item.boxs
+      const idx = boxs.indexOf(prop.code)
+      boxs.splice(idx, 1)
+      cabinet.draws.decor[n].boxs = boxs
+    })
+  }
 
   const dispense = (d, cabinet) => {
     const props = cabinet.draws.decor
     const prop = props[d]
     const pays = prop.pays
     const drops = pays.drops
-    const pr = paymentRequired(prop, props)
-    if (pr) return dispatch({ action: 'remark', msg: `You need to put ${pr} in` })
 
-
+    if (paymentRequired(prop)) {
+      const mp = missingPayment(prop, props)
+      if (mp) {
+        return dispatch({ action: 'remark', msg: `You need to put ${mp} in` })
+      } else {
+        takePayment(prop, props, cabinet)
+      }
+    }
 
     drops.map(pid => {
       let drop = cabinet.draws.decor[pid]
       if (!drop.boxs) drop.boxs = []
       drop.boxs.push(d)
     })
-
-
-
-    console.log('dispencing', d)
-    //console.log(cabinet.draws.decor[pid])
-    console.log(prop)
-    console.log(prop.pays)
-    console.log(prop.pays.drops)
-    console.log(cabinet)
-
-
-    // create a new payout object and put in dispenser.
-
-    //const drops =
-
-    // increment pays
 
     dispatch({ action: 'customUpdate', box: d })
     dispatch({ action: 'remark', msg: `${d} dispensed` })
