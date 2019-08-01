@@ -124,7 +124,7 @@ default: {
   },
 
   mingVase: {
-    desc: 'a ming dynsaty delicate china vase, it dispences unlimited sticks',
+    desc: 'a ming dynsaty delicate china vase, it dispenses unlimited sticks',
     locs: ['testSite'],
     pays: {
       drops: ['stick'],

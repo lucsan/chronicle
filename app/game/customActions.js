@@ -87,6 +87,7 @@ const customActions = (dispatch) => {
   }
 
   const dispense = (d, cabinet) => {
+    cabinet.draws.openBox = d
     const props = cabinet.draws.decor
     const prop = props[d]
     const pays = prop.pays

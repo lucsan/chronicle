@@ -112,13 +112,18 @@ const actions = () => {
     let locs = cabinet.draws.decor[id].locs
     if (!locs.find(l => l == from)) return
 
-    let f = false
-    locs = locs.map(l => {
-      if (l != from) return l
-      if (f == true) return l
-      f = true
-    })
-    locs = locs.filter(l => l != undefined)
+    // let f = false
+    // locs = locs.map(l => {
+    //   if (l != from) return l
+    //   if (f == true) return l
+    //   f = true
+    // })
+    // locs = locs.filter(l => l != undefined)
+
+    locs = slide(from, locs)
+
+    console.log('locs',locs)
+
     locs.push(to)
     cabinet.use({ decor: { [id]: { locs: locs } } })
 
@@ -128,6 +133,8 @@ const actions = () => {
     dispatch({ action: 'prop', from: from, to: to, code: id })
   }
 
+
+
   const moveToBox = (id, cabinet) => {
     if (cabinet.draws.openBox == '') return
     if(!cabinet.draws.decor[id].boxs) cabinet.use({ decor: { [id]: { boxs: [] } } })
@@ -135,7 +142,11 @@ const actions = () => {
     const boxs = cabinet.draws.decor[id].boxs
     const locs = cabinet.draws.decor[id].locs
 
-    const newLocs = locs.filter(b => { return b != 'bod' })
+    const newLocs = slide('bod', locs)
+    //const newLocs = locs.filter(b => { return b != 'bod' })
+
+    console.log('locs', locs, 'newLocs', newLocs)
+
     boxs.push(cabinet.draws.openBox)
 
     cabinet.use({ decor: { [id]: { locs: newLocs } } })
@@ -146,21 +157,29 @@ const actions = () => {
     dispatch({ action: 'remark', msg: `You put ${id} in ${cabinet.draws.openBox}` })
   }
 
-  const moveFromBox = (id, cabinet) => {
 
+
+  const moveFromBox = (id, cabinet) => {
     const boxs = cabinet.draws.decor[id].boxs
+    const boxId = cabinet.draws.openBox
+console.log('moveFrom', boxs)
     if (!boxs.find(b => b == cabinet.draws.openBox)) return
 
     let a = boxs.filter(b => {
       return b != cabinet.draws.openBox
     })
-    cabinet.draws.decor[id].boxs = a
+
+    const newBoxs = slide(boxId, boxs)
+    cabinet.draws.decor[id].boxs = newBoxs
+
     cabinet.draws.decor[id].locs.push('bod')
 
     //console.log('movefrombox', id, cabinet.draws.decor[id].boxs, cabinet.draws.openBox)
     dispatch({ action: 'prop', box: cabinet.draws.openBox })
-
+    dispatch({ action: 'remark', msg: `You took ${id} from ${boxId}` })
   }
+
+
 
   const updateSave = (cabinet) => {
     const name = cabinet.draws.character.name
