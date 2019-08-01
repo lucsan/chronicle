@@ -11,7 +11,7 @@ const commonConfigLoaded = () => {
 }
 
 const loadVersionConfig = () => {
-  scriptsLoader(['app/data/testzone/config.js'], () => loadVersionScripts())
+  scriptsLoader(['app/data/test/config.js'], () => loadVersionScripts())
 }
 
 const loadVersionScripts = () => {
@@ -36,6 +36,7 @@ const scriptsLoaded = () => {
 //  scripted actions
   const customActions = (marshall, act) => {
     return (act) => {
+    //console.log('chra',act)
       marshall.action(act.action, act.id)
     }
   }
@@ -50,6 +51,4 @@ const scriptsLoaded = () => {
 
   const stage = theater(royal(marshall.cabinet.draws))
   stage.build()
-
-
 }
