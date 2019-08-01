@@ -91,6 +91,12 @@ const customActions = (dispatch) => {
     const prop = props[d]
     const pays = prop.pays
     const drops = pays.drops
+    const paid = pays.paid
+    const max = pays.max
+
+    console.log('paid', paid, 'max', max)
+
+    if (paid >= max) { return dispatch({ action: 'remark', msg: `${d} can't pay out again.` }) }
 
     if (paymentRequired(prop)) {
       const mp = missingPayment(prop, props)
@@ -107,17 +113,15 @@ const customActions = (dispatch) => {
       drop.boxs.push(d)
     })
 
+    cabinet.draws.decor[d].pays.paid++
     dispatch({ action: 'customUpdate', box: d })
     dispatch({ action: 'remark', msg: `${d} dispensed` })
-
   }
 
   // This is a custom action rather than a container action.
   const crush = () => {
     // The object is crushed (modify to crushedObject ?)
   }
-
-
 
   return {
     lock,

@@ -107,7 +107,7 @@ default: {
       action: 'none', // mutates, combines,
       //destroy: false,
       paid: 0,
-      max: 10,
+      max: 2,
     },
   },
 
@@ -120,7 +120,7 @@ default: {
       action: 'mutate',
       //destroy: true, // mutates, combines,
       paid: 0,
-      max: 10,
+      max: 1,
     },
   },
 
