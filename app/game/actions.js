@@ -56,8 +56,8 @@ const actions = () => {
     if (act == 'inv->bod') return changePropLocation('inv', 'bod', id, cabinet)
     if (act == 'box->bod') return changePropLocation('box', 'bod', id, cabinet)
     if (act == 'bod->box') return changePropLocation('bod', 'box', id, cabinet)
+    if (act == 'combine') return combine(id, cabinet)
     if (act == 'look') return dispatch({ action: 'look', code: id })
-    if (act == 'combine') return combineProps(id, cabinet)
     if (act == 'remark') return dispatch({ action: 'remark', msg: id })
 
     doBoxAction(act, id, cabinet)
@@ -112,24 +112,12 @@ const actions = () => {
     let locs = cabinet.draws.decor[id].locs
     if (!locs.find(l => l == from)) return
 
-    // let f = false
-    // locs = locs.map(l => {
-    //   if (l != from) return l
-    //   if (f == true) return l
-    //   f = true
-    // })
-    // locs = locs.filter(l => l != undefined)
-
     locs = slide(from, locs)
-
-    console.log('locs',locs)
-
     locs.push(to)
     cabinet.use({ decor: { [id]: { locs: locs } } })
 
     updateSave(cabinet)
     saveGame(cabinet.draws)
-    // from to probably not needed here
     dispatch({ action: 'prop', from: from, to: to, code: id })
   }
 
@@ -143,26 +131,18 @@ const actions = () => {
     const locs = cabinet.draws.decor[id].locs
 
     const newLocs = slide('bod', locs)
-    //const newLocs = locs.filter(b => { return b != 'bod' })
-
-    console.log('locs', locs, 'newLocs', newLocs)
-
     boxs.push(cabinet.draws.openBox)
-
     cabinet.use({ decor: { [id]: { locs: newLocs } } })
     cabinet.use({ decor: { [id]: { boxs: boxs } } })
 
-    //console.log('moveToBox', id, cabinet, 'openBox', cabinet.draws.openBox)
     dispatch({ action: 'prop', box: cabinet.draws.openBox })
     dispatch({ action: 'remark', msg: `You put ${id} in ${cabinet.draws.openBox}` })
   }
 
 
-
   const moveFromBox = (id, cabinet) => {
     const boxs = cabinet.draws.decor[id].boxs
     const boxId = cabinet.draws.openBox
-console.log('moveFrom', boxs)
     if (!boxs.find(b => b == cabinet.draws.openBox)) return
 
     let a = boxs.filter(b => {
@@ -194,45 +174,50 @@ console.log('moveFrom', boxs)
   // props in box puzle (put the right props in the box)
 
 
-  const combineProps = (id, cabinet) => {
-    let proposedProp = cabinet.draws.decor[id]
-    console.log(`you are attempting to combine ${proposedProp.code}`)
-    console.log(`you need ${proposedProp.combines.needs}`)
+  // const combineProps = (id, cabinet) => {
+  //   let proposedProp = cabinet.draws.decor[id]
+  //   console.log(`you are attempting to combine ${proposedProp.code}`)
+  //   console.log(`you need ${proposedProp.combines.needs}`)
+  //
+  //   let dontHave = proposedProp.combines.needs.filter(n => {
+  //     let needed = cabinet.draws.decor[n]
+  //     if (!needed.locs.find(l => l == 'bod' || l == 'inv')) return needed.code
+  //   })
+  //
+  //   if (dontHave.length > 0) {
+  //     proposedProp.combines.missing = dontHave
+  //     console.log(`you are short `, dontHave)
+  //     dispatch({ action: 'combine', status: 'failure', code: id, msg: `You needed ${dontHave}` })
+  //     return
+  //   }
+  //
+  //   console.log(`Yay you have it all, you can make ${id}`)
+  //
+  //   proposedProp.combines.needs.map(i => {
+  //     let used = cabinet.draws.decor[i]
+  //     let f = false
+  //     let b = used.locs.map(l => {
+  //       if (l == 'bod' || l == 'inv') f = true
+  //       if (f) {
+  //         f = false
+  //         return null
+  //       }
+  //       return l
+  //     })
+  //     let c = b.filter(l => l != null)
+  //     used.locs = c
+  //   })
+  //
+  //   proposedProp.locs.push('bod')
+  //
+  //   console.log(cabinet.draws.decor['lintStick'])
+  //   dispatch({ action: 'combine', status: 'success', code: id, msg: `You created ${id}` })
+  //
+  // }
 
-    let dontHave = proposedProp.combines.needs.filter(n => {
-      let needed = cabinet.draws.decor[n]
-      if (!needed.locs.find(l => l == 'bod' || l == 'inv')) return needed.code
-    })
-
-    if (dontHave.length > 0) {
-      proposedProp.combines.missing = dontHave
-      console.log(`you are short `, dontHave)
-      dispatch({ action: 'combine', status: 'failure', code: id, msg: `You needed ${dontHave}` })
-      return
-    }
-
-    console.log(`Yay you have it all, you can make ${id}`)
-
-    proposedProp.combines.needs.map(i => {
-      let used = cabinet.draws.decor[i]
-      let f = false
-      let b = used.locs.map(l => {
-        if (l == 'bod' || l == 'inv') f = true
-        if (f) {
-          f = false
-          return null
-        }
-        return l
-      })
-      let c = b.filter(l => l != null)
-      used.locs = c
-    })
-
-    proposedProp.locs.push('bod')
-
-    console.log(cabinet.draws.decor['lintStick'])
-    dispatch({ action: 'combine', status: 'success', code: id, msg: `You created ${id}` })
-
+  const combine = (id, cabinet) => {
+    const usedIn = cabinet.draws.decor[id].usedIn
+    console.log(id, usedIn)
   }
 
   const dispatch = (detail) => {

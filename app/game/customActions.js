@@ -57,7 +57,6 @@ const customActions = (dispatch) => {
 
   }
 
-
   const paymentRequired = (prop) => {
     if (!prop.pays.criteria) return false
     if (prop.pays.criteria.list.length < 1) return false
@@ -78,11 +77,8 @@ const customActions = (dispatch) => {
   const takePayment = (prop, props, cabinet) => {
     const need = prop.pays.criteria.list
     need.map(n => {
-      let item = props[n]
-      let boxs = item.boxs
-      const idx = boxs.indexOf(prop.code)
-      boxs.splice(idx, 1)
-      cabinet.draws.decor[n].boxs = boxs
+      const boxs = props[n].boxs
+      cabinet.draws.decor[n].boxs = slide(prop.code, boxs)
     })
   }
 
@@ -94,8 +90,6 @@ const customActions = (dispatch) => {
     const drops = pays.drops
     const paid = pays.paid
     const max = pays.max
-
-    console.log('paid', paid, 'max', max)
 
     if (paid >= max) { return dispatch({ action: 'remark', msg: `${d} can't pay out again.` }) }
 
@@ -119,6 +113,7 @@ const customActions = (dispatch) => {
     dispatch({ action: 'remark', msg: `${d} dispensed` })
   }
 
+
   // This is a custom action rather than a container action.
   const crush = () => {
     // The object is crushed (modify to crushedObject ?)
@@ -129,6 +124,6 @@ const customActions = (dispatch) => {
     unlock,
     open,
     unlockDoor,
-    dispense
+    dispense,
   }
 }
