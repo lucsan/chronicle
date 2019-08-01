@@ -10,24 +10,19 @@ const marshalls = (defaultProps, defaultSets) => {
   cabinet.use({ sets: defaultSets })
   cabinet.use({ places: defaultSets })
 
-  //planz.loadProps(cabinet.draws.props)
-  //planz.loadSets(cabinet.draws.sets)
-
+  // Note: cabinet.use has bug when stowing arrays
   cabinet.use({
-    decor: planz.initaliseProps(cabinet.draws.props, {
+    decor: planz.initaliseProps(cabinet, {
       defaultActions: acts.defaultActions,
-      action: action,
-      draws: cabinet.draws
+      action: action
     })
   })
 
   cabinet.use({ tools: { propsAtLoc: planz.propsAtLoc } })
   cabinet.use({ tools: { propsInBox: planz.propsInBox } })
-
   cabinet.use({ tools: { move: move } })
   cabinet.use({ tools: { saveGame: saveGame } } )
   cabinet.use({ tools: { loadGame: loadGame } } )
-
   cabinet.use({ tools: { dispatch: acts.dispatch } })
 
   return {

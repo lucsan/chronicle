@@ -27,7 +27,7 @@ let Cabinet = function() {
   const injector = (fragment, subject) => {
     let keys = Object.keys(fragment)
     keys.map(k => {
-      if (typeof(fragment[k]) === 'object' && !Array.isArray(fragment[k])) {
+      if (typeof fragment[k] === 'object' && !Array.isArray(fragment[k])) {
         if (subject[k] === undefined) subject[k] = {}
         return injector(fragment[k], subject[k])
       } else {
