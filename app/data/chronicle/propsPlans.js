@@ -14,45 +14,24 @@ default: {
     locs: ['clearing', 'creepyWoods'],
     artist: 'lucsan',
     pickUp: true,
-    actions: {
-      // TODO synonyms for pick up? remove, get, take.
-      env: {
-        kick: () => { custom({ action: 'kick', id: 'stick', msg: 'ouch' }) },
-        prod: () => {}
-      },
-      inv: {
-        destroy: () => {},
-      },
-      bod: {
-        hit: () => { custom({ action: 'msg', id: 'stick', msg: 'you hit the stick' }) },
-        poke: () => { console.log(`you poke`) },
-        swish: () => { custom({ action: () => { msg: 'You swish the stick' }, id: 'stick' })  },
-      },
-    },
-    properties: {
-      attack: 2,
-      defense: 0,
-      weight: 2,
-      poking: true,
-    },
   },
 
   chest: {
     desc: 'a locked chest, maybe it contains a rubish sword',
-    locs: ['testSite', 'clearing'],
+    locs: ['clearing'],
     artist: 'lucsan',
     box: { locked: true, key: 'chestKey' },
   },
 
   rubishSword: {
     desc: 'Its a sword, well almost, still... its trying its best',
-    locs: ['testSite'],
+    locs: [],
     boxs: ['chest']
   },
 
   chestKey: {
     desc: 'key for a chest',
-    locs: ['testSite', 'clearing'],
+    locs: ['clearing'],
     artist: 'lucsan',
     pickUp: true,
   },
@@ -79,8 +58,8 @@ default: {
     locs: ['clearing'],
     actions: {
       env: {
-        speak: () => { propActions().msg('ha ha ha, he he he, I\'m a little gnome and you can\'t catch me') },
-        tickle: () => {},
+        speak: () => { custom({ action: 'remark', id: 'ha ha ha, he he he, I\'m a little gnome and you can\'t catch me' }) },
+        tickle: () => { custom({ action: 'remark', id: 'ha ha ha, he he he' }) },
       },
     },
   },

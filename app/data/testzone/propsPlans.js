@@ -105,7 +105,6 @@ default: {
       //criteria: { list: [], inOrder: false },
       drops: ['helipass'],
       action: 'none', // mutates, combines,
-      //destroy: false,
       paid: 0,
       max: 2,
     },
@@ -124,11 +123,22 @@ default: {
     },
   },
 
+  mingVase: {
+    desc: 'a ming dynsaty delicate china vase, it dispences unlimited sticks',
+    locs: ['testSite'],
+    pays: {
+      drops: ['stick'],
+      paid: 0,
+      max: 100,
+    }
+
+  },
+
 
 
   gnome: {
     desc: "a nice gnome",
-    locs: ['clearing'],
+    locs: ['testSite'],
     actions: {
       env: {
         speak: () => { custom({ action: 'lines', id: 'random' }) },
@@ -194,7 +204,7 @@ default: {
     locs: ['inv'],
     actions: {
       bod: {
-        examine: () => { propActions().msg(`its lint, like you get from your pocket.`) },
+        //examine: () => { propActions().msg(`its lint, like you get from your pocket.`) },
         sniff: () => { propActions().msg(`you sniff your lint, it smells vaugly of dust, and pocket.`) },
         throw: () => { propActions().drop('lint') },
       },
@@ -214,9 +224,9 @@ default: {
     pickUp: true,
     actions: {
       inv: {
-        give: () => console.log(`give to gnome`),
-        tickling: () => console.log(`You tickle something with it`),
-        poking: () => console.log(`you poke something with it`),
+        //give: () => console.log(`give to gnome`),
+        //tickling: () => console.log(`You tickle something with it`),
+        //poking: () => console.log(`you poke something with it`),
       },
     },
     properties: {
@@ -248,7 +258,7 @@ default: {
 
   littleMonster: {
     desc: 'Oooh how cute, a little monster',
-    locs: ['creepyWoods'],
+    locs: ['testSite'],
     actions: {
       env: {
         //hit: () => console.log(`monster is hit`)
@@ -260,16 +270,6 @@ default: {
       defense: 2,
       health: 4,
       drops: ['penny'],
-    },
-  },
-
-  mingVase: {
-    desc: 'a ming dynsaty delicate china vase, it dispences unlimited sticks',
-    locs: [],
-    actions: {
-      env: {
-        pickUp: () => custom({ action: 'create', id: 'stick' })
-      },
     },
   },
 
@@ -291,7 +291,7 @@ default: {
   },
   roboken: {
     desc: 'a robot with a chickens heart.',
-    locs: ['testSite', 'begining']
+    locs: []
   },
   vexedSheep: {
     desc: 'a slightly vexed sheep with fluffy white fleece.',
