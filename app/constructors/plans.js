@@ -28,18 +28,18 @@ const plans = () => {
     return ids
   }
 
-  const initaliseProps = (props, info) => {
+  const initaliseProps = (cabinet, info) => {
+    let props = cabinet.draws.props
     for (let id in props) {
       let prop = props[id]
       if (prop.code == undefined) prop.code = id
       if (prop.desc == undefined) prop.desc = id
       if (prop.locs == undefined) prop.locs = []
       prop.usedIn = []
-      info.defaultActions(id, info.action, info.draws)
+      info.defaultActions(id, info.action, cabinet.draws)
     }
     for (let id in props) {
-      let prop = props[id]
-      applyCombinesWith(prop, props)
+      applyCombinesWith(props[id], cabinet.draws.props)
     }
     return props
   }
