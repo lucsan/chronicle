@@ -30,7 +30,7 @@ describe('cabinet', () => {
     expect(cabinet.use('player').name).toBe('Playe Rone')
   })
 
-  it('should poulate a full object', () => {
+  it('should populate a deep object', () => {
     let cabinet = new Cabinet
     const text = 'you proded it'
     const propsPlansTest = {
@@ -39,11 +39,27 @@ describe('cabinet', () => {
           env: {
             prod: text
           }
-        }
+        },
+        usedIn: ['a', 'b', 'c']
       }
     }
     cabinet.use({ props: propsPlansTest })
+    console.log(cabinet.draws.props.testItem)
     expect(cabinet.draws.props.testItem.actions.env.prod).toBe(text)
   })
 
+
 })
+
+// const injector = (fragment, subject) => {
+//   let keys = Object.keys(fragment)
+//   keys.map(k => {
+//     if (typeof(fragment[k]) === 'object' && !Array.isArray(fragment[k])) {
+//       if (subject[k] === undefined) subject[k] = {}
+//       return injector(fragment[k], subject[k])
+//     } else {
+//       subject[k] = fragment[k]
+//     }
+//   })
+//   return subject
+// }
