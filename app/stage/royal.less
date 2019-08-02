@@ -1,3 +1,7 @@
+body {
+  font-family: verdana;
+}
+
 .title { font-weight: bold; }
 
 .respond {
@@ -5,46 +9,81 @@
   background: #eeeeee;
 }
 
-
-
 .inventory {
-  border: 2px solid brown;
-  width: 48%;
-  float: left;
+  background-color: #f2f2f2;
 }
 
 .body {
   background-color: #ffe6cc;
-  border: 2px solid red;
+}
+
+.inventory, .body {
   width: 48%;
   float: left;
+}
+
+.inventory .container-title {
+  background-color: #e6e6e6;
 }
 
 .body .container-title {
   background-color: #ff9933;
 }
 
-.placeProps {
-  background-color: #c2f0c2;
-  border: 2px solid green;
-  //width: 32%;
-  //float: left;
+.inventory .prop .title,
+.body .prop .title {
+  font-size: smaller;
+}
+
+#env {
+  clear: both;
+  overflow: auto;
+
+}
+
+#env .prop {
+  float: left;
+  border: 1px solid green;
+  background-color: #00cc44;
+  margin-right: 4px;
+  margin-bottom: 2px;
+  padding: 2px;
+}
+
+#env .prop .title {
+  font-size: smaller;
 }
 
 #place {
   background-color: #c2f0c2;
+  width: 96%;
 }
 
 #place .placeTitle {
   background-color: #5cd65c;
 }
 
+#exits {
+  clear: both;
+  overflow: auto;
+  min-height: 3em;
+}
 
-.placeProps .container-title {
-  background-color: #5cd65c;
+#exits .container-title {
   background-color: #5cd65c;
 }
 
+#exits .exit {
+  float: left;
+  margin-right: 3px;
+}
 
+.placeProps {
+  background-color: #c2f0c2;
+}
+
+.placeProps .container-title {
+  background-color: #5cd65c;
+}
 
 .action, .exit { cursor: pointer; }

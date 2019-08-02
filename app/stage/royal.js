@@ -88,8 +88,8 @@ const royal = (draws) => {
     const propIds = propsAtLoc(loc)
     if (loc != 'bod' && loc != 'inv' && loc != 'box') loc = 'env'
     document.getElementById(loc).innerHTML = ''
-    if (loc == 'inv') el('inv', 'title').div('🎒 backpack')
-    if (loc == 'bod') el('bod', 'title').div('🤲 in hand')
+    if (loc == 'inv') el('inv', 'container-title').div('🎒 backpack')
+    if (loc == 'bod') el('bod', 'container-title').div('🤲 in hand')
     propIds.map(p => {
       let prop = draws.decor[p]
       el(loc, 'prop', `${loc}-${prop.code}`).div()
@@ -129,7 +129,7 @@ const royal = (draws) => {
 
   const placeExits = (place) => {
     document.getElementById('exits').innerHTML = ''
-    el('exits', 'title').div('Exits')
+    el('exits', 'container-title').div('Exits')
     place.exits.map(e => {
       const exit = draws.places[e.to]
       //console.log(exit)
