@@ -12,6 +12,7 @@ const royal = (draws) => {
     if (actionName == 'examine') return '<span title="examine closely" >🔬</span>'
     if (actionName == 'dropIt') return '<span title="drop me" >👐</span>'
     if (actionName == 'boxIt') return '<span title="put me in the box" >🎁</span>'
+    if (actionName == 'combine') return '<span title="Craft things" >🔧</span>'
 
     return actionName
   }
@@ -34,6 +35,7 @@ const royal = (draws) => {
     el('place', 'things place placeProps', 'env').div()
     el('place', 'place exits', 'exits').div()
 
+    el('things', 'things combo', 'combo').div()
     el('things', 'things box', 'box').div()
     el('things', 'things body', 'bod').div()
     el('things', 'things inventory', 'inv').div()
@@ -69,6 +71,7 @@ const royal = (draws) => {
     if (!d || !d.box) return
     let inBox = propsInBox(d.box)
     document.getElementById('box').innerHTML = ''
+    el('box', 'title').div('🎁 box')
     inBox.map(pid => {
       const prop = draws.decor[pid]
       el('box', 'box prop', `box-${prop.code}`).div()
@@ -81,6 +84,8 @@ const royal = (draws) => {
     const propIds = propsAtLoc(loc)
     if (loc != 'bod' && loc != 'inv' && loc != 'box') loc = 'env'
     document.getElementById(loc).innerHTML = ''
+    if (loc == 'inv') el('inv', 'title').div('🎒 backpack')
+    if (loc == 'bod') el('bod', 'title').div('🤲 in hand')
     propIds.map(p => {
       let prop = draws.decor[p]
       el(loc, 'prop', `${loc}-${prop.code}`).div()
@@ -95,9 +100,27 @@ const royal = (draws) => {
       if (i == 'boxIt' && draws.openBox == '') continue
       el(`${container}-${prop.code}`, `action ${i}`).button(actionEmos(i), box[i])
     }
+    // Combo button
     if (prop.usedIn.length > 0) {
-      el(`${container}-${prop.code}`, 'action i').button('combo', e => console.log('combo'))
+      el(`${container}-${prop.code}`, `action combo`).button(actionEmos('combine'), e => listCombos(prop))
     }
+  }
+
+  const listCombos = (prop) => {
+    el().removeElement('combi')
+    el('combo', 'combo', 'combi').div()
+    el('combi', 'combo title').div('🔧 Combine ' + prop.code)
+    prop.usedIn.map(p => {
+      const needs = draws.decor[p].combines.needs
+      el('combi', 'combo item').div(p + ' needs ' + needs)
+      el('combi', 'combo button').button(`Make ${p}`, e => custom({ action: 'combine', id: p }))
+    })
+
+    console.log('listComobs', prop)
+  }
+
+  const comboActions = (prop, container) => {
+
   }
 
   const placeExits = (place) => {

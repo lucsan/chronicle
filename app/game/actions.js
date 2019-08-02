@@ -215,10 +215,79 @@ const actions = () => {
   //
   // }
 
-  const combine = (id, cabinet) => {
+
+
+  const combine1 = (id, cabinet) => {
     const usedIn = cabinet.draws.decor[id].usedIn
     console.log(id, usedIn)
+    usedIn.map(u => {
+      combinate(u, cabinet)
+    })
+
+
+    // Find combo props
+    // list combo props
+    // check for needed props
+
   }
+
+  const combine = (id, cabinet) => {
+    console.log('make', id)
+    combinate(id, cabinet)
+  }
+
+
+  const combinate = (newPropId, cabinet) => {
+    console.log('combining for ' + newPropId)
+    let needs = cabinet.draws.decor[newPropId].combines.needs
+    console.log('needs', needs)
+    let has = findInBags(needs, cabinet)
+    let hasText = has.map(n => ctt(n)).join(', ')
+    if (has.length < 1) hasText = 'nothing'
+    const needsNotMetMsg = `you need ${needs.map(n => ctt(n)).join(', ')} you have ${hasText} for ${ctt(newPropId)}`
+    if (has.length < needs.length) return dispatch({ action: 'remark', msg: needsNotMetMsg })
+
+    makeCombine(newPropId, cabinet)
+    dispatch({ action: 'prop', box: '' })
+    dispatch({ action: 'remark', msg: `Made ${ctt(newPropId)}`})
+
+  }
+
+  const makeCombine = (newPropId, cabinet) => {
+    const needs = cabinet.draws.decor[newPropId].combines.needs
+    removeFromBags(needs, cabinet)
+    console.log(needs.map(n => { return `${cabinet.draws.decor[n].code} ${cabinet.draws.decor[n].locs}` }))
+    cabinet.draws.decor[newPropId].locs.push('bod')
+  }
+
+  const destroys = (pid, needs, cabinet) => {
+    const destroy = needs
+    return destroy
+  }
+
+  const removeFromBags = (list, cabinet) => {
+    list.map(i => {
+      const prop = cabinet.draws.decor[i]
+      if (prop.locs.indexOf('inv') > -1) return prop.locs = slide('inv', prop.locs)
+      if (prop.locs.indexOf('bod') > -1) return prop.locs = slide('bod', prop.locs)
+
+    })
+  }
+
+
+
+  const findInBags = (list, cabinet) => {
+    let inBag = []
+    list.map(i => {
+      const prop = cabinet.draws.decor[i]
+      if (prop.locs.indexOf('inv') > -1
+      || prop.locs.indexOf('bod') > -1) {
+        inBag.push(i)
+      }
+    })
+    return inBag
+  }
+
 
   const dispatch = (detail) => {
     document.dispatchEvent(
