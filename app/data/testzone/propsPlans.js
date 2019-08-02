@@ -79,10 +79,10 @@ default: {
     locs: ['testSite'],
   },
 
-  bint: {
-    desc: 'a bint',
-    locs: ['testSite']
-  },
+  // bint: {
+  //   desc: 'a bint',
+  //   locs: ['testSite']
+  // },
 
   chest: {
     desc: 'a locked chest, maybe it contains a rubish sword',

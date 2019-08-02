@@ -13,6 +13,9 @@ const royal = (draws) => {
     if (actionName == 'dropIt') return '<span title="drop me" >👐</span>'
     if (actionName == 'boxIt') return '<span title="put me in the box" >🎁</span>'
     if (actionName == 'combine') return '<span title="Craft things" >🔧</span>'
+    if (actionName == 'open') return '<span title="open me" >🖐</span>'
+    if (actionName == 'dispense') return '<span title="dispense things" >📮</span>'
+    if (actionName == 'unlock') return '<span title="unlock this" >🔓</span>'
 
     return actionName
   }
@@ -61,6 +64,7 @@ const royal = (draws) => {
   }
 
   const propMoved = (d) => {
+    document.getElementById('combo').innerHTML = ''
     doProps(draws.character.location)
     doProps('bod')
     doProps('inv')
@@ -116,7 +120,7 @@ const royal = (draws) => {
       el('combi', 'combo button').button(`Make ${p}`, e => custom({ action: 'combine', id: p }))
     })
 
-    console.log('listComobs', prop)
+    //console.log('listComobs', prop)
   }
 
   const comboActions = (prop, container) => {
@@ -148,10 +152,10 @@ const royal = (draws) => {
       //console.log(d)
       if (d.locked) {
         el('exits', 'exit', e.to).div(e.to)
-        el(e.to, 'exit').button('unlock', () => custom({ action: 'unlockDoor', id: { name: d.name, to: e.to, key: d.key } }))
+        el(e.to, 'exit').button(actionEmos('unlock'), () => custom({ action: 'unlockDoor', id: { name: d.name, to: e.to, key: d.key } }))
       } else {
         el('exits', 'exit', e.to).div(e.to)
-        el(e.to, 'exit').button('open', () => draws.tools.move(e.to))
+        el(e.to, 'exit').button(actionEmos('open'), () => draws.tools.move(e.to))
       }
 
     })
@@ -165,7 +169,7 @@ const royal = (draws) => {
   const update = (d) => {
     if (d.type == 'prose') {
       document.getElementById('placeProse').innerHTML = draws.places[d.code].prose
-      console.log('🎀' + draws.places[d.code].prose)
+      //console.log('🎀' + draws.places[d.code].prose)
 
     }
   }
@@ -183,7 +187,7 @@ const royal = (draws) => {
       lookText += '<div>Contains: ' + txt + '<div>'
     }
     document.getElementById('respond').innerHTML = lookText + '</details>'
-    console.log(`👁‍🗨 ${d.code}`, prop)
+    //console.log(`👁‍🗨 ${d.code}`, prop)
   }
 
   const respond = (d) => {

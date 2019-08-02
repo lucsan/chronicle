@@ -15,7 +15,6 @@ const customActions = (dispatch) => {
   const unlock = (id, cabinet) => {
     const decor = cabinet.draws.decor
     if (!keyCheck(id, decor)) return dispatch({ action: 'remark', msg: `You need the ${decor[id].box.key} to open the ${id}` })
-
     delete decor[id].actions.env.unlock
     decor[id].actions.env.lock = () => custom({ action: 'lock', id: 'chest' })
     decor[id].actions.env.open = () => custom({ action: 'open', id: 'chest' })
@@ -49,7 +48,7 @@ const customActions = (dispatch) => {
     }
     let di = doors.indexOf(info.name)
     let key = cabinet.draws.decor[info.key]
-    if (!key.locs.find(l => l == 'bod')) return
+    if (!key.locs.find(l => l == 'bod')) return dispatch({ action: 'remark', msg: `You  need a ${ctt(info.key)} to unlock this`})
     doors[i].locked = false
 
     cabinet.use({ places: { [info.to]: { doors: doors } } })

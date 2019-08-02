@@ -23,6 +23,7 @@ const setsPlans = {
       {to: 'lab', desc: 'the laboratory entrance'}
     ]
   },
+
   creepyWoods: {
     desc: 'some nice creepy woods',
     proseScript: 'creepyWoods',
@@ -37,6 +38,11 @@ const setsPlans = {
       }
     ]
   },
+
+  skyCity: {
+    desc: 'A city in the sky',
+  },
+
   lab: {
     desc: 'a low rent laboratory, with a cheep bench, an old bunsen burner and a test tube rack',
     proseScript: 'lab',
