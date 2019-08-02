@@ -11,7 +11,7 @@ default: {
   },
   stick: {
     desc: '🌲 a nice stick',
-    locs: ['testSite', 'clearing', 'creepyWoods'],
+    locs: ['testSite', 'clearing', 'creepyWoods', 'inv'],
     artist: 'lucsan',
     pickUp: true,
     actions: {
@@ -37,9 +37,56 @@ default: {
     },
   },
 
+  hiddenBox: {
+    desc: 'A box which is hidden until an act reveals it',
+    locs: ['testSite']
+  },
+
+  lintStick: {
+    desc: 'a mysterious lintstick, it has some pocket lint stuck to it. I wonder what this is for?',
+    pickUp: true,
+    combines: {
+      needs: ['stick', 'lint', 'stickyTape'],
+      destroys: ['stick', 'lint'],
+      desc: 'you use a piece of sticky tape to adhere the lint to your stick. Yay, a lintstick, its more stick than lint and it has a sticky linty end',
+    },
+  },
+
+  mintStick: {
+    desc: 'a strange mintstick, it has a mint stuck on it. I wonder what this is for?',
+    pickUp: true,
+    combines: {
+      needs: ['stick', 'mint'],
+      destroys: ['stick', 'mint'],
+      desc: 'you chew the mint for a bit, then squish it to the end of the stick, yay, a mint stick',
+    },
+  },
+
+  // bintStick: {
+  //   desc: 'a strange bintstick',
+  //   pickUp: true,
+  //   combines: {
+  //     needs: ['stick', 'bint'],
+  //     destroys: ['stick', 'bint'],
+  //     desc: 'you chew the mint for a bit, then squish it to the end of the stick, yay, a mint stick',
+  //   },
+  // },
+
+
+  mint: {
+    desc: 'a mint',
+    pickUp: true,
+    locs: ['testSite'],
+  },
+
+  bint: {
+    desc: 'a bint',
+    locs: ['testSite']
+  },
+
   chest: {
     desc: 'a locked chest, maybe it contains a rubish sword',
-    locs: ['testSite'],
+    locs: ['stockRoom'],
     artist: 'lucsan',
     box: {
       locked: true,
@@ -76,7 +123,7 @@ default: {
 
   ninePennyBowl: {
     desc: 'A bowl which should have nine shinny new pennies in it. but dosent.',
-    locs: ['testSite'],
+    locs: ['stockRoom'],
     box: {
       open: true,
       //contains: ['shinnyPennyOne'],
@@ -90,7 +137,7 @@ default: {
     pickUp: true,
     desc: 'A shinny penny',
     boxs: ['ninePennyBowl', 'chest', 'cardBox'],
-    locs: ['testSite', 'clearing']
+    locs: ['stockRoom', 'clearing']
   },
 
   helipass: {
@@ -99,7 +146,7 @@ default: {
   },
 
   helipassDispenser: {
-    locs: ['testSite'],
+    locs: ['stockRoom'],
     box: { open: true },
     pays: {
       //criteria: { list: [], inOrder: false },
@@ -177,7 +224,7 @@ default: {
 
   chestKey: {
     desc: 'key for a chest',
-    locs: ['testSite', 'clearing'],
+    locs: ['stockRoom', 'clearing'],
     artist: 'lucsan',
     pickUp: true,
   },
@@ -201,7 +248,7 @@ default: {
 
   lint: {
     desc: "some grey and fluffy lint",
-    locs: ['inv'],
+    locs: ['bod'],
     actions: {
       bod: {
         //examine: () => { propActions().msg(`its lint, like you get from your pocket.`) },
@@ -216,28 +263,6 @@ default: {
     locs: ['inv'],
     properties: {
       sticking: true,
-    },
-  },
-
-  lintStick: {
-    desc: 'a mysterious lintstick, it has some pocket lint stuck to it. I wonder what this is for?',
-    pickUp: true,
-    actions: {
-      inv: {
-        //give: () => console.log(`give to gnome`),
-        //tickling: () => console.log(`You tickle something with it`),
-        //poking: () => console.log(`you poke something with it`),
-      },
-    },
-    properties: {
-      attack: 2,
-      defense: 0,
-      health: 10,
-    },
-    combines: {
-      needs: ['stick', 'lint', 'stickyTape'],
-      destroys: ['stick', 'lint'],
-      desc: 'you use a piece of sticky tape to adhere the lint to your stick. Yay, a lintstick, its more stick than lint and it has a sticky linty end',
     },
   },
 
@@ -287,11 +312,11 @@ default: {
   },
   chiborg: {
     desc: 'a chicken with a mechanical heart.',
-    locs: ['testSite'],
+    locs: ['stockRoom'],
   },
   roboken: {
     desc: 'a robot with a chickens heart.',
-    locs: []
+    locs: ['stockRoom']
   },
   vexedSheep: {
     desc: 'a slightly vexed sheep with fluffy white fleece.',
@@ -299,7 +324,7 @@ default: {
   },
   articulatedGoat: {
     desc: 'a goat, articulated at the knees.',
-    locs: []
+    locs: ['stockRoom']
   },
   oldMonk: {
     desc: 'a calm old monk called Ren-i quietly pushing his broom.',

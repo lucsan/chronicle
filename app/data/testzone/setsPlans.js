@@ -16,7 +16,7 @@ const setsPlans = {
   testSite: {
     desc: 'hazardous items test area',
     exits: [
-      { to: 'clearing' },
+      //{ to: 'clearing' },
       {
         to: 'helicopter',
         // actions: [
@@ -34,6 +34,7 @@ const setsPlans = {
       {to: 'begining' },
       {to: 'secretPassage' },
       {to: 'puzzleStation' },
+      {to: 'stockRoom' },
     ],
   },
 
@@ -64,6 +65,13 @@ const setsPlans = {
     desc: 'Set as chest (container)',
     exits: [
       {to: 'testSite', desc: 'close the chest'}
+    ]
+  },
+
+  stockRoom: {
+    desc: 'Where old props go to gather dust',
+    exits: [
+      {to: 'testSite', desc: 'Test Zone'}
     ]
   },
 
