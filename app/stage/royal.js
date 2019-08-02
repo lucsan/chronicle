@@ -4,11 +4,11 @@ const royal = (draws) => {
   const propsInBox = (box) => { return draws.tools.propsInBox(box, draws.decor) }
 
   const actionEmos = (actionName) => {
-    if (actionName == 'pickUp') return '<span title="Pick me up" >🤏</span>'
+    if (actionName == 'pickUp' || actionName == 'take') return '<span title="Pick me up" >🤏</span>'
     if (actionName == 'grab') return '<span title="Take me out of the bag" >🤏</span>'
     if (actionName == 'bagIt') return '<span title="pop into the bag" >🎒</span>'
     if (actionName == 'look') return '<span title="lookey see" >👁‍🗨</span>'
-    if (actionName == 'inspect') return '<span title="peeky peek" >🔎</span>'
+    if (actionName == 'inspect' || actionName == 'view') return '<span title="peeky peek" >🔎</span>'
     if (actionName == 'examine') return '<span title="examine closely" >🔬</span>'
     if (actionName == 'dropIt') return '<span title="drop me" >👐</span>'
     if (actionName == 'boxIt') return '<span title="put me in the box" >🎁</span>'
@@ -101,7 +101,7 @@ const royal = (draws) => {
       el(`${container}-${prop.code}`, `action ${i}`).button(actionEmos(i), box[i])
     }
     // Combo button
-    if (prop.usedIn.length > 0) {
+    if (prop.usedIn.length > 0 && (container == 'inv' || container == 'bod') ) {
       el(`${container}-${prop.code}`, `action combo`).button(actionEmos('combine'), e => listCombos(prop))
     }
   }
