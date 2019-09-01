@@ -1,4 +1,4 @@
-console.log('%cChronicle running ->>', 'color:red;font-weight:bold;')
+console.log('%cApp running ->>', 'color:red;font-weight:bold;')
 
 let marshall = null
 
@@ -12,7 +12,7 @@ const commonConfigLoaded = () => {
 }
 
 const loadVersionConfig = () => {
-  scriptsLoader(['app/data/chronicle/config.js'], () => loadVersionScripts())
+  scriptsLoader([`app/data/${story}/config.js`], () => loadVersionScripts())
 }
 
 const loadVersionScripts = () => {
@@ -34,19 +34,17 @@ const scriptsLoaded = () => {
   console.info('%cMarshalling assets', css+css1)
   marshall = marshalls(propsPlans, setsPlans)
 
-  // scripted actions
-  const customActions = (marshall, act) => {
-    return (act) => {
-    console.log('chra',act)
-      marshall.action(act.action, act.id)
-    }
-  }
 
   localStorage.setItem('player', JSON.stringify({ name: 'Playe Rone', character: 'Charac Ter' }))
+  console.log(marshall.cabinet)
+
   loadGame(marshall.cabinet)
 
   const stage = theater(royal(marshall.cabinet.draws))
   stage.build()
+
 }
+
+//console.log('m', marshall)
 
 let custom = (info) => { marshall.action(info.action, info.id) }
