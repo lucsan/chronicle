@@ -29,7 +29,7 @@ const actions = () => {
 
     for (let box in defaults) {
       if (!prop.actions[box]) prop.actions[box] = {}
-      for (act in defaults[box]) {
+      for (let act in defaults[box]) {
         if (!prop.actions[box][act]) prop.actions[box][act] = defaults[box][act]
       }
     }
@@ -119,6 +119,11 @@ const actions = () => {
     updateSave(cabinet)
     saveGame(cabinet.draws)
     dispatch({ action: 'prop', from: from, to: to, code: id })
+    let msg = ''
+    if (from != 'inv' && from != 'bod') msg = `you picked up the ${ctt(id)}`
+    if (to != 'inv' && to != 'bod') msg = `you dropped the ${ctt(id)} at ${ctt(to)}`
+
+    remark(msg)
   }
 
 
@@ -156,7 +161,7 @@ const actions = () => {
 
     //console.log('movefrombox', id, cabinet.draws.decor[id].boxs, cabinet.draws.openBox)
     dispatch({ action: 'prop', box: cabinet.draws.openBox })
-    dispatch({ action: 'remark', msg: `You took ${id} from ${boxId}` })
+    dispatch({ action: 'remark', msg: `You got a ${ctt(id)} from the ${ctt(boxId)}` })
   }
 
 
@@ -297,6 +302,9 @@ const actions = () => {
       )
     )
   }
+
+  const remark = (msg) => dispatch({ action: 'remark', msg: msg })
+
 
   return {
     doMove,

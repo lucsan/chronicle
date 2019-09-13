@@ -38,7 +38,7 @@ default: {
 
   nineShinnyPenniesBowl: {
     artist: 'lucsan',
-    desc: 'A beautiful bowl with a dragon on it. It should have nine shinny pennies in it, but it dosen\'t.',
+    desc: 'A beautiful bowl with a dragon on it. It should have nine shinny pennies in it, but it doesn\'t.',
     box: {
       open: true
     },
@@ -46,6 +46,7 @@ default: {
   },
 
   shinnyPennyOne: {
+    pickUp: true,
     desc: 'A bright shinny penny',
     boxs: ['nineShinnyPenniesBowl']
   },

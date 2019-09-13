@@ -14,7 +14,7 @@ const customActions = (dispatch) => {
 
   const unlock = (id, cabinet) => {
     const decor = cabinet.draws.decor
-    if (!keyCheck(id, decor)) return dispatch({ action: 'remark', msg: `You need the ${decor[id].box.key} to open the ${id}` })
+    if (!keyCheck(id, decor)) return dispatch({ action: 'remark', msg: `You need the ${ctt(decor[id].box.key)} to open the ${ctt(id)}` })
     delete decor[id].actions.env.unlock
     decor[id].actions.env.lock = () => custom({ action: 'lock', id: 'chest' })
     decor[id].actions.env.open = () => custom({ action: 'open', id: 'chest' })
@@ -41,6 +41,8 @@ const customActions = (dispatch) => {
   }
 
   const unlockDoor = (info, cabinet) => {
+    console.log(info)
+    
     let doors = cabinet.draws.places[info.to].doors
     let i = 0
     for (i = 0; i < doors.length; i++) {

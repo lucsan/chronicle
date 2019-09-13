@@ -16,6 +16,11 @@ const royal = (draws) => {
     if (actionName == 'open') return '<span title="open me" >🖐</span>'
     if (actionName == 'dispense') return '<span title="dispense things" >📮</span>'
     if (actionName == 'unlock') return '<span title="unlock this" >🔓</span>'
+    if (actionName == 'lock') return '<span title="unlock this" >🔐</span>'
+
+    if (actionName == 'ask') return '<span title="ask me" >👂</span>'
+    if (actionName == 'rub') return '<span title="rub me" >👋</span>'
+    if (actionName == 'sniff') return '<span title="havew a wiff">👃</span>'
 
     return actionName
   }
@@ -50,6 +55,11 @@ const royal = (draws) => {
     const placeId = draws.character.location
     const place = draws.places[placeId]
 
+    if (!place) return console.error(`Issue with non existent place, '${placeId}', check versionConfig charStart.`)
+
+    document.getElementById('box').innerHTML = ''
+    document.getElementById('combo').innerHTML = ''
+
     document.getElementById('placeTitle').innerHTML = ctt(placeId)
     document.getElementById('placeDesc').innerHTML = ''
     if (place.desc) document.getElementById('placeDesc').innerHTML = place.desc
@@ -75,7 +85,7 @@ const royal = (draws) => {
     if (!d || !d.box) return
     let inBox = propsInBox(d.box)
     document.getElementById('box').innerHTML = ''
-    el('box', 'title').div('🎁 box')
+    el('box', 'title').div(`🎁 ${ctt(d.box)}`)
     inBox.map(pid => {
       const prop = draws.decor[pid]
       el('box', 'box prop', `box-${prop.code}`).div()
@@ -128,43 +138,58 @@ const royal = (draws) => {
   }
 
   const placeExits = (place) => {
+  
+    if (!place.exits) return console.error(`Warning, no exits provided for `, place) 
+
     document.getElementById('exits').innerHTML = ''
     el('exits', 'container-title').div('Exits')
-    place.exits.map(e => {
-      const exit = draws.places[e.to]
-      //console.log(exit)
+    for (let to in place.exits) {
+      makeExit( to, place.exits[to])
+    }
 
-      if (exit.doors) {
-        makeDoor(e, exit)
-      } else {
-        makeExit(e)
-      }
-
-      //e.actions? exitActions(e, place): makeExit(e)
+    for (let lock in place.doors) {
+      makeDoor(lock, place.doors)
+    }
 
 
-    })
+    // place.exits.map(e => {
+    //   const exit = draws.places[e.to]
+    //   exit.doors? makeDoor(e, exit): makeExit(e)
+    // })
+
   }
 
-  const makeDoor = (e, exit) => {
-    //console.log(e, exit)
-    exit.doors.map(d => {
-      //console.log(d)
-      if (d.locked) {
-        el('exits', 'exit', e.to).div(e.to)
-        el(e.to, 'exit').button(actionEmos('unlock'), () => custom({ action: 'unlockDoor', id: { name: d.name, to: e.to, key: d.key } }))
-      } else {
-        el('exits', 'exit', e.to).div(e.to)
-        el(e.to, 'exit').button(actionEmos('open'), () => draws.tools.move(e.to))
-      }
-
-    })
+  const makeDoor = (lock, door) => {
+    el('exits', 'exit', lock).div(lock)
+    el(lock, 'exit').button(actionEmos('unlock'), () => custom({ action: 'unlockDoor', id: { name: door.name, to: lock, key: door.key } }))
   }
 
-  const makeExit = (e) => {
-    el('exits', 'exit', e.to).div()
-    el(e.to, 'exit').button(ctt(e.to), () => draws.tools.move(e.to))
+  const makeExit = (to, exit) => {
+    el('exits', 'exit', to).div()
+    el(to, 'exit').button(exit.desc?exit.desc:ctt(to), () => draws.tools.move(to))
+    
   }
+
+  // const makeDoor1 = (e, exit) => {
+  //   exit.doors.map(d => {
+  //     if (d.locked) {
+  //       el('exits', 'exit', e.to).div(e.to)
+  //       el(e.to, 'exit').button(actionEmos('unlock'), () => custom({ action: 'unlockDoor', id: { name: d.name, to: e.to, key: d.key } }))
+  //     } else {
+  //       el('exits', 'exit', e.to).div(e.to)
+  //       el(e.to, 'exit').button(actionEmos('open'), () => draws.tools.move(e.to))
+  //       // el('exits', 'exit', e.to).div()
+  //       // el(e.to, 'exit').button(`${ctt(d.name)} ${ctt(e.to)}`, () => draws.tools.move(e.to))
+
+  //     }
+
+  //   })
+  // }
+
+  // const makeExit1 = (e) => {
+  //   el('exits', 'exit', e.to).div()
+  //   el(e.to, 'exit').button(e.desc?e.desc:ctt(e.to), () => draws.tools.move(e.to))
+  // }
 
   const update = (d) => {
     if (d.type == 'prose') {
