@@ -1,24 +1,15 @@
 const propsPlans = {
-default: {
-    artist: '',
-    desc: '',
-    loc: '',
-    locs: [],
-    pickUp: false,
-    isBox: false,
-    hit: true, // can hit things with it
-    strikes: false, // retaliates
-  },
+
   stick: {
     desc: '🌲 a nice stick',
-    locs: ['clearing', 'creepyWoods'],
+    locs: ['trunk'],
     artist: 'lucsan',
     pickUp: true,
   },
 
   chest: {
     desc: 'a locked chest, maybe it contains a rubish sword',
-    locs: ['clearing'],
+    locs: ['trunk'],
     artist: 'lucsan',
     box: { locked: true, key: 'chestKey' },
   },
@@ -31,14 +22,14 @@ default: {
 
   chestKey: {
     desc: 'key for a chest',
-    locs: ['clearing'],
+    locs: ['trunk'],
     artist: 'lucsan',
     pickUp: true,
   },
 
   welcomizer: {
     desc: 'A welcomizer, its here to help',
-    locs: ['begining'],
+    locs: ['trunk'],
     pickUp: true,
     actions: {
       env: {
@@ -55,7 +46,7 @@ default: {
 
   gnome: {
     desc: "a nice gnome",
-    locs: ['clearing'],
+    locs: ['trunk'],
     actions: {
       env: {
         speak: () => { custom({ action: 'remark', id: 'ha ha ha, he he he, I\'m a little gnome and you can\'t catch me' }) },
@@ -123,7 +114,7 @@ default: {
 
   littleMonster: {
     desc: 'Oooh how cute, a little monster',
-    locs: ['creepyWoods'],
+    locs: ['trunk'],
     actions: {
       env: {
         //hit: () => console.log(`monster is hit`)
@@ -140,7 +131,7 @@ default: {
 
   mingVase: {
     desc: 'a ming dynsaty delicate china vase, it dispences unlimited sticks',
-    locs: ['testSite', 'creepyWoods'],
+    locs: ['trunk', 'creepyWoods'],
     actions: {
       env: {
         pickUp: () => custom({ action: 'create', id: 'stick' })
@@ -150,35 +141,18 @@ default: {
 
   washingSoda: {
     desc: 'A tin of sodium carbonate.',
-    locs: ['testSite', 'lab'],
+    locs: ['trunk', 'lab'],
   },
   citricAcid: {
     desc: 'a bag of citric acid. It tastes kinda lemony',
-    locs: ['testSite', 'lab'],
+    locs: ['trunk', 'lab'],
   },
   testTube: {
     desc: 'a test tube of dubious cleanliness.',
-    locs: ['testSite', 'lab'],
-  },
-  chiborg: {
-    desc: 'a chicken with a mechanical heart.',
-    locs: ['testSite'],
+    locs: ['trunk', 'lab'],
   },
   roboken: {
     desc: 'a robot with a chickens heart.',
-    locs: ['testSite', 'begining']
+    locs: ['trunk', 'begining']
   },
-  vexedSheep: {
-    desc: 'a slightly vexed sheep with fluffy white fleece.',
-    locs: ['testSite', 'funkyHills']
-  },
-  articulatedGoat: {
-    desc: 'a goat, articulated at the knees.',
-    locs: ['testSite']
-  },
-  oldMonk: {
-    desc: 'a calm old monk called Ren-i quietly pushing his broom.',
-    locs: ['teaHouse']
-  }
-
 }

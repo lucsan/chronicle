@@ -46,7 +46,7 @@ const scriptsLoaded = () => {
 
   localStorage.setItem('player', JSON.stringify({ name: 'Playe Rone', character: 'Charac Ter' }))
   console.log(marshall.cabinet)
-  marshall.cabinet.draws.character.location = 'testSite'
+  marshall.cabinet.draws.character.location = versionConfig.charStart
   loadGame(marshall.cabinet)
 
   const stage = theater(royal(marshall.cabinet.draws))

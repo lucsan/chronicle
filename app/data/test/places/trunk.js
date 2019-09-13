@@ -1,0 +1,1 @@
+const trunk_prose = `A 📦 room containing all the props. A prop trunk if you will.`
