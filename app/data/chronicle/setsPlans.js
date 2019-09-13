@@ -3,9 +3,7 @@ const setsPlans = {
   begining: {
     desc: 'A begining. Your character stands poised ready for a new adventure. Click on 🤏 to pick up the welcomizer. Click on clearing to begin your journey.',
     proseScript: 'begining',
-    exits: [
-      {to: 'clearing', desc: 'Adventure awaits (click here) ...'},
-    ]
+    exits: {clearing: { desc: 'Adventure awaits (click here) ...'} },
   },
 
   clearing: {
@@ -13,83 +11,73 @@ const setsPlans = {
     label: 'a nice clearing',
     proseScript: 'clearing',
     author: 'lucsan',
-    exits: [
-      {
-        desc: 'Path to the Creepy Woods',
-        to: 'creepyWoods',
-      },
-    ]
+    exits: { creepyWoods: { desc: 'Path to the Creepy Woods' } },
   },
 
   aPath: {
     desc: 'a path leads off to the north',
-    exits: [
-      { to: 'creepyWoods' },
-      { to: 'wetWaterRiver' },
-    ]
+    exits: {
+      creepyWoods: {},
+      wetWaterRiver: {},
+    },
   },
 
   wetWaterRiver: {
     desc: 'a bend in the river, the water definately looks like the wet type',
-    exits: [
-      { to: 'aPath' },
-      { to: 'riverBoat' },
-    ]
+    exits: {
+      aPath: {},
+      riverBoat: {},
+    },
   },
 
   riverBoat: {
     desc: 'a river boat',
-    exits: [
-      { to: 'wetWaterRiver' },
-      { to: 'drearyLane' },
-    ]
+    exits: {
+      wetWaterRiver: {},
+      drearyLane: {},
+    },
   },
 
   drearyLane: {
     desc: 'a dreary lane wonders away from the river',
-    exits: [
-      { to: 'riverBoat' },
-      { to: 'statelyManorLawns' },
-      { to: 'statelyVillage' },
-    ]
+    exits: {
+      riverBoat: {},
+      statelyManorLawns: {},
+      statelyVillageriveBoat: {},
+    },
   },
 
   statelyManorLawns: {
     desc: 'a wide tree lined driveway leads across the lawns to the front of the manor. There is an alien spaceship parked on the grass',
-    exits: [
-      { to: 'alienSpaceShip' },
-      { to: 'drearyLane' },
-      { to: 'statelyManorFront' },
-    ]
+    exits: {
+      alienSpaceShip: {},
+      drearyLane: {},
+      statelyManorFront: {},
+    },
   },
 
   alienSpaceShip: {
     desc: 'a spaceship, it belongs to some aliens from outer space',
-    exits: [{to: 'statelyManorLawns'}],
+    exits: {
+      statelyManorLawns: {},
+    },
   },
 
   statelyVillage: {
     desc: 'the village of Stately',
-    exits: [{to: 'drearyLane'}],
+    exits: {
+      drearyLane: {},
+    },
   },
 
   creepyWoods: {
     desc: 'some nice creepy woods',
     proseScript: 'creepyWoods',
-    exits: [
-      {
-        desc: 'a Clearing can be seen through the trees',
-        to: 'clearing',
-      },
-      {
-        desc: 'a path leads out of the woods',
-        to: 'aPath',
-      },
-      {
-        desc: 'sunshine covered meadows lie in the distance',
-        to: 'funkyHills'
-      }
-    ]
+    exits: {
+      clearing: { desc: 'a Clearing can be seen through the trees', },
+      aPath: { desc: 'a path leads out of the woods', },
+      funkyHills: { desc: 'sunshine covered meadows lie in the distance', },
+    },
   },
 
   skyCity: {
@@ -99,32 +87,26 @@ const setsPlans = {
   lab: {
     desc: 'a low rent laboratory, with a cheep bench, an old bunsen burner and a test tube rack',
     proseScript: 'lab',
-    exits: [
-      {
-        desc: 'the door to the Clearing',
-        to: 'clearing',
-      },
-      { to: 'labShed'}
-    ]
+    exits: {
+      clearing: { desc: 'the door to the Clearing', },
+      labShed: {},
+    },
   },
 
   labShed: {
     desc: 'a shed round the back of the laboratory',
-    exits: [
-      { to: 'lab' },
-      { to: 'clearing' }
-    ],
+    exits: {
+      lab: {},
+      clearing: {},
+      },
   },
 
   funkyHills: {
     desc: 'low grassy hills undulate across a shallow plain, sheep gamble in the pastures and meadows, a windmill gently turns in the distance',
-    exits: [
-      {
-        desc: 'The creepy woods becon with twisted twig',
-        to: 'creepyWoods'
-      },
-      {to: 'bridgeOfSighs'}
-    ]
+    exits: {
+      creepyWoods: { desc: 'The creepy woods becon with twisted twig', },
+      bridgeOfSighs: {},
+    },
   },
 
   bridgeOfSighs: {
@@ -137,45 +119,50 @@ const setsPlans = {
 
   acornDale: {
     desc: 'acorn dale',
-    exits: [
-      { to: 'bridgeOfSighs' },
-      { to: 'treeHouse' },
-    ],
+    exits: {
+      bridgeOfSighs: {},
+      treeHouse: {},
+    },
   },
 
   treeHouse: {
     desc: 'an entire house, in a tree, albeit a one room house',
     proseScript: 'treeHouse',
-    exits: [
-      {to: 'acornDale' },
-    ],
-    doors: [
-      { name: 'climb', locked: true, key: 'ropeLadder' }
-    ],
+    exits: {
+      acornDale: {},
+    },
+    // doors: [
+    //   { name: 'climb', locked: true, key: 'ropeLadder' }
+    // ],
   },
 
   teaHouse: {
     desc: 'a tea house, well, more a hut than house',
-    exits: [{to: 'clearing'}],
+    exits: {
+      clearing: {},
+    },
   },
 
   fairytails: {
     desc: 'The big book of Fairy tails and smaller legends.',
-    exits: [{to: 'clearing'}],
+    exits: {
+      clearing: {},
+    },
   },
 
 
   helicopter: {
     desc: 'a sleek and shinny helecopter',
-    exits: [{to: 'testSite'}],
+    exits: {
+      testSite: {},
+    },
   },
 
   bannanaFactoryFrontEntrance: {
     desc: 'And you thought bannans grew on trees.',
-    exits: [{to: 'testSite'}],
+    exits: {
+      testSite: {},
+    },
   },
-
-
-
 
 }
