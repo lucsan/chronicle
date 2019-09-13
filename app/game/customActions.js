@@ -1,4 +1,6 @@
+console.log('%c--> customActions', 'color: green;')
 // these are container actions
+
 const customActions = (dispatch) => {
 
   const lock = (id, cabinet) => {
@@ -41,21 +43,29 @@ const customActions = (dispatch) => {
   }
 
   const unlockDoor = (info, cabinet) => {
-    console.log(info)
+    const { to, from } = info
+    let doors = cabinet.draws.places[from].doors
+    let door = doors[to]
     
-    let doors = cabinet.draws.places[info.to].doors
-    let i = 0
-    for (i = 0; i < doors.length; i++) {
-      if (doors[i].name == info.name) break;
-    }
-    let di = doors.indexOf(info.name)
-    let key = cabinet.draws.decor[info.key]
-    if (!key.locs.find(l => l == 'bod')) return dispatch({ action: 'remark', msg: `You  need a ${ctt(info.key)} to unlock this`})
-    doors[i].locked = false
+    if (!door) return dispatch({ action: 'remark', msg: `${from} ${to} does not have any instructions.` })
+    if (!door.locked) return
 
-    cabinet.use({ places: { [info.to]: { doors: doors } } })
-    dispatch({ action: 'doorsUpdate', info: { place: info.to, door: info.name } })
+    const key = cabinet.draws.decor[door.key]
 
+    if (!key) return dispatch({ action: 'remark', msg: `Prop ${door.key} doesnt exist (see propsPlans).` })
+    if (!key.locs.find(l => l == 'bod' || l == 'inv')) return dispatch({ action: 'remark', msg: `You need a ${ctt(door.key)} to unlock this`})
+
+    cabinet.use({ places: { [from]: { doors: { [to]: { locked: false } } } } })
+    dispatch({ action: 'remark', msg: `You unlocked ${ctt(to)} with a ${ctt(door.key)}` })
+    dispatch({ action: 'doorsUpdate', info: { from, to } })
+  }
+
+  const enter = (info, cabinet, doMove) => {
+    const { from, to } = info
+     
+    doMove(to, cabinet)
+    //console.log(info)
+    
   }
 
   const paymentRequired = (prop) => {
@@ -125,6 +135,7 @@ const customActions = (dispatch) => {
     unlock,
     open,
     unlockDoor,
+    enter,
     dispense,
   }
 }

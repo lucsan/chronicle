@@ -1,7 +1,7 @@
 const setsPlans = {
   // place {id name}: Description (with tokens)
   begining: {
-    desc: 'A begining. Your character stands poised ready for a new adventure',
+    desc: 'A begining. Your character stands poised ready for a new adventure. Click on 🤏 to pick up the welcomizer. Click on clearing to begin your journey.',
     proseScript: 'begining',
     exits: [
       {to: 'clearing', desc: 'Adventure awaits (click here) ...'},
@@ -15,13 +15,62 @@ const setsPlans = {
     author: 'lucsan',
     exits: [
       {
-        desc: 'a path leads to the Creepy Woods',
+        desc: 'Path to the Creepy Woods',
         to: 'creepyWoods',
       },
-      { to: 'treeHouse' },
-      { to: 'teaHouse' },
-      {to: 'lab', desc: 'the laboratory entrance'}
     ]
+  },
+
+  aPath: {
+    desc: 'a path leads off to the north',
+    exits: [
+      { to: 'creepyWoods' },
+      { to: 'wetWaterRiver' },
+    ]
+  },
+
+  wetWaterRiver: {
+    desc: 'a bend in the river, the water definately looks like the wet type',
+    exits: [
+      { to: 'aPath' },
+      { to: 'riverBoat' },
+    ]
+  },
+
+  riverBoat: {
+    desc: 'a river boat',
+    exits: [
+      { to: 'wetWaterRiver' },
+      { to: 'drearyLane' },
+    ]
+  },
+
+  drearyLane: {
+    desc: 'a dreary lane wonders away from the river',
+    exits: [
+      { to: 'riverBoat' },
+      { to: 'statelyManorLawns' },
+      { to: 'statelyVillage' },
+    ]
+  },
+
+  statelyManorLawns: {
+    desc: 'a wide tree lined driveway leads across the lawns to the front of the manor. There is an alien spaceship parked on the grass',
+    exits: [
+      { to: 'alienSpaceShip' },
+      { to: 'drearyLane' },
+      { to: 'statelyManorFront' },
+    ]
+  },
+
+  alienSpaceShip: {
+    desc: 'a spaceship, it belongs to some aliens from outer space',
+    exits: [{to: 'statelyManorLawns'}],
+  },
+
+  statelyVillage: {
+    desc: 'the village of Stately',
+    exits: [{to: 'drearyLane'}],
   },
 
   creepyWoods: {
@@ -31,6 +80,10 @@ const setsPlans = {
       {
         desc: 'a Clearing can be seen through the trees',
         to: 'clearing',
+      },
+      {
+        desc: 'a path leads out of the woods',
+        to: 'aPath',
       },
       {
         desc: 'sunshine covered meadows lie in the distance',
@@ -54,6 +107,7 @@ const setsPlans = {
       { to: 'labShed'}
     ]
   },
+
   labShed: {
     desc: 'a shed round the back of the laboratory',
     exits: [
@@ -61,6 +115,7 @@ const setsPlans = {
       { to: 'clearing' }
     ],
   },
+
   funkyHills: {
     desc: 'low grassy hills undulate across a shallow plain, sheep gamble in the pastures and meadows, a windmill gently turns in the distance',
     exits: [
@@ -71,14 +126,32 @@ const setsPlans = {
       {to: 'bridgeOfSighs'}
     ]
   },
+
   bridgeOfSighs: {
     desc: 'an ornate bridge with a definate air of sorrow',
-    exits: [{to: 'funkyHills'},],
+    exits: [
+      { to: 'funkyHills' },
+      { to: 'acornDale' },
+    ],
   },
+
+  acornDale: {
+    desc: 'acorn dale',
+    exits: [
+      { to: 'bridgeOfSighs' },
+      { to: 'treeHouse' },
+    ],
+  },
+
   treeHouse: {
     desc: 'an entire house, in a tree, albeit a one room house',
     proseScript: 'treeHouse',
-    exits: [{to: 'clearing'}]
+    exits: [
+      {to: 'acornDale' },
+    ],
+    doors: [
+      { name: 'climb', locked: true, key: 'ropeLadder' }
+    ],
   },
 
   teaHouse: {
@@ -86,13 +159,14 @@ const setsPlans = {
     exits: [{to: 'clearing'}],
   },
 
-  helicopter: {
-    desc: 'a sleek and shinny helecopter',
-    exits: [{to: 'testSite'}],
+  fairytails: {
+    desc: 'The big book of Fairy tails and smaller legends.',
+    exits: [{to: 'clearing'}],
   },
 
-  puzzleStation: {
-    desc: 'You\'ve done a little exploring, now to progress the story further you must solve a riddle',
+
+  helicopter: {
+    desc: 'a sleek and shinny helecopter',
     exits: [{to: 'testSite'}],
   },
 
@@ -101,10 +175,7 @@ const setsPlans = {
     exits: [{to: 'testSite'}],
   },
 
-  alienSpaceShip: {
-    desc: 'A spaceship, it belongs to some aliens from outer space.',
-    exits: [{to: 'testSite'}],
-  }
+
 
 
 }

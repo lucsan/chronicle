@@ -20,7 +20,7 @@ const royal = (draws) => {
 
     if (actionName == 'ask') return '<span title="ask me" >👂</span>'
     if (actionName == 'rub') return '<span title="rub me" >👋</span>'
-    if (actionName == 'sniff') return '<span title="havew a wiff">👃</span>'
+    if (actionName == 'sniff') return '<span title="have a wiff">👃</span>'
 
     return actionName
   }
@@ -89,7 +89,7 @@ const royal = (draws) => {
     inBox.map(pid => {
       const prop = draws.decor[pid]
       el('box', 'box prop', `box-${prop.code}`).div()
-      el( `box-${prop.code}`, 'box title').div(prop.code)
+      el( `box-${prop.code}`, 'box title').div(ctt(prop.code))
       propsActions(prop, 'box')
     })
   }
@@ -139,57 +139,33 @@ const royal = (draws) => {
 
   const placeExits = (place) => {
   
-    if (!place.exits) return console.error(`Warning, no exits provided for `, place) 
+    if (!place.exits && !place.doors) return console.error(`Warning, no exits (or doors) provided for `, place) 
 
     document.getElementById('exits').innerHTML = ''
     el('exits', 'container-title').div('Exits')
     for (let to in place.exits) {
       makeExit( to, place.exits[to])
     }
-
-    for (let lock in place.doors) {
-      makeDoor(lock, place.doors)
+    for (let to in place.doors) {
+      makeDoor(to, place.code, place.doors[to].locked, place.doors[to].key)
     }
-
-
-    // place.exits.map(e => {
-    //   const exit = draws.places[e.to]
-    //   exit.doors? makeDoor(e, exit): makeExit(e)
-    // })
-
   }
 
-  const makeDoor = (lock, door) => {
-    el('exits', 'exit', lock).div(lock)
-    el(lock, 'exit').button(actionEmos('unlock'), () => custom({ action: 'unlockDoor', id: { name: door.name, to: lock, key: door.key } }))
+  const makeDoor = (to, from, locked = false, key = '') => {
+    el('exits', 'exit', to).div(to)
+    if (key) {
+      el(to, 'exit').button(actionEmos('unlock'), () => custom({ action: 'unlockDoor', id: { to, from } }))
+    }
+    if (!locked) {
+      el(to, 'exit').button(actionEmos('enter'), () => custom({ action: 'enter', id: { to, from } }))
+    }
   }
 
   const makeExit = (to, exit) => {
     el('exits', 'exit', to).div()
-    el(to, 'exit').button(exit.desc?exit.desc:ctt(to), () => draws.tools.move(to))
+    el(to, 'exit').button(exit.desc?exit.desc: ctt(to), () => draws.tools.move(to))
     
   }
-
-  // const makeDoor1 = (e, exit) => {
-  //   exit.doors.map(d => {
-  //     if (d.locked) {
-  //       el('exits', 'exit', e.to).div(e.to)
-  //       el(e.to, 'exit').button(actionEmos('unlock'), () => custom({ action: 'unlockDoor', id: { name: d.name, to: e.to, key: d.key } }))
-  //     } else {
-  //       el('exits', 'exit', e.to).div(e.to)
-  //       el(e.to, 'exit').button(actionEmos('open'), () => draws.tools.move(e.to))
-  //       // el('exits', 'exit', e.to).div()
-  //       // el(e.to, 'exit').button(`${ctt(d.name)} ${ctt(e.to)}`, () => draws.tools.move(e.to))
-
-  //     }
-
-  //   })
-  // }
-
-  // const makeExit1 = (e) => {
-  //   el('exits', 'exit', e.to).div()
-  //   el(e.to, 'exit').button(e.desc?e.desc:ctt(e.to), () => draws.tools.move(e.to))
-  // }
 
   const update = (d) => {
     if (d.type == 'prose') {
@@ -216,7 +192,7 @@ const royal = (draws) => {
   }
 
   const respond = (d) => {
-    console.log('respond', d.msg)
+    //console.log('respond', d.msg)
     document.getElementById('respond').innerHTML = d.msg
   }
 

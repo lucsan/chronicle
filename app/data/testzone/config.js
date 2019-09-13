@@ -1,8 +1,8 @@
 const versionConfig = {
   // Instance level config (eg: data, testZone, mystery)
   //eventPrefix: 'chronicle_',
-  charStart: 'testzone',
-  version: 'testzone',
+  charStart: 'testSite',
+  version: 'testZone',
   autoload: [
     'app/data/testzone/setsPlans.js',
     'app/data/testzone/propsPlans.js',

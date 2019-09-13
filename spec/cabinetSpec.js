@@ -44,7 +44,7 @@ describe('cabinet', () => {
       }
     }
     cabinet.use({ props: propsPlansTest })
-    console.log(cabinet.draws.props.testItem)
+    //console.log(cabinet.draws.props.testItem)
     expect(cabinet.draws.props.testItem.actions.env.prod).toBe(text)
   })
 

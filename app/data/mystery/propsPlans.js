@@ -20,7 +20,7 @@ default: {
         ask: () => { custom({ action: 'remark', id: 'Click on 🤏 pickUp to pick me up, click on 👁‍🗨 look, to inspect me.' }) }
       },
       bod: {
-        ask: () => { custom({ action: 'remark', id: 'Click on 🎒bag it, to put me in the backpack. Click on 👐drop to drop me.' }) },
+        ask: () => { custom({ action: 'remark', id: 'Click on 🎒bag it, to put me in the backpack. Click on 👐 drop to drop me.' }) },
       },
       inv: {
         ask: () => { custom({ action: 'remark', id: 'Click on 🤏 grab, to grab me out of the backpak.' }) },
@@ -32,7 +32,7 @@ default: {
   badge: {
     desc: 'A little copper button badge, it says `Detective #1`.',
     label: '📛 Badge',
-    locs: ['bod', 'foulManorLibrary'],
+    locs: ['foulManorLibrary'],
     pickUp: true,
   },
 

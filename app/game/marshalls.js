@@ -18,6 +18,8 @@ const marshalls = (defaultProps, defaultSets) => {
     })
   })
 
+  cabinet.use({ places: planz.initaliseSets( cabinet, {}) })
+
   cabinet.use({ tools: { propsAtLoc: planz.propsAtLoc } })
   cabinet.use({ tools: { propsInBox: planz.propsInBox } })
   cabinet.use({ tools: { move: move } })

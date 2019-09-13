@@ -32,9 +32,9 @@ const plans = () => {
     let props = cabinet.draws.props
     for (let id in props) {
       let prop = props[id]
-      if (prop.code == undefined) prop.code = id
-      if (prop.desc == undefined) prop.desc = id
-      if (prop.locs == undefined) prop.locs = []
+      if (!prop.code) prop.code = id
+      if (!prop.desc) prop.desc = id
+      if (!prop.locs) prop.locs = []
       prop.usedIn = []
       info.defaultActions(id, info.action, cabinet.draws)
     }
@@ -51,9 +51,19 @@ const plans = () => {
     })
   }
 
+  const initaliseSets = (cabinet, info) => {
+    let sets = cabinet.draws.sets
+    for (let id in sets) {
+      let set = sets[id]
+      if (!set.code) set.code = id
+    }
+    return sets
+  }
+
   return {
     propsAtLoc,
     propsInBox,
     initaliseProps,
+    initaliseSets,
   }
 }

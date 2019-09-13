@@ -1,14 +1,4 @@
 const propsPlans = {
-default: {
-    artist: '',
-    desc: '',
-    loc: '',
-    locs: [],
-    pickUp: false,
-    isBox: false,
-    hit: true, // can hit things with it
-    strikes: false, // retaliates
-  },
   stick: {
     desc: '🌲 a nice stick',
     locs: ['clearing', 'creepyWoods'],
@@ -29,6 +19,12 @@ default: {
     boxs: ['chest']
   },
 
+  ropeLadder: {
+    desc: 'a ladder, it\'s a bit ropey',
+    locs: [],
+    boxs: []
+  },
+
   chestKey: {
     desc: 'key for a chest',
     locs: ['clearing'],
@@ -37,7 +33,7 @@ default: {
   },
 
   welcomizer: {
-    desc: 'A welcomizer, its here to help',
+    desc: 'a welcomizer, its here to help',
     locs: ['begining'],
     pickUp: true,
     actions: {
@@ -45,7 +41,7 @@ default: {
         ask: () => { custom({ action: 'remark', id: 'Click on 🤏 pickUp to pick me up, click on 👁‍🗨 look, to inspect me.' }) }
       },
       bod: {
-        ask: () => { custom({ action: 'remark', id: 'Click on 🎒bag it, to put me in the backpack. Click on 👐drop to drop me.' }) },
+        ask: () => { custom({ action: 'remark', id: 'Click on 🎒bag it, to put me in the backpack. Click on 👐 drop to drop me.' }) },
       },
       inv: {
         ask: () => { custom({ action: 'remark', id: 'Click on 🤏 grab, to grab me out of the backpak.' }) },
@@ -53,25 +49,14 @@ default: {
     },
   },
 
-  gnome: {
-    desc: "a nice gnome",
-    locs: ['clearing'],
-    actions: {
-      env: {
-        speak: () => { custom({ action: 'remark', id: 'ha ha ha, he he he, I\'m a little gnome and you can\'t catch me' }) },
-        tickle: () => { custom({ action: 'remark', id: 'ha ha ha, he he he' }) },
-      },
-    },
-  },
-
   lint: {
-    desc: "some grey and fluffy lint",
-    locs: ['inv'],
+    artist: 'lucsan',
+    desc: "some grey and fluffy lint, like you get from your pocket",
+    pickUp: true,
+    locs: ['bod'],
     actions: {
       bod: {
-        examine: () => { propActions().msg(`its lint, like you get from your pocket.`) },
-        sniff: () => { propActions().msg(`you sniff your lint, it smells vaugly of dust, and pocket.`) },
-        throw: () => { propActions().drop('lint') },
+        sniff: () => { custom({ action: 'remark', id: `you sniff your lint, it smells vaugly of dust, and pocket.` }) },
       },
     },
   },
@@ -87,18 +72,6 @@ default: {
   lintStick: {
     desc: 'a mysterious lintstick, it has some pocket lint stuck to it. I wonder what this is for?',
     pickUp: true,
-    actions: {
-      inv: {
-        give: () => console.log(`give to gnome`),
-        tickling: () => console.log(`You tickle something with it`),
-        poking: () => console.log(`you poke something with it`),
-      },
-    },
-    properties: {
-      attack: 2,
-      defense: 0,
-      health: 10,
-    },
     combines: {
       needs: ['stick', 'lint', 'stickyTape'],
       destroys: ['stick', 'lint'],
@@ -106,8 +79,15 @@ default: {
     },
   },
 
+  phoneBox: {
+    desc: 'bright red traditional English phone box',
+    box: { },
+    locs: ['bridgeOfSighs'],
+  },
+
   penny: {
-    desc: 'A shinny penny.'
+    desc: 'a shinny penny',
+    boxs: ['phoneBox']
   },
 
   badge: {
@@ -123,7 +103,7 @@ default: {
 
   littleMonster: {
     desc: 'Oooh how cute, a little monster',
-    locs: ['creepyWoods'],
+    locs: [],
     actions: {
       env: {
         //hit: () => console.log(`monster is hit`)
@@ -140,7 +120,7 @@ default: {
 
   mingVase: {
     desc: 'a ming dynsaty delicate china vase, it dispences unlimited sticks',
-    locs: ['testSite', 'creepyWoods'],
+    locs: [],
     actions: {
       env: {
         pickUp: () => custom({ action: 'create', id: 'stick' })
@@ -148,33 +128,44 @@ default: {
     },
   },
 
+  gnome: {
+    desc: "a nice gnome",
+    locs: [],
+    actions: {
+      env: {
+        speak: () => { custom({ action: 'remark', id: 'ha ha ha, he he he, I\'m a little gnome and you can\'t catch me' }) },
+        tickle: () => { custom({ action: 'remark', id: 'ha ha ha, he he he' }) },
+      },
+    },
+  },
+
   washingSoda: {
     desc: 'A tin of sodium carbonate.',
-    locs: ['testSite', 'lab'],
+    locs: ['lab'],
   },
   citricAcid: {
     desc: 'a bag of citric acid. It tastes kinda lemony',
-    locs: ['testSite', 'lab'],
+    locs: ['lab'],
   },
   testTube: {
     desc: 'a test tube of dubious cleanliness.',
-    locs: ['testSite', 'lab'],
+    locs: ['lab'],
   },
   chiborg: {
     desc: 'a chicken with a mechanical heart.',
-    locs: ['testSite'],
+    locs: [],
   },
   roboken: {
     desc: 'a robot with a chickens heart.',
-    locs: ['testSite', 'begining']
+    locs: []
   },
   vexedSheep: {
     desc: 'a slightly vexed sheep with fluffy white fleece.',
-    locs: ['testSite', 'funkyHills']
+    locs: ['funkyHills']
   },
   articulatedGoat: {
     desc: 'a goat, articulated at the knees.',
-    locs: ['testSite']
+    locs: []
   },
   oldMonk: {
     desc: 'a calm old monk called Ren-i quietly pushing his broom.',

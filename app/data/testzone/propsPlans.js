@@ -42,6 +42,12 @@ default: {
     locs: ['testSite']
   },
 
+  monkeyNut: {
+    pickUp: true,
+    desc: 'Strange kind of key',
+    locs: ['testSite']
+  },
+
   lintStick: {
     desc: 'a mysterious lintstick, it has some pocket lint stuck to it. I wonder what this is for?',
     pickUp: true,
@@ -62,47 +68,29 @@ default: {
     },
   },
 
-  // bintStick: {
-  //   desc: 'a strange bintstick',
-  //   pickUp: true,
-  //   combines: {
-  //     needs: ['stick', 'bint'],
-  //     destroys: ['stick', 'bint'],
-  //     desc: 'you chew the mint for a bit, then squish it to the end of the stick, yay, a mint stick',
-  //   },
-  // },
-
-
   mint: {
     desc: 'a mint',
     pickUp: true,
     locs: ['testSite'],
   },
 
-  // bint: {
-  //   desc: 'a bint',
-  //   locs: ['testSite']
-  // },
-
   chest: {
     desc: 'a locked chest, maybe it contains a rubish sword',
-    locs: ['stockRoom'],
+    locs: ['testSite'],
     artist: 'lucsan',
     box: {
       locked: true,
       key: 'chestKey',
-      //contains: ['rubishSword'],
     },
-    // isBox: true,
-    // locked: true,
-    // key: 'chestKey',
-    // contains: ['rubishSword'],
-    // actions: {
-    //   env: {
-    //     unlock: () => { custom({ action: 'unlock', id: 'chest' }) }
-    //   }
-    // }
   },
+
+  chestKey: {
+    desc: 'key for a chest',
+    locs: ['stockRoom', 'testSite'],
+    artist: 'lucsan',
+    pickUp: true,
+  },
+
 
   cardBox: {
     desc: 'a cardboard box',
@@ -220,13 +208,6 @@ default: {
   oldSoverign: {
     desc: 'A dull old soverign piece',
     boxs: ['ninePennyBowl']
-  },
-
-  chestKey: {
-    desc: 'key for a chest',
-    locs: ['stockRoom', 'clearing'],
-    artist: 'lucsan',
-    pickUp: true,
   },
 
   welcomizer: {

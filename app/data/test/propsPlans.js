@@ -2,6 +2,7 @@ const propsPlans = {
 
   stick: {
     desc: '🌲 a nice stick',
+    label: 'a stick',    
     locs: ['trunk'],
     artist: 'lucsan',
     pickUp: true,
