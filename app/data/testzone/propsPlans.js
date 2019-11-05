@@ -91,7 +91,6 @@ default: {
     pickUp: true,
   },
 
-
   cardBox: {
     desc: 'a cardboard box',
     locs: ['testSite'],
@@ -279,37 +278,57 @@ default: {
     },
   },
 
+  sausageLens: {
+    desc: 'an improbable lens, made from sausage',
+    pickUp: true,
+    locs: ['testSite'],
+    reveals: ['secretPassage', 'hiddenBox'],
+  },
+
+  glassOnion: {
+    desc: 'like an onion onion, but made of glass',
+    pickUp: true,
+    locs: ['testSite'],
+  },
+
   washingSoda: {
     desc: 'A tin of sodium carbonate.',
     locs: ['lab'],
   },
+
   citricAcid: {
     desc: 'a bag of citric acid. It tastes kinda lemony',
     locs: ['lab'],
   },
+
   testTube: {
     desc: 'a test tube of dubious cleanliness.',
     locs: ['lab'],
   },
+
   chiborg: {
     desc: 'a chicken with a mechanical heart.',
     locs: ['stockRoom'],
   },
+
   roboken: {
     desc: 'a robot with a chickens heart.',
     locs: ['stockRoom']
   },
+
   vexedSheep: {
     desc: 'a slightly vexed sheep with fluffy white fleece.',
     locs: ['funkyHills']
   },
+
   articulatedGoat: {
     desc: 'a goat, articulated at the knees.',
     locs: ['stockRoom']
   },
+
   oldMonk: {
     desc: 'a calm old monk called Ren-i quietly pushing his broom.',
     locs: ['teaHouse']
-  }
+  },
 
 }

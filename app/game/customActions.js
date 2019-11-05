@@ -44,7 +44,7 @@ const customActions = (dispatch) => {
 
   const unlockDoor = (info, cabinet) => {
     const { to, from } = info
-    let doors = cabinet.draws.places[from].doors
+    let doors = cabinet.draws.places[from].exits
     let door = doors[to]
     
     if (!door) return dispatch({ action: 'remark', msg: `${from} ${to} does not have any instructions.` })
@@ -55,7 +55,7 @@ const customActions = (dispatch) => {
     if (!key) return dispatch({ action: 'remark', msg: `Prop ${door.key} doesnt exist (see propsPlans).` })
     if (!key.locs.find(l => l == 'bod' || l == 'inv')) return dispatch({ action: 'remark', msg: `You need a ${ctt(door.key)} to unlock this`})
 
-    cabinet.use({ places: { [from]: { doors: { [to]: { locked: false } } } } })
+    cabinet.use({ places: { [from]: { exits: { [to]: { locked: false } } } } })
     dispatch({ action: 'remark', msg: `You unlocked ${ctt(to)} with a ${ctt(door.key)}` })
     dispatch({ action: 'doorsUpdate', info: { from, to } })
   }

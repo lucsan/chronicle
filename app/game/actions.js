@@ -48,6 +48,7 @@ const actions = () => {
 
   }
 
+
   const doAction = (act, id, cabinet) => {
     // console.log('act', act, id, cabinet)
     if (act == 'env->bod') return changePropLocation('env', 'bod', id, cabinet)
@@ -122,10 +123,11 @@ const actions = () => {
     locs = slide(from, locs)
     locs.push(to)
     cabinet.use({ decor: { [id]: { locs: locs } } })
-
+   checkIfHiddenReveal(id, cabinet)
     updateSave(cabinet)
     saveGame(cabinet.draws)
     dispatch({ action: 'prop', from: from, to: to, code: id })
+ 
     let msg = ''
     if (from != 'inv' && from != 'bod') msg = `you picked up the ${ctt(id)}`
     if (to != 'inv' && to != 'bod') msg = `you dropped the ${ctt(id)} at ${ctt(to)}`
@@ -133,6 +135,25 @@ const actions = () => {
     remark(msg)
   }
 
+  const checkIfHiddenReveal = (id, cabinet) => {
+    const ploc = cabinet.draws.character.location
+
+    const exits = cabinet.draws.places[ploc].exits
+
+    for (const e in exits) {
+    let hidden = false      
+      const exit = exits[e]
+      if (id == exit.reveal) {
+        
+        if (cabinet.draws.decor[id].locs.find((l) => l == 'bod' || l == 'inv')) {
+          hidden = false
+        } else {
+          hidden = true
+        }
+      }
+      cabinet.use({ places: { [ploc]: { exits: { [e]: {hidden }}}}})     
+    }
+  }
 
 
   const moveToBox = (id, cabinet) => {

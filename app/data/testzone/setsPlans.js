@@ -6,14 +6,14 @@ const setsPlans = {
       helicopter: true,
       begining: true,
       puzzleStation: true,
+      room1: { 
+        label: 'The Room', 
+        door: true,
+        locked: true,
+      },  // locked: false
+      stockRoom: { door: true, label: '🚧 Stock Room', locked: true, key: 'monkeyNut' } ,
+      secretPassage: { door: true, locked: true, key: 'glassOnion', hidden: true, reveal: 'sausageLens' },
     },
-    doors: {
-      // helicopter:  { locked: true, key: 'helipass' },
-      stockRoom: { label: '🗄 Stock Room', locked: true, key: 'monkeyNut' },
-      secretPassage: { locked: true, key: 'GlassOnion', hidden: true, reveal: 'sausageLens' },
-      treeHouse: { locked: false },
-    }
-
   },
 
   helicopter: {
@@ -27,8 +27,8 @@ const setsPlans = {
   secretPassage: {
     hidden: true,
     desc: 'a secret passage, not to be revealed till its discovered',
-    doors: {
-      testSite: {  },
+    exits: {
+      testSite: { locked: false },
       cheeseWheel: {  },
     }
   },
@@ -48,6 +48,22 @@ const setsPlans = {
   treeHouse: {
     desc: 'an entire house, in a tree, albeit a one room house',
     proseScript: 'treeHouse',
+    exits: { stockRoom: {} },
+  },
+
+  room1: {
+    desc: 'The Room (1)',
+    label: 'The Room',
+    exits: { room2: { label: '', } },
+  },
+
+  room2: {
+    desc: 'The Room (2)',
+    exits: { room3: { label: '', } },
+  },
+
+  room3: {
+    desc: 'The Room (3)',
     exits: { testSite: {} },
   },
 

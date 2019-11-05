@@ -17,6 +17,7 @@ const royal = (draws) => {
     if (actionName == 'dispense') return '<span title="dispense things" >📮</span>'
     if (actionName == 'unlock') return '<span title="unlock this" >🔓</span>'
     if (actionName == 'lock') return '<span title="unlock this" >🔐</span>'
+    if (actionName == 'reveal') return '<span title="reveal any secrets" >💡</span>'
 
     if (actionName == 'ask') return '<span title="ask me" >👂</span>'
     if (actionName == 'rub') return '<span title="rub me" >👋</span>'
@@ -79,6 +80,32 @@ const royal = (draws) => {
     doProps('bod')
     doProps('inv')
     doBoxes(d)
+    doHidden(d)
+  }
+
+  const reveal = (prop) => {
+    doHidden({ code: prop.code })
+  }
+
+  const doHidden = (d) => {
+    if (!d) return
+    //if (d.to != 'bod' || d.to != 'inv')
+    console.log('doing hidden')
+    let exits = draws.places[draws.character.location].exits
+    
+    console.log(d)
+   
+    for (const e in exits) {
+      let exit = exits[e]
+      // if (exit.reveal == d.code && exit.hidden == false) {
+      if (exit.reveal == d.code) {
+console.log(exit)
+        el().removeElement(e)
+        makeDoor(e, draws.character.location, exit)
+      }
+      
+    }
+    
   }
 
   const doBoxes = (d) => {
@@ -116,7 +143,13 @@ const royal = (draws) => {
     }
     // Combo button
     if (prop.usedIn.length > 0 && (container == 'inv' || container == 'bod') ) {
-      el(`${container}-${prop.code}`, `action combo`).button(actionEmos('combine'), e => listCombos(prop))
+      el(`${container}-${prop.code}`, `action combo`).button(actionEmos('combine'), () => listCombos(prop))
+    }
+
+    // reveal hidden exit/object
+    if (prop.reveals.length > 0  && (container == 'inv' || container == 'bod')) {
+      console.log(prop)
+      el(`${container}-${prop.code}`, `action reveal`).button(actionEmos('reveal'), () => reveal(prop))
     }
   }
 
@@ -129,49 +162,62 @@ const royal = (draws) => {
       el('combi', 'combo item').div(p + ' needs ' + needs)
       el('combi', 'combo button').button(`Make ${p}`, e => custom({ action: 'combine', id: p }))
     })
-
-    //console.log('listComobs', prop)
-  }
-
-  const comboActions = (prop, container) => {
-
   }
 
   const placeExits = (place) => {
-  
-    if (!place.exits && !place.doors) return console.error(`Warning, no exits (or doors) provided for `, place) 
 
+    if (!place.exits && !place.doors) return console.error(`Warning, no exits (or doors) provided for `, place) 
     document.getElementById('exits').innerHTML = ''
     el('exits', 'container-title').div('Exits')
     for (let to in place.exits) {
-      makeExit( to, place.exits[to])
+      // makeExit( to, place.exits[to])
+      
+      makeExit( to, place.code, place.exits[to])
     }
-    for (let to in place.doors) {
-      makeDoor(to, place.code, place.doors[to].locked, place.doors[to].key)
-    }
+    // for (let to in place.exits) {
+    //   // makeExit( to, place.exits[to])
+    //   makeExit( to, place)
+    // }
+    // for (let to in place.doors) {
+    //   makeDoor(to, place)
+    // }
   }
 
-  const makeDoor = (to, from, locked = false, key = '') => {
-    el('exits', 'exit', to).div(to)
-    if (key) {
+  const makeExit = (to, from, exit) => {
+    //const exit = place.exits[to]    
+    if (exit.door) {
+      makeDoor(to, from, exit)
+      return
+    }
+
+    el('exits', 'exit', to).div()
+    el(to, 'exit').button(exit.label? exit.label: ctt(to), () => draws.tools.move(to))
+
+  }
+
+  const makeDoor = (to, from, exit) => {
+    //console.log(to, exit)
+  
+    if (exit.reveal && exit.hidden) { return }    
+
+    if (!exit.locked) {
+      // el(to, 'exit').button(exit.label? exit.label: ctt(to), () => draws.tools.move(to))
+      el('exits', 'exit', to).button(exit.label? exit.label: ctt(to), () => draws.tools.move(to))
+      return
+    }
+
+
+    el('exits', 'exit', to).div(exit.label? exit.label: ctt(to)) 
+
+    if (exit.key) {
       el(to, 'exit').button(actionEmos('unlock'), () => custom({ action: 'unlockDoor', id: { to, from } }))
     }
-    if (!locked) {
-      el(to, 'exit').button(actionEmos('enter'), () => custom({ action: 'enter', id: { to, from } }))
-    }
-  }
-
-  const makeExit = (to, exit) => {
-    el('exits', 'exit', to).div()
-    el(to, 'exit').button(exit.desc?exit.desc: ctt(to), () => draws.tools.move(to))
-    
   }
 
   const update = (d) => {
     if (d.type == 'prose') {
       document.getElementById('placeProse').innerHTML = draws.places[d.code].prose
       //console.log('🎀' + draws.places[d.code].prose)
-
     }
   }
 
@@ -191,20 +237,12 @@ const royal = (draws) => {
     //console.log(`👁‍🗨 ${d.code}`, prop)
   }
 
-  const respond = (d) => {
-    //console.log('respond', d.msg)
-    document.getElementById('respond').innerHTML = d.msg
-  }
+  const respond = (d) => { document.getElementById('respond').innerHTML = d.msg }
 
   const doorsUpdate = (d) => {
     let place = draws.places[draws.character.location]
     placeExits(place)
   }
-
-  // const customUpdate = (d) => {
-  //   place(d)
-  // }
-
 
   return {
     build,
