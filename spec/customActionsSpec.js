@@ -25,14 +25,14 @@ let testProps = {
 let testSets = {
   helicopter: {
     desc: 'a sleek and shinny helecopter',
-    exits: { testSite: {} },
-    doors: {
-      lockedSite: { locked: true, key: 'lemon' },
-      lockedSiteNoKeyHeld: { locked: true, key: 'fridge' },
-      lockedSiteNoKeyObject: {locked: true, key: 'noSuchProp'},
-      lockedSiteNoKeyDeclaired: { locked: true },
-      noKeySite: {},
-      testSite: { label: 'Disembark to 💥Test Site' }
+    exits: { 
+      lockedSite: { door: true, locked: true, key: 'lemon' },
+      lockedSiteNoKeyHeld: { door: true, locked: true, key: 'fridge' },
+      lockedSiteNoKeyObject: { door: true, locked: true, key: 'noSuchProp'},
+      lockedSiteNoKeyDeclaired: { door: true, locked: true },
+      noKeySite: { door: true, },
+      testSite: { label: 'Disembark to 💥Test Site' },
+      hiddenDoor: { door: true, hidden: true, reveal: 'secretKey' }    
     },
   },
   lockedSite: {},
@@ -58,7 +58,7 @@ describe('customActions', () => {
         to: 'lockedSiteNoKeyHeld',
       }     
       custActs.unlockDoor(info, marshall.cabinet)
-      expect(marshall.cabinet.draws.places.helicopter.doors.lockedSiteNoKeyHeld.locked).toBe(true)
+      expect(marshall.cabinet.draws.places.helicopter.exits.lockedSiteNoKeyHeld.locked).toBe(true)
     })
 
     it('should send a message if you dont have the key and the door is locked', () => {
@@ -76,9 +76,9 @@ describe('customActions', () => {
         from: 'helicopter',         
         to: 'lockedSite',
       }
-      marshall.cabinet.use({ places: { helicopter: { doors: { lockedSite: { locked: true } } } } })
+      marshall.cabinet.use({ places: { helicopter: { exits: { lockedSite: { locked: true } } } } })
       custActs.unlockDoor(info, marshall.cabinet)
-      expect(marshall.cabinet.draws.places.helicopter.doors.lockedSite.locked).toBe(false)
+      expect(marshall.cabinet.draws.places.helicopter.exits.lockedSite.locked).toBe(false)
     })
 
     it('should send a message you have unlocked a door with the key', () => {
@@ -86,7 +86,7 @@ describe('customActions', () => {
         from: 'helicopter',         
         to: 'lockedSite',
       }
-      marshall.cabinet.use({ places: { helicopter: { doors: { lockedSite: { locked: true } } } } })
+      marshall.cabinet.use({ places: { helicopter: { exits: { lockedSite: { locked: true } } } } })
       customActions((d) => {
         if (d.action == 'remark') expect(d.msg).toBe('You unlocked Locked Site with a Lemon')
       }).unlockDoor(info, marshall.cabinet)
@@ -103,28 +103,40 @@ describe('customActions', () => {
       }).unlockDoor(info, marshall.cabinet)
     })
 
-    describe('sets doors open (enter)', () => {
-      it('should move character to selected room', () => {
-        const info = {
-          from: 'testSite',
-          to: 'helecopter'
-        }
-        marshall.cabinet.use({ character: { location: info.from } })
-        custActs.enter(info, marshall.cabinet, actions().doMove)
-        expect(marshall.cabinet.draws.character.location).toBe(info.to)
-      })
 
-      xit('should signal a character move', () => {
-
-        expect(1).toBe(2)
-      })
-
-      xit('should not open if its locked', () => {
-        expect(1).toBe(2)
-      })
-    })
 
   })
 
+  describe('sets doors open (enter)', () => {
+    it('should move character to selected room', () => {
+      const info = {
+        from: 'testSite',
+        to: 'helicopter'
+      }
+      marshall.cabinet.use({ character: { location: info.from } })
+      custActs.enter(info, marshall.cabinet, actions().doMove)
+      expect(marshall.cabinet.draws.character.location).toBe(info.to)
+    })
+
+    xit('should signal a character move', () => {
+
+      expect(1).toBe(2)
+    })
+
+    xit('should not open if its locked', () => {
+      expect(1).toBe(2)
+    })
+  })
+
+  describe('sets doors hidden', () => {
+    xit('should hide a door if hidden is true', () => {
+      const info = {
+        from: 'helicopter',
+        to: 'hiddenDoor'
+      }
+      // custActs.
+      expect(1).toBe(2)
+    })
+  })
 
 })
