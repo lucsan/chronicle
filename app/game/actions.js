@@ -123,7 +123,7 @@ const actions = () => {
     locs = slide(from, locs)
     locs.push(to)
     cabinet.use({ decor: { [id]: { locs: locs } } })
-   checkIfHiddenReveal(id, cabinet)
+    checkIfHiddenReveal(id, cabinet)
     updateSave(cabinet)
     saveGame(cabinet.draws)
     dispatch({ action: 'prop', from: from, to: to, code: id })
@@ -228,10 +228,10 @@ const actions = () => {
     cabinet.draws.decor[newPropId].locs.push('bod')
   }
 
-  const destroys = (pid, needs, cabinet) => {
-    const destroy = needs
-    return destroy
-  }
+  // const destroys = (pid, needs, cabinet) => {
+  //   const destroy = needs
+  //   return destroy
+  // }
 
   const removeFromBags = (list, cabinet) => {
     list.map(i => {
