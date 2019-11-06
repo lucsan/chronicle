@@ -25,14 +25,8 @@ rules:
       - groupCollapsed
       - groupEnd
 globals:
-  autoLoader: false
-  scriptLoader: false
-  application: false
   app: false
-  player: false
-  character: false
   el: false
-  actions: false
   describe: false
   expect: false
   it: false
