@@ -18,9 +18,8 @@ const setsPlans = {
 
   helicopter: {
     desc: 'a sleek and shinny helecopter',
-    exits: { testSite: {} },
-    doors: {
-      testSite: { label: 'disembark' }
+    exits: { 
+      testSite: { door: true, label: 'disembark' }
     },
   },
 

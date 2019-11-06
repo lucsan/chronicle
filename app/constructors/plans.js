@@ -35,6 +35,7 @@ const plans = () => {
       if (!prop.code) prop.code = id
       if (!prop.desc) prop.desc = id
       if (!prop.locs) prop.locs = []
+      if (!prop.reveals) prop.reveals = []
       prop.usedIn = []
       info.defaultActions(id, info.action, cabinet.draws)
     }

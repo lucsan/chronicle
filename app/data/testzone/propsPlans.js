@@ -1,3 +1,5 @@
+console.log('--> props plans - testzone')
+
 const propsPlans = {
 default: {
     artist: '',
