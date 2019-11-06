@@ -43,7 +43,7 @@ const setsPlans = {
     exits: {
       riverBoat: {},
       statelyManorLawns: {},
-      statelyVillageriveBoat: {},
+      statelyVillage: {},
     },
   },
 
@@ -67,7 +67,13 @@ const setsPlans = {
     desc: 'the village of Stately',
     exits: {
       drearyLane: {},
+      excitedCottage: {},
     },
+  },
+
+  excitedCottage: {
+    desc: 'This cottage is somewhat over excited for a cottage',
+    exits: { statelyVillage: {} }
   },
 
   creepyWoods: {
@@ -77,7 +83,14 @@ const setsPlans = {
       clearing: { desc: 'a Clearing can be seen through the trees', },
       aPath: { desc: 'a path leads out of the woods', },
       funkyHills: { desc: 'sunshine covered meadows lie in the distance', },
+      teddyBearPicnic: { desc: 'Picnic this way, teddy bears only' }
     },
+  },
+
+  teddyBearPicnic: {
+    label: 'Teady Bears Picnic',
+    desc: 'not much of picnicing happening right now Yogi, and a good job too, as I highly doubt you brought a disguise',
+    exits: { creepyWoods: {} },
   },
 
   skyCity: {
@@ -98,7 +111,7 @@ const setsPlans = {
     exits: {
       lab: {},
       clearing: {},
-      },
+    },
   },
 
   funkyHills: {
@@ -111,10 +124,10 @@ const setsPlans = {
 
   bridgeOfSighs: {
     desc: 'an ornate bridge with a definate air of sorrow',
-    exits: [
-      { to: 'funkyHills' },
-      { to: 'acornDale' },
-    ],
+    exits: {
+      funkyHills: {},
+      acornDale: {},
+    },
   },
 
   acornDale: {
